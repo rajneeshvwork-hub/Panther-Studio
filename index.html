@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Presenter Studio V1</title>
+<style>
+:root{
+  --bg:#080d18;--panel:#0d1525;--panel2:#111c31;--panel3:#16223a;--line:#25334d;
+  --text:#f3f6ff;--muted:#93a2bf;--accent:#7ea7ff;--accent2:#a98cff;
+  --good:#63d7a0;--warn:#ffc96e;--danger:#ff7f8a;--shadow:0 26px 80px rgba(0,0,0,.38)
+}
+*{box-sizing:border-box} html,body{margin:0;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit} button{cursor:pointer;border:1px solid var(--line);background:var(--panel3);color:var(--text);padding:9px 12px;border-radius:10px;transition:.18s ease} button:hover{border-color:#4c6391;transform:translateY(-1px)}
+button.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#08111f;border:0;font-weight:800} button.danger{background:#351a24;border-color:#6d3040;color:#ffdbe0} button.ghost{background:transparent} button:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.app{display:grid;grid-template-columns:340px minmax(0,1fr);height:100vh;overflow:hidden} aside{background:#0a1120;border-right:1px solid var(--line);padding:18px;overflow:auto} main{min-width:0;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#08111f;font-weight:900}.brand h1{font-size:18px;margin:0}.sub{font-size:12px;line-height:1.45;color:var(--muted);margin:8px 0 18px}
+.section{border-top:1px solid var(--line);padding-top:15px;margin-top:15px}.section h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#bcc8de;margin:0 0 10px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+label{display:block;font-size:11px;color:var(--muted);margin:9px 0 5px} input[type=file],select,input[type=number],input[type=text],textarea{width:100%;background:#091223;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 9px} textarea{min-height:125px;resize:vertical;line-height:1.45}
+.row{display:flex;gap:8px;align-items:center}.grow{flex:1;min-width:0}.status{font-size:11px;color:var(--muted);line-height:1.4;margin-top:7px}.status.good{color:var(--good)}.status.warn{color:var(--warn)}.status.danger{color:var(--danger)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.metric{background:#0b1426;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}.metric b{font-size:14px;display:block}.metric span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.topbar{height:62px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#0a1221}.top-left,.top-right{display:flex;align-items:center;gap:9px}.dot{width:9px;height:9px;border-radius:50%;background:#66758f}.dot.live{background:var(--danger);box-shadow:0 0 0 5px rgba(255,127,138,.12)}.dot.paused{background:var(--warn)}.rec-label{font-size:12px;color:#cbd5e8}.timer{font-variant-numeric:tabular-nums;font-size:14px;font-weight:800}.remaining{font-size:11px;color:var(--muted)}
+.stage-wrap{position:relative;flex:1;min-height:0;padding:18px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,#16213b 0,#090e19 68%)}
+.stage{position:relative;width:min(100%,1220px);aspect-ratio:16/9;background:#03060b;border:1px solid #2d3c5a;border-radius:16px;overflow:hidden;box-shadow:var(--shadow)} #slideFrame{width:100%;height:100%;border:0;background:#fff}.empty-slide{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#74839f;padding:24px;pointer-events:none}
+.camera-bubble{position:absolute;right:20px;bottom:20px;width:180px;aspect-ratio:16/10;border-radius:16px;overflow:hidden;border:2px solid rgba(255,255,255,.85);background:#101827;box-shadow:0 12px 30px rgba(0,0,0,.35);z-index:4}.camera-bubble.circle{aspect-ratio:1;border-radius:50%}.camera-bubble video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.teleprompter{position:absolute;left:6%;right:6%;bottom:5%;height:38%;border-radius:16px;background:linear-gradient(180deg,rgba(4,7,13,.18),rgba(4,7,13,.91));border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(6px);overflow:hidden;z-index:3;box-shadow:0 14px 45px rgba(0,0,0,.3)}.teleprompter.hidden{display:none}.tele-head{position:absolute;top:0;left:0;right:0;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;z-index:5;background:linear-gradient(180deg,rgba(7,10,18,.82),transparent);font-size:9px;color:#9ba9c2;letter-spacing:.08em;text-transform:uppercase}.notes-viewport{height:100%;overflow:auto;padding:44px 30px 75px;mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 86%,transparent 100%)}.notes-text{white-space:pre-wrap;line-height:1.52;font-size:29px;font-weight:570;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.65)}.cue{font-size:10px;color:#b8c5dd;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.countdown{position:absolute;inset:0;z-index:20;background:rgba(3,6,12,.72);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;font-size:120px;font-weight:900;text-shadow:0 10px 30px rgba(0,0,0,.4)}.countdown.show{display:flex}
+.bottom{border-top:1px solid var(--line);background:#0a1221;padding:10px 14px}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill{padding:6px 9px;border-radius:999px;background:#101a2e;border:1px solid var(--line);font-size:11px;color:#c9d4e8}.control-group{display:flex;align-items:center;gap:6px}.control-group label{margin:0;font-size:10px}.control-group input[type=range]{width:105px}.hint{margin-left:auto;font-size:10px;color:#71809a}.progress{height:5px;background:#111a2b;border-radius:999px;overflow:hidden;margin-top:9px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s}
+.meter{height:8px;background:#0a1221;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-top:7px}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--good) 0 58%,var(--warn) 58% 82%,var(--danger) 82%);transition:width .08s}.mic-line{display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:10px}.mic-label{color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.download{display:none;margin-top:8px}.download a{color:#c4d5ff;font-size:12px}.small{font-size:10px;color:var(--muted)}
+.toast{position:fixed;right:18px;top:78px;background:#131e33;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;box-shadow:0 18px 50px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translateY(-6px);transition:.2s;z-index:50}.toast.show{opacity:1;transform:none}
+.modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;z-index:60}.modal.show{display:flex}.modal-card{width:min(560px,92vw);background:#0d1627;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.modal-card h3{margin:0 0 12px}.shortcut-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.shortcut{display:flex;justify-content:space-between;border-bottom:1px solid #1f2c42;padding:7px 0;font-size:12px}.key{font-family:ui-monospace,monospace;background:#16223a;border:1px solid #30415f;border-radius:6px;padding:2px 6px;color:#dce5f5}
+@media(max-width:940px){.app{grid-template-columns:1fr}aside{display:none}.camera-bubble{width:130px}.notes-text{font-size:23px}.hint{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="logo">P</div><div><h1>Presenter Studio V1</h1><div class="small">Private teleprompter + clean recording</div></div></div>
+  <div class="sub">Built for short presentation walkthroughs. Your notes stay in the presenter view while the output window stays clean.</div>
+
+  <div class="section">
+    <div class="section-title"><h2>1 · Presentation</h2><span class="pill" id="slideMini">1</span></div>
+    <label>Upload PDF</label><input id="pdfInput" type="file" accept="application/pdf,.pdf" />
+    <div class="row"><div class="grow"><label>Current slide</label><input id="slideNumber" type="number" min="1" value="1" /></div><div class="grow"><label>Total slides</label><input id="totalSlides" type="number" min="1" placeholder="10" /></div></div>
+    <div id="pdfStatus" class="status">No presentation loaded.</div>
+  </div>
+
+  <div class="section">
+    <h2>2 · Speaker notes</h2>
+    <label>Upload .md or .txt</label><input id="notesInput" type="file" accept="text/plain,text/markdown,.md,.txt" />
+    <label>Or paste notes</label><textarea id="notesPaste" placeholder="## Slide 1\nOpening...\n\n## Slide 2\nNext section..."></textarea>
+    <div class="two" style="margin-top:8px"><button id="applyNotes">Apply notes</button><select id="notesMode"><option value="slide">Slide sync</option><option value="continuous">Continuous</option></select></div>
+    <div class="metrics"><div class="metric"><b id="wordCount">0</b><span>words</span></div><div class="metric"><b id="estTime">0:00</b><span>est. time</span></div><div class="metric"><b id="paceFit">—</b><span>target WPM</span></div></div>
+    <div id="notesStatus" class="status">Use headings like “## Slide 3” for slide-aware notes.</div>
+  </div>
+
+  <div class="section">
+    <h2>3 · Timing</h2>
+    <div class="two"><div><label>Target minutes</label><input id="targetMin" type="number" min="1" max="60" value="5" /></div><div><label>Countdown</label><select id="countdownSelect"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="0">Off</option></select></div></div>
+    <button id="fitPace" style="width:100%;margin-top:8px">Fit teleprompter to target</button>
+    <div id="timingStatus" class="status">Set your target and we’ll calculate the reading pace.</div>
+  </div>
+
+  <div class="section">
+    <h2>4 · Camera & microphone</h2>
+    <button id="enableMedia" class="primary" style="width:100%">Enable camera & mic</button>
+    <label>Camera</label><select id="cameraSelect"><option>Default camera</option></select>
+    <label>Microphone</label><select id="micSelect"><option>Default microphone</option></select>
+    <div class="meter"><i id="audioLevel"></i></div><div class="mic-line"><span class="mic-label">Mic health</span><b id="micHealth">Not tested</b></div>
+    <div class="two"><div><label>Camera position</label><select id="camPosition"><option value="br">Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option></select></div><div><label>Camera size</label><select id="camSize"><option value="sm">Small</option><option value="md" selected>Medium</option><option value="lg">Large</option></select></div></div>
+    <div class="two"><button id="shapeBtn">Rounded camera</button><button id="cameraToggle">Hide camera</button></div>
+    <div id="mediaStatus" class="status">Permissions not requested yet.</div>
+  </div>
+
+  <div class="section">
+    <h2>5 · Output & recording</h2>
+    <button id="openOutput" style="width:100%">Open clean output window</button>
+    <label>Recording name</label><input id="recordingName" type="text" value="presentation-recording" />
+    <div class="row" style="margin-top:8px"><button id="recordBtn" class="primary grow" disabled>● Record</button><button id="pauseBtn" class="grow" disabled>Pause</button></div>
+    <button id="stopBtn" class="danger" style="width:100%;margin-top:8px" disabled>Stop & save</button>
+    <div class="status warn">When Chrome asks what to share, choose the separate <b>Presenter Output</b> window.</div>
+    <div class="download" id="downloadBox"><a id="downloadLink">Download recording</a></div>
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div class="top-left"><span id="recDot" class="dot"></span><span class="rec-label" id="recText">Ready</span><span class="pill" id="modePill">SLIDE SYNC</span></div>
+    <div class="top-right"><span class="remaining" id="remaining">Target 05:00</span><span class="timer" id="timer">00:00</span><button class="ghost" id="helpBtn">Shortcuts</button></div>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage" id="stage" title="Click outside the teleprompter to advance slide">
+      <iframe id="slideFrame" aria-label="Presentation preview"></iframe>
+      <div class="empty-slide" id="emptySlide"><div><b>Upload your presentation</b><br><br>PDF for V1 · notes stay private · recording stays clean</div></div>
+      <div class="camera-bubble" id="cameraBubble"><video id="cameraPreview" autoplay muted playsinline></video></div>
+      <div class="teleprompter" id="teleprompter">
+        <div class="tele-head"><span>Presenter only · never sent to output</span><span class="cue" id="nextCue">Next cue: —</span></div>
+        <div class="notes-viewport" id="notesViewport"><div class="notes-text" id="notesText">Your speaker notes will appear here.</div></div>
+      </div>
+      <div class="countdown" id="countdown"></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="controls">
+      <button id="prevBtn">← Prev</button><span class="pill" id="slidePill">Slide 1</span><button id="nextBtn">Next →</button>
+      <button id="scrollToggle">▶ Auto-scroll</button><button id="teleToggle">Hide notes</button>
+      <div class="control-group"><label>Speed</label><input id="speedRange" type="range" min="70" max="220" value="130" /><span class="pill" id="speedLabel">130 WPM</span></div>
+      <div class="control-group"><label>Text</label><input id="fontRange" type="range" min="18" max="42" value="29" /></div>
+      <div class="hint">←/→ slides · Space scroll · P pause · H notes · ? shortcuts</div>
+    </div>
+    <div class="progress"><i id="progressBar"></i></div>
+  </div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="helpModal"><div class="modal-card"><div class="row" style="justify-content:space-between"><h3>Presenter shortcuts</h3><button id="closeHelp">Close</button></div><div class="shortcut-grid">
+  <div class="shortcut"><span>Next slide</span><span class="key">→</span></div><div class="shortcut"><span>Previous slide</span><span class="key">←</span></div>
+  <div class="shortcut"><span>Auto-scroll</span><span class="key">Space</span></div><div class="shortcut"><span>Pause recording</span><span class="key">P</span></div>
+  <div class="shortcut"><span>Hide notes</span><span class="key">H</span></div><div class="shortcut"><span>Notes faster/slower</span><span class="key">↑ / ↓</span></div>
+  <div class="shortcut"><span>Open shortcuts</span><span class="key">?</span></div><div class="shortcut"><span>Scroll notes</span><span class="key">Wheel</span></div>
+</div></div></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const E={
+ pdfInput:$('pdfInput'),slideFrame:$('slideFrame'),emptySlide:$('emptySlide'),slideNumber:$('slideNumber'),totalSlides:$('totalSlides'),slidePill:$('slidePill'),slideMini:$('slideMini'),
+ notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),notesMode:$('notesMode'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),nextCue:$('nextCue'),
+ wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),targetMin:$('targetMin'),countdownSelect:$('countdownSelect'),fitPace:$('fitPace'),timingStatus:$('timingStatus'),modePill:$('modePill'),
+ enableMedia:$('enableMedia'),cameraSelect:$('cameraSelect'),micSelect:$('micSelect'),audioLevel:$('audioLevel'),micHealth:$('micHealth'),mediaStatus:$('mediaStatus'),cameraPreview:$('cameraPreview'),cameraBubble:$('cameraBubble'),camPosition:$('camPosition'),camSize:$('camSize'),shapeBtn:$('shapeBtn'),cameraToggle:$('cameraToggle'),
+ openOutput:$('openOutput'),recordingName:$('recordingName'),recordBtn:$('recordBtn'),pauseBtn:$('pauseBtn'),stopBtn:$('stopBtn'),downloadBox:$('downloadBox'),downloadLink:$('downloadLink'),
+ recDot:$('recDot'),recText:$('recText'),timer:$('timer'),remaining:$('remaining'),progressBar:$('progressBar'),countdown:$('countdown'),
+ prevBtn:$('prevBtn'),nextBtn:$('nextBtn'),scrollToggle:$('scrollToggle'),teleToggle:$('teleToggle'),speedRange:$('speedRange'),speedLabel:$('speedLabel'),fontRange:$('fontRange'),stage:$('stage'),
+ helpBtn:$('helpBtn'),helpModal:$('helpModal'),closeHelp:$('closeHelp'),toast:$('toast')
+};
+let pdfUrl=null,currentSlide=1,notesRaw='',notesBySlide=new Map(),continuousNotes='';
+let mediaStream=null,outputWindow=null,recorder=null,chunks=[],displayStream=null;
+let recordStartedAt=0,pausedAt=0,totalPausedMs=0,timerInterval=null;
+let audioCtx=null,analyser=null,meterRAF=null,clipHold=0;
+let autoScrolling=false,lastScrollTs=0,scrollRAF=null;
+let cameraHidden=false,cameraCircle=false;
+
+function setStatus(el,text,cls=''){el.className='status '+cls;el.innerHTML=text}
+function toast(msg){E.toast.textContent=msg;E.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>E.toast.classList.remove('show'),1800)}
+function fmt(sec){sec=Math.max(0,Math.round(sec));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
+function countWords(s){return (s.trim().match(/\b[\w’'-]+\b/g)||[]).length}
+
+function parseNotes(raw){
+ notesBySlide=new Map();continuousNotes=raw.trim();
+ const lines=raw.replace(/\r/g,'').split('\n');let currentKey=0,bucket=[];
+ const flush=()=>{const t=bucket.join('\n').trim();if(t)notesBySlide.set(currentKey,(notesBySlide.get(currentKey)||'')+(notesBySlide.has(currentKey)?'\n':'')+t);bucket=[]};
+ for(const line of lines){const m=line.match(/^\s{0,3}#{1,6}\s*Slide\s+(\d+)\b.*$/i);if(m){flush();currentKey=parseInt(m[1],10)}else bucket.push(line)}flush();
+ if(![...notesBySlide.keys()].some(k=>k>0)&&raw.trim())notesBySlide.set(0,raw.trim());
+ updateStats();
+}
+function noteForSlide(n){return notesBySlide.get(n)||notesBySlide.get(0)||'No notes for this slide.'}
+function nextNote(n){for(let i=n+1;i<n+12;i++){if(notesBySlide.get(i))return notesBySlide.get(i).split(/\n+/)[0].slice(0,110)}return '—'}
+function updateNotes(reset=true){
+ const continuous=E.notesMode.value==='continuous';E.notesText.textContent=continuous?(continuousNotes||'No notes loaded.'):noteForSlide(currentSlide);
+ E.nextCue.textContent='Next cue: '+(continuous?'continuous script':nextNote(currentSlide));if(reset)E.notesViewport.scrollTop=0;
+ E.modePill.textContent=continuous?'CONTINUOUS':'SLIDE SYNC';
+}
+function updateStats(){
+ const words=countWords(notesRaw);const wpm=parseInt(E.speedRange.value,10)||130;const mins=words/wpm;const target=Math.max(1,parseFloat(E.targetMin.value)||5);const fit=Math.round(words/target);
+ E.wordCount.textContent=words;E.estTime.textContent=fmt(mins*60);E.paceFit.textContent=words?fit:'—';E.remaining.textContent=`Target ${fmt(target*60)}`;
+ const cls=fit>180?'warn':fit<90&&words?'warn':'good';setStatus(E.timingStatus,words?`At ${wpm} WPM, your script is about <b>${fmt(mins*60)}</b>. Target pace for ${target} min: <b>${fit} WPM</b>.`:'Add notes to calculate pacing.',words?cls:'');
+}
+
+function slideSrc(n){return pdfUrl?`${pdfUrl}#page=${n}&zoom=page-width&toolbar=0&navpanes=0&scrollbar=0`:''}
+function updateSlide(){
+ const total=parseInt(E.totalSlides.value||'0',10);if(total)currentSlide=Math.min(currentSlide,total);currentSlide=Math.max(1,currentSlide);E.slideNumber.value=currentSlide;
+ E.slidePill.textContent=`Slide ${currentSlide}${total?` / ${total}`:''}`;E.slideMini.textContent=total?`${currentSlide}/${total}`:currentSlide;
+ if(pdfUrl){E.slideFrame.src=slideSrc(currentSlide);E.emptySlide.style.display='none'}updateNotes(E.notesMode.value==='slide');syncOutput();
+ if(total)E.progressBar.style.width=`${Math.min(100,currentSlide/total*100)}%`;
+}
+function nextSlide(){const total=parseInt(E.totalSlides.value||'0',10);if(!total||currentSlide<total){currentSlide++;updateSlide()}}
+function prevSlide(){if(currentSlide>1){currentSlide--;updateSlide()}}
+
+E.pdfInput.addEventListener('change',()=>{const f=E.pdfInput.files?.[0];if(!f)return;if(pdfUrl)URL.revokeObjectURL(pdfUrl);pdfUrl=URL.createObjectURL(f);currentSlide=1;updateSlide();setStatus($('pdfStatus'),`Loaded <b>${f.name}</b>.`,'good')});
+E.slideNumber.addEventListener('change',()=>{currentSlide=parseInt(E.slideNumber.value||'1',10);updateSlide()});E.totalSlides.addEventListener('change',updateSlide);
+E.prevBtn.addEventListener('click',prevSlide);E.nextBtn.addEventListener('click',nextSlide);E.stage.addEventListener('click',e=>{if(e.target.closest('.teleprompter')||e.target.closest('.camera-bubble')||e.target.closest('.countdown'))return;nextSlide()});
+E.notesInput.addEventListener('change',async()=>{const f=E.notesInput.files?.[0];if(!f)return;notesRaw=await f.text();E.notesPaste.value=notesRaw;parseNotes(notesRaw);updateNotes();setStatus($('notesStatus'),`Loaded notes from <b>${f.name}</b>.`,'good')});
+E.applyNotes.addEventListener('click',()=>{notesRaw=E.notesPaste.value;parseNotes(notesRaw);updateNotes();const count=[...notesBySlide.keys()].filter(k=>k>0).length;setStatus($('notesStatus'),count?`Mapped notes to <b>${count}</b> slide sections.`:'Using one continuous notes section.','good')});
+E.notesMode.addEventListener('change',()=>{updateNotes(true);toast(E.notesMode.value==='slide'?'Slide-sync teleprompter':'Continuous teleprompter')});
+E.targetMin.addEventListener('input',updateStats);E.speedRange.addEventListener('input',()=>{E.speedLabel.textContent=E.speedRange.value+' WPM';updateStats()});
+E.fitPace.addEventListener('click',()=>{const words=countWords(notesRaw),target=Math.max(1,parseFloat(E.targetMin.value)||5);if(!words)return toast('Add speaker notes first');const fit=Math.max(70,Math.min(220,Math.round(words/target)));E.speedRange.value=fit;E.speedLabel.textContent=fit+' WPM';updateStats();toast(`Teleprompter set to ${fit} WPM`)});
+E.fontRange.addEventListener('input',()=>E.notesText.style.fontSize=E.fontRange.value+'px');E.teleToggle.addEventListener('click',()=>{E.teleprompter.classList.toggle('hidden');E.teleToggle.textContent=E.teleprompter.classList.contains('hidden')?'Show notes':'Hide notes'});
+
+function toggleScroll(){autoScrolling=!autoScrolling;E.scrollToggle.textContent=autoScrolling?'⏸ Pause scroll':'▶ Auto-scroll';if(autoScrolling){lastScrollTs=performance.now();scrollRAF=requestAnimationFrame(scrollStep)}else if(scrollRAF)cancelAnimationFrame(scrollRAF)}
+function scrollStep(ts){if(!autoScrolling)return;const dt=(ts-lastScrollTs)/1000;lastScrollTs=ts;const wpm=parseInt(E.speedRange.value,10),pxPerSec=(wpm/60)*17;E.notesViewport.scrollTop+=pxPerSec*dt;if(E.notesViewport.scrollTop+E.notesViewport.clientHeight>=E.notesViewport.scrollHeight-2){autoScrolling=false;E.scrollToggle.textContent='▶ Auto-scroll';return}scrollRAF=requestAnimationFrame(scrollStep)}E.scrollToggle.addEventListener('click',toggleScroll);
+
+async function enumerateDevices(){const d=await navigator.mediaDevices.enumerateDevices(),cams=d.filter(x=>x.kind==='videoinput'),mics=d.filter(x=>x.kind==='audioinput');E.cameraSelect.innerHTML=cams.map((x,i)=>`<option value="${x.deviceId}">${x.label||`Camera ${i+1}`}</option>`).join('');E.micSelect.innerHTML=mics.map((x,i)=>`<option value="${x.deviceId}">${x.label||`Microphone ${i+1}`}</option>`).join('')}
+async function startMedia(){try{mediaStream?.getTracks().forEach(t=>t.stop());const v=E.cameraSelect.value,a=E.micSelect.value;mediaStream=await navigator.mediaDevices.getUserMedia({video:v&&!v.startsWith('Default')?{deviceId:{exact:v},width:{ideal:1280},height:{ideal:720}}:{width:{ideal:1280},height:{ideal:720}},audio:a&&!a.startsWith('Default')?{deviceId:{exact:a},echoCancellation:true,noiseSuppression:true,autoGainControl:true}:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});E.cameraPreview.srcObject=mediaStream;await enumerateDevices();if(v&&[...E.cameraSelect.options].some(o=>o.value===v))E.cameraSelect.value=v;if(a&&[...E.micSelect.options].some(o=>o.value===a))E.micSelect.value=a;setStatus(E.mediaStatus,'Camera and microphone are ready.','good');E.recordBtn.disabled=false;setupAudioMeter();syncOutput()}catch(err){setStatus(E.mediaStatus,`Could not access camera/mic: ${err.message}`,'warn')}}
+E.enableMedia.addEventListener('click',startMedia);E.cameraSelect.addEventListener('change',startMedia);E.micSelect.addEventListener('change',startMedia);
+function setupAudioMeter(){if(audioCtx)audioCtx.close();if(meterRAF)cancelAnimationFrame(meterRAF);audioCtx=new(window.AudioContext||window.webkitAudioContext)();const src=audioCtx.createMediaStreamSource(mediaStream);analyser=audioCtx.createAnalyser();analyser.fftSize=512;src.connect(analyser);const data=new Uint8Array(analyser.fftSize);const tick=()=>{analyser.getByteTimeDomainData(data);let sum=0,peak=0;for(const v of data){const n=Math.abs((v-128)/128);sum+=n*n;peak=Math.max(peak,n)}const rms=Math.sqrt(sum/data.length);const pct=Math.min(100,rms*380);E.audioLevel.style.width=pct+'%';if(peak>.92){clipHold=30;E.micHealth.textContent='Clipping';E.micHealth.style.color='var(--danger)'}else if(clipHold>0){clipHold--}else if(rms<.025){E.micHealth.textContent='Too quiet';E.micHealth.style.color='var(--warn)'}else if(rms<.22){E.micHealth.textContent='Good';E.micHealth.style.color='var(--good)'}else{E.micHealth.textContent='Loud';E.micHealth.style.color='var(--warn)'}meterRAF=requestAnimationFrame(tick)};tick()}
+
+function cameraStyle(){const pos=E.camPosition.value,size=E.camSize.value;const widths={sm:'12vw',md:'16vw',lg:'21vw'};const sides={br:'right:2.2vw;bottom:2.2vh;',bl:'left:2.2vw;bottom:2.2vh;',tr:'right:2.2vw;top:2.2vh;',tl:'left:2.2vw;top:2.2vh;'};return `${sides[pos]}width:${widths[size]};${cameraCircle?'aspect-ratio:1;border-radius:50%;':'aspect-ratio:16/10;border-radius:16px;'}${cameraHidden?'display:none;':''}`}
+function applyCameraLocal(){const pos=E.camPosition.value,size=E.camSize.value;E.cameraBubble.style.cssText='';E.cameraBubble.classList.toggle('circle',cameraCircle);E.cameraBubble.style.width={sm:'140px',md:'180px',lg:'235px'}[size];E.cameraBubble.style.right=E.cameraBubble.style.left=E.cameraBubble.style.top=E.cameraBubble.style.bottom='auto';if(pos.includes('r'))E.cameraBubble.style.right='20px';else E.cameraBubble.style.left='20px';if(pos.includes('b'))E.cameraBubble.style.bottom='20px';else E.cameraBubble.style.top='20px';E.cameraBubble.style.display=cameraHidden?'none':'block';syncOutput()}
+E.camPosition.addEventListener('change',applyCameraLocal);E.camSize.addEventListener('change',applyCameraLocal);E.shapeBtn.addEventListener('click',()=>{cameraCircle=!cameraCircle;E.shapeBtn.textContent=cameraCircle?'Circle camera':'Rounded camera';applyCameraLocal()});E.cameraToggle.addEventListener('click',()=>{cameraHidden=!cameraHidden;E.cameraToggle.textContent=cameraHidden?'Show camera':'Hide camera';applyCameraLocal()});
+
+function outputHtml(){return `<!doctype html><html><head><meta charset="utf-8"><title>Presenter Output</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}*{box-sizing:border-box}#root{position:relative;width:100vw;height:100vh;background:#000}iframe{width:100%;height:100%;border:0;background:#fff}#cam{position:absolute;object-fit:cover;border:2px solid rgba(255,255,255,.9);box-shadow:0 10px 36px rgba(0,0,0,.45);transform:scaleX(-1);background:#111}</style></head><body><div id="root"><iframe id="outSlide"></iframe><video id="cam" autoplay muted playsinline></video></div></body></html>`}
+function openOutputWindow(){outputWindow=window.open('','PresenterOutput','popup=yes,width=1280,height=720');if(!outputWindow){alert('Popup blocked. Allow popups for this page, then try again.');return}outputWindow.document.open();outputWindow.document.write(outputHtml());outputWindow.document.close();setTimeout(syncOutput,160)}E.openOutput.addEventListener('click',openOutputWindow);
+function syncOutput(){if(!outputWindow||outputWindow.closed)return;try{const s=outputWindow.document.getElementById('outSlide'),c=outputWindow.document.getElementById('cam');if(s&&pdfUrl)s.src=slideSrc(currentSlide);if(c&&mediaStream){c.srcObject=mediaStream;c.setAttribute('style',cameraStyle())}}catch(e){console.warn(e)}}
+
+function pickMime(){const opts=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];return opts.find(t=>MediaRecorder.isTypeSupported(t))||''}
+async function runCountdown(){let n=parseInt(E.countdownSelect.value,10)||0;if(!n)return;E.countdown.classList.add('show');while(n>0){E.countdown.textContent=n;await new Promise(r=>setTimeout(r,1000));n--}E.countdown.textContent='GO';await new Promise(r=>setTimeout(r,450));E.countdown.classList.remove('show')}
+async function startRecording(){if(!mediaStream)return alert('Enable camera and microphone first.');if(!outputWindow||outputWindow.closed)openOutputWindow();await runCountdown();try{displayStream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:{ideal:30,max:30}},audio:false});const mic=mediaStream.getAudioTracks()[0];const combined=new MediaStream([...displayStream.getVideoTracks(),...(mic?[mic]:[])]);chunks=[];const mime=pickMime();recorder=new MediaRecorder(combined,mime?{mimeType:mime,videoBitsPerSecond:6000000}:{videoBitsPerSecond:6000000});recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob);E.downloadLink.href=url;const clean=(E.recordingName.value||'presentation-recording').trim().replace(/[^a-z0-9_-]+/gi,'-');E.downloadLink.download=clean+'.webm';E.downloadBox.style.display='block';displayStream?.getTracks().forEach(t=>t.stop())};displayStream.getVideoTracks()[0].addEventListener('ended',()=>{if(recorder?.state!=='inactive')stopRecording()});recorder.start(1000);recordStartedAt=Date.now();totalPausedMs=0;pausedAt=0;E.timer.textContent='00:00';timerInterval=setInterval(updateTimer,200);E.recordBtn.disabled=true;E.pauseBtn.disabled=false;E.stopBtn.disabled=false;E.recDot.className='dot live';E.recText.textContent='Recording';E.downloadBox.style.display='none';if(!autoScrolling)toggleScroll();toast('Recording started')}catch(err){if(err.name!=='NotAllowedError')alert('Recording could not start: '+err.message)}}
+function elapsedMs(){const now=recorder?.state==='paused'?pausedAt:Date.now();return Math.max(0,now-recordStartedAt-totalPausedMs)}
+function updateTimer(){const s=Math.floor(elapsedMs()/1000);E.timer.textContent=fmt(s);const target=Math.max(1,parseFloat(E.targetMin.value)||5)*60;E.remaining.textContent=s<=target?`${fmt(target-s)} remaining`:`+${fmt(s-target)} over`;E.progressBar.style.width=`${Math.min(100,s/target*100)}%`;if(s>target)E.remaining.style.color='var(--danger)';else if(target-s<30)E.remaining.style.color='var(--warn)';else E.remaining.style.color='var(--muted)'}
+function togglePause(){if(!recorder)return;if(recorder.state==='recording'){recorder.pause();pausedAt=Date.now();E.pauseBtn.textContent='Resume';E.recDot.className='dot paused';E.recText.textContent='Paused';if(autoScrolling)toggleScroll()}else if(recorder.state==='paused'){totalPausedMs+=Date.now()-pausedAt;pausedAt=0;recorder.resume();E.pauseBtn.textContent='Pause';E.recDot.className='dot live';E.recText.textContent='Recording';if(!autoScrolling)toggleScroll()}}
+function stopRecording(){if(recorder&&recorder.state!=='inactive')recorder.stop();clearInterval(timerInterval);E.recordBtn.disabled=false;E.pauseBtn.disabled=true;E.pauseBtn.textContent='Pause';E.stopBtn.disabled=true;E.recDot.className='dot';E.recText.textContent='Recording saved';if(autoScrolling)toggleScroll();toast('Recording saved')}
+E.recordBtn.addEventListener('click',startRecording);E.pauseBtn.addEventListener('click',togglePause);E.stopBtn.addEventListener('click',stopRecording);
+
+E.helpBtn.addEventListener('click',()=>E.helpModal.classList.add('show'));E.closeHelp.addEventListener('click',()=>E.helpModal.classList.remove('show'));E.helpModal.addEventListener('click',e=>{if(e.target===E.helpModal)E.helpModal.classList.remove('show')});
+document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;if(e.key==='ArrowRight'){e.preventDefault();nextSlide()}else if(e.key==='ArrowLeft'){e.preventDefault();prevSlide()}else if(e.code==='Space'){e.preventDefault();toggleScroll()}else if(e.key.toLowerCase()==='p'){e.preventDefault();togglePause()}else if(e.key.toLowerCase()==='h'){e.preventDefault();E.teleToggle.click()}else if(e.key==='ArrowUp'){e.preventDefault();E.speedRange.value=Math.min(220,+E.speedRange.value+5);E.speedRange.dispatchEvent(new Event('input'))}else if(e.key==='ArrowDown'){e.preventDefault();E.speedRange.value=Math.max(70,+E.speedRange.value-5);E.speedRange.dispatchEvent(new Event('input'))}else if(e.key==='?'){E.helpModal.classList.add('show')}});
+
+updateSlide();updateStats();applyCameraLocal();
+})();
+</script>
+</body>
+</html>
