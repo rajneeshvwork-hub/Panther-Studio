@@ -4,7 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="theme-color" content="#0b0f17" />
-<title>Wakanda Studio V3</title>
+<title>Wakanda Studio V4 — Presentation Performance Studio</title>
+<script src="./config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{
   --bg-0:#07090f;
@@ -254,13 +256,44 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 .privacy-chip{display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:rgba(121,226,175,.07);border:1px solid rgba(121,226,175,.16);font-size:10px;color:#cff9e3;font-weight:700;white-space:nowrap}
 .privacy-chip i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(121,226,175,.09)}
 @media(max-width:1060px){.thumb-dock{display:none}}
+
+/* V4 workflow + performance layer */
+.workflow-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 12px;padding:5px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.12);position:sticky;top:-18px;z-index:20;backdrop-filter:blur(18px)}
+.flow-btn{padding:8px 3px;border-radius:11px;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;box-shadow:none;color:var(--muted)}
+.flow-btn span{width:19px;height:19px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.055);font-size:9px}
+.flow-btn.active{color:#f3f7ff;background:rgba(124,192,255,.1);border-color:rgba(124,192,255,.25)}
+.flow-btn.active span{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#071019}
+.workflow-panel{display:none}.workflow-always{display:block}
+aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="prepare"] .workflow-panel[data-flow~="prepare"],aside[data-flow="rehearse"] .workflow-panel[data-flow~="rehearse"],aside[data-flow="present"] .workflow-panel[data-flow~="present"],aside[data-flow="review"] .workflow-panel[data-flow~="review"]{display:block}
+.recovery-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;margin:8px 0;border-radius:15px;background:rgba(121,226,175,.06);border:1px solid rgba(121,226,175,.18)}.recovery-card[hidden]{display:none}.recovery-card.warn{background:rgba(255,201,111,.06);border-color:rgba(255,201,111,.2)}.recovery-card b{display:block;font-size:10px}.recovery-card span{display:block;font-size:9px;color:var(--muted);margin-top:2px}.recovery-card button{padding:7px 9px;font-size:9px}
+.source-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.source-card{text-align:left;padding:13px;min-height:68px}.source-card b{display:block;font-size:12px;margin-bottom:4px}.source-card span{font-size:9px;color:var(--muted);line-height:1.3}.source-card.primary-source{border-color:rgba(124,192,255,.32);background:linear-gradient(145deg,rgba(124,192,255,.11),rgba(141,136,255,.05))}
+.duration-presets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.duration-presets button{padding:8px 3px;font-size:10px}.duration-presets button.active{background:linear-gradient(135deg,rgba(124,192,255,.22),rgba(141,136,255,.18));border-color:rgba(124,192,255,.45)}
+.pace-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}.pace-hero>div{padding:11px 7px;border-radius:15px;background:rgba(0,0,0,.15);border:1px solid var(--line);text-align:center}.pace-hero span{display:block;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}.pace-hero b{display:block;font-size:16px;margin-top:3px}.pace-list{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow:auto}.pace-row{display:grid;grid-template-columns:44px 1fr 56px 56px;align-items:center;gap:6px;padding:8px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:10px}.pace-row .bar{height:4px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}.pace-row .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:999px}.pace-row.warn{border-color:rgba(255,201,111,.25)}
+.preflight{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px}.preflight-item{padding:9px;border-radius:13px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:10px;color:var(--muted)}.preflight-item b{display:block;color:#e7eef9;font-size:10px;margin-bottom:2px}.preflight-item.ok{border-color:rgba(121,226,175,.2)}.preflight-item.warn{border-color:rgba(255,201,111,.25)}
+.take-list{display:flex;flex-direction:column;gap:7px;margin-top:9px}.take-item{padding:10px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.take-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.take-item b{font-size:11px}.take-item span{font-size:9px;color:var(--muted)}.take-actions{display:flex;gap:5px;margin-top:7px}.take-actions button{padding:6px 8px;font-size:9px}
+.pace-live{font-size:10px;font-weight:700;padding:6px 9px;border-radius:999px;background:rgba(121,226,175,.07);border:1px solid rgba(121,226,175,.14);color:#d3f8e7}.pace-live.behind{color:#ffe0a9;border-color:rgba(255,201,111,.22);background:rgba(255,201,111,.06)}.pace-live.ahead{color:#d3e9ff;border-color:rgba(124,192,255,.2);background:rgba(124,192,255,.06)}
+.pptx-stage{position:absolute;inset:0;display:none;background:#000;overflow:hidden;z-index:0;pointer-events:none}.pptx-stage.active{display:block}.pptx-stage>*{max-width:100%;max-height:100%}
+.teleprompter{--prompter-alpha:.86;background:linear-gradient(180deg,rgba(5,9,16,.08),rgba(5,9,16,var(--prompter-alpha)))}
+.guidance-line{opacity:.48;transition:opacity .18s ease,transform .18s ease;margin:.15em 0}.guidance-line.active{opacity:1;transform:scale(1.012)}.guidance-special{display:inline-flex;margin:8px auto;padding:6px 10px;border-radius:999px;font-size:.56em;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(124,192,255,.12);border:1px solid rgba(124,192,255,.22);color:#d8ebff}.guidance-special.reminder{background:rgba(255,201,111,.1);border-color:rgba(255,201,111,.2);color:#ffe2ad}.guidance-special.pause{background:rgba(141,136,255,.1);border-color:rgba(141,136,255,.2);color:#ddd8ff}
+.app.performance{grid-template-columns:0 minmax(0,1fr)}.app.performance aside{transform:translateX(-110%);opacity:0;pointer-events:none}.app.performance .thumb-dock{display:none}.app.performance .topbar{height:54px}.app.performance .window-bar{opacity:.5}.app.performance .hint{display:none}.app.performance .bottom{padding-top:8px}.perf-action{display:none}.app.performance .perf-action{display:inline-flex}.app.performance .control-group{display:none}
+.review-meta{grid-template-columns:repeat(5,1fr)}
+.google-note{padding:9px 10px;border-radius:12px;background:rgba(124,192,255,.06);border:1px solid rgba(124,192,255,.12);font-size:10px;color:#cbdaf0;margin-top:8px}
+@media(max-width:600px){.workflow-nav{grid-template-columns:repeat(5,1fr)}.flow-btn{font-size:0}.flow-btn span{font-size:9px}.review-meta{grid-template-columns:1fr 1fr}.source-grid{grid-template-columns:1fr}.duration-presets{grid-template-columns:repeat(3,1fr)}}
+
 #recordCanvas{display:none}
-@media (max-width:1060px){
+@media (max-width:1180px){
+  .app{grid-template-columns:330px minmax(0,1fr)}
+  .camera-bubble{width:150px}
+  .hint{display:none}
+}
+.mobile-warning{display:none;position:fixed;inset:0;z-index:150;background:rgba(5,8,14,.92);backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:22px}
+.mobile-warning.dismissed{display:none!important}.mobile-warning-card{width:min(440px,94vw);padding:24px;border-radius:26px;background:linear-gradient(180deg,rgba(19,27,43,.96),rgba(11,16,27,.96));border:1px solid var(--line-strong);box-shadow:var(--shadow);text-align:center}.mobile-warning-card .logo{margin:0 auto 14px}.mobile-warning-card h2{margin:0 0 8px;font-size:22px}.mobile-warning-card p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.6}
+@media (max-width:820px){
+  .mobile-warning{display:flex}
   .app{grid-template-columns:1fr}
   aside{display:none}
   .camera-bubble{width:136px}
-  .notes-text{font-size:24px}
-  .hint{display:none}
+  .notes-text{font-size:22px}
 }
 @media (max-width:720px){
   .shell{padding:8px}.app{border-radius:22px}
@@ -271,22 +304,38 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 </style>
 </head>
 <body>
+<div class="mobile-warning" id="mobileWarning">
+  <div class="mobile-warning-card">
+    <div class="logo">W</div>
+    <h2>Wakanda Studio works best on desktop</h2>
+    <p>Presenting, camera controls, slide navigation, and private guidance need a wider workspace. Open Wakanda Studio on a laptop or desktop for the intended experience.</p>
+    <button id="mobileDismiss">Continue anyway</button>
+  </div>
+</div>
 <div class="shell">
   <div class="app" id="app">
-    <aside>
+    <aside id="sidebar" data-flow="import">
       <div class="brand-row">
         <div class="brand">
           <div class="logo">W</div>
           <div>
-            <div class="row" style="gap:6px"><h1>Wakanda Studio</h1><span class="badge">V3</span></div>
-            <div class="small">Private teleprompter · internal clean recording</div>
+            <div class="row" style="gap:6px"><h1>Wakanda Studio</h1><span class="badge">V4</span></div>
+            <div class="small">Prepare · rehearse · present · improve</div>
           </div>
         </div>
         <div class="traffic" aria-hidden="true"><i class="red"></i><i class="yellow"></i><i class="green"></i></div>
       </div>
-      <div class="sub">Record a clean presentation video while reading private speaker notes. V3 adds drag-and-drop, slide thumbnails, per-slide note editing, and a microphone test workflow.</div>
+      <div class="sub">Import your deck, prepare private guidance, rehearse to time, present live or record, then improve the next take. Your audience never sees your notes.</div>
 
-      <div class="ready-card">
+      <div class="workflow-nav" id="workflowNav" aria-label="Workflow">
+        <button class="flow-btn active" data-flow="import"><span>1</span>Import</button>
+        <button class="flow-btn" data-flow="prepare"><span>2</span>Prepare</button>
+        <button class="flow-btn" data-flow="rehearse"><span>3</span>Rehearse</button>
+        <button class="flow-btn" data-flow="present"><span>4</span>Present</button>
+        <button class="flow-btn" data-flow="review"><span>5</span>Review</button>
+      </div>
+
+      <div class="ready-card workflow-always">
         <div class="ready-head"><b id="readyTitle">Setup 0/3</b><span id="readyText">Add your presentation first</span></div>
         <div class="check-grid">
           <div class="check" id="checkSlides"><i></i>Presentation</div>
@@ -296,13 +345,22 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
         </div>
       </div>
 
-      <div class="section">
-        <div class="section-title"><h2>1 · Presentation</h2><span class="pill" id="slideMini">—</span></div>
-        <label>Presentation</label>
-        <div class="drop-zone" id="presentationDrop" tabindex="0" role="button" aria-label="Upload or drop presentation">
-          <b>Drop PDF or slide images here</b><span>or click to browse · PDF / JPG / PNG</span>
-          <input id="presentationInput" type="file" accept="application/pdf,.pdf,image/png,image/jpeg,.png,.jpg,.jpeg" multiple />
+      <div class="recovery-card" id="sessionRecovery" hidden><div><b>Previous deck available</b><span>Restore the last presentation you were working on.</span></div><button id="restoreSessionBtn">Restore</button></div>
+      <div class="recovery-card warn" id="recordingRecovery" hidden><div><b>Protected recording found</b><span>Wakanda saved recording chunks before the previous session ended.</span></div><button id="recoverRecordingBtn">Recover</button></div>
+
+      <div class="section workflow-panel" data-flow="import">
+        <div class="section-title"><h2>Presentation source</h2><span class="pill" id="slideMini">—</span></div>
+        <div class="source-grid">
+          <button class="source-card primary-source" id="pptxSource"><b>PowerPoint</b><span>.pptx · browser rendered</span></button>
+          <button class="source-card" id="googleSource"><b>Google Slides</b><span>Link or Google account</span></button>
+          <button class="source-card" id="pdfSource"><b>PDF</b><span>Reliable universal import</span></button>
+          <button class="source-card" id="imageSource"><b>Images</b><span>JPG / PNG slides</span></button>
         </div>
+        <div class="drop-zone" id="presentationDrop" tabindex="0" role="button" aria-label="Upload or drop presentation">
+          <b>Drop your presentation here</b><span>PowerPoint / PDF / JPG / PNG</span>
+          <input id="presentationInput" type="file" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation,.pptx,application/pdf,.pdf,image/png,image/jpeg,.png,.jpg,.jpeg" multiple />
+        </div>
+        <button id="googleImportBtn" style="width:100%;margin-top:8px">Import from Google Slides</button>
         <div class="two">
           <div><label>Current slide</label><input id="slideNumber" type="number" min="1" value="1" /></div>
           <div><label>Total slides</label><input id="totalSlides" type="number" min="1" value="1" readonly /></div>
@@ -310,14 +368,14 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
         <div id="presentationStatus" class="status">No presentation loaded.</div>
       </div>
 
-      <div class="section">
-        <h2>2 · Speaker notes</h2>
-        <label>Speaker-note file</label>
+      <div class="section workflow-panel" data-flow="prepare">
+        <h2>Private guidance</h2>
+        <label>Guidance file</label>
         <div class="drop-zone" id="notesDrop" tabindex="0" role="button" aria-label="Upload or drop speaker notes">
-          <b>Drop Markdown or text notes here</b><span>or click to browse · .md / .txt</span>
+          <b>Drop private guidance here</b><span>or click to browse · .md / .txt</span>
           <input id="notesInput" type="file" accept="text/plain,text/markdown,.md,.txt" />
         </div>
-        <label>Or paste notes</label>
+        <label>Or paste script / cues</label>
         <textarea id="notesPaste" placeholder="## Slide 1 — Opening&#10;Your opening...&#10;&#10;## Slide 2 — Problem&#10;Your next section..."></textarea>
         <div class="two" style="margin-top:8px">
           <button id="applyNotes">Apply notes</button>
@@ -328,31 +386,39 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
           <div class="metric"><b id="estTime">00:00</b><span>Est. Time</span></div>
           <div class="metric"><b id="paceFit">—</b><span>Target WPM</span></div>
         </div>
-        <div id="notesStatus" class="status">Use headings like <b>## Slide 3</b> for slide-aware notes.</div>
+        <div id="notesStatus" class="status">Use <b>## Slide 3</b> headings. Optional cues: <b>[REMINDER]</b>, <b>[CUE]</b>, <b>[PAUSE]</b>, <b>[TRANSITION]</b>.</div>
         <div class="editor-card" id="slideNotesCard">
-          <div class="editor-head"><b>Current slide notes</b><span id="slideNotesLabel">Slide —</span></div>
-          <textarea id="slideNotesEditor" placeholder="Edit the notes for the current slide here..."></textarea>
-          <button id="saveSlideNotes" style="width:100%;margin-top:7px">Save current slide notes</button>
+          <div class="editor-head"><b>Current slide guidance</b><span id="slideNotesLabel">Slide —</span></div>
+          <textarea id="slideNotesEditor" placeholder="Write the script, cues or reminders for this slide..."></textarea>
+          <button id="saveSlideNotes" style="width:100%;margin-top:7px">Save current slide guidance</button>
         </div>
       </div>
 
-      <div class="section">
-        <h2>3 · Timing & teleprompter</h2>
+      <div class="section workflow-panel" data-flow="prepare">
+        <h2>Timing & teleprompter</h2>
+        <label>Target duration</label>
+        <div class="duration-presets" id="durationPresets">
+          <button data-min="5" class="active">5 min</button><button data-min="7">7 min</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button>
+        </div>
         <div class="two">
-          <div><label>Target minutes</label><input id="targetMin" type="number" min="0.5" max="60" step="0.5" value="5" /></div>
+          <div><label>Custom minutes</label><input id="targetMin" type="number" min="0.5" max="180" step="0.5" value="5" /></div>
           <div><label>Countdown</label><select id="countdownSelect"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="0">Off</option></select></div>
         </div>
         <div class="two">
           <div><label>Prompter position</label><select id="prompterPosition"><option value="top">Top · near camera</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option></select></div>
           <div><label>Focus line</label><select id="focusPosition"><option value="30">High</option><option value="43" selected>Center</option><option value="57">Low</option></select></div>
         </div>
+        <div class="two">
+          <div><label>Reading mode</label><select id="readingMode"><option value="manual">Manual</option><option value="auto" selected>Auto pace</option></select></div>
+          <div><label>Prompter opacity</label><input id="opacityRange" type="range" min="30" max="100" value="86" /></div>
+        </div>
         <button id="fitPace" style="width:100%;margin-top:10px">Fit pace to target</button>
         <div class="toggle-line"><span>Auto-advance when current slide notes finish</span><input id="autoAdvance" type="checkbox" /></div>
         <div id="timingStatus" class="status">Add notes to calculate pacing.</div>
       </div>
 
-      <div class="section">
-        <h2>4 · Camera & microphone</h2>
+      <div class="section workflow-panel" data-flow="prepare">
+        <h2>Camera & microphone</h2>
         <button id="enableMedia" class="primary" style="width:100%">Enable camera & mic</button>
         <label>Camera</label><select id="cameraSelect"><option value="">Default camera</option></select>
         <label>Microphone</label><select id="micSelect"><option value="">Default microphone</option></select>
@@ -367,13 +433,27 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
         <div id="mediaStatus" class="status">Permissions not requested yet.</div>
       </div>
 
-      <div class="section">
-        <h2>5 · Session</h2>
+      <div class="section workflow-panel" data-flow="rehearse">
+        <div class="section-title"><h2>Rehearsal plan</h2><span class="pill" id="paceVerdict">Add notes</span></div>
+        <div class="pace-hero"><div><span>Target</span><b id="paceTarget">05:00</b></div><div><span>Estimated</span><b id="paceEstimated">00:00</b></div><div><span>Difference</span><b id="paceDelta">—</b></div></div>
+        <div class="pace-list" id="paceList"><div class="status">Add slide-aware guidance to build a per-slide timing plan.</div></div>
+        <button id="rehearseStartBtn" class="good" style="width:100%;margin-top:10px">Start rehearsal</button>
+      </div>
+
+      <div class="section workflow-panel" data-flow="review">
+        <div class="section-title"><h2>Review & takes</h2><span class="pill" id="takeCount">0 takes</span></div>
+        <div class="take-list" id="takeList"><div class="status">Record a take and it will appear here for comparison.</div></div>
+      </div>
+
+      <div class="section workflow-panel" data-flow="present">
+        <h2>Performance session</h2>
         <div class="two">
           <div><label>Output quality</label><select id="quality"><option value="720">720p</option><option value="1080" selected>1080p</option></select></div>
           <div><label>Recording name</label><input id="recordingName" type="text" value="wakanda-studio-recording" /></div>
         </div>
-        <button id="cleanPreviewBtn" style="width:100%;margin-top:10px">Preview clean output</button>
+        <div class="preflight" id="preflight"></div>
+        <button id="cleanPreviewBtn" style="width:100%;margin-top:10px">Preview audience output</button>
+        <div class="two" style="margin-top:8px"><button id="audienceBtn">Open Audience View</button><button id="liveBtn" class="good">Present Live</button></div>
         <div class="two" style="margin-top:8px"><button id="practiceBtn" class="good">▶ Rehearse</button><button id="recordBtn" class="primary" disabled>● Record</button></div>
         <div class="two" style="margin-top:8px"><button id="pauseBtn" disabled>Pause</button><button id="stopBtn" class="danger" disabled>Stop & review</button></div>
         <div id="sessionStatus" class="status">The final video is composed internally. No screen-sharing window is required.</div>
@@ -391,7 +471,7 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
           <span class="privacy-chip"><i></i>Notes private</span>
         </div>
         <div class="top-right">
-          <span class="remaining" id="remaining">Target 05:00</span>
+          <span class="pace-live" id="paceLive">On pace</span><span class="remaining" id="remaining">Target 05:00</span>
           <span class="timer" id="timer">00:00</span>
           <button id="thumbToggle" class="ghost">Slides</button>
           <button id="focusBtn" class="ghost">Focus</button>
@@ -403,12 +483,12 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
         <div class="stage-window">
           <div class="window-bar"><span>Presenter Preview</span><span>Slides + camera are recorded · notes stay private</span></div>
           <div class="stage" id="stage" title="Click the slide area to advance">
-            <canvas id="slideCanvas" width="1280" height="720" aria-label="Presentation preview"></canvas>
-            <div class="empty-slide" id="emptySlide"><div><b>Drop in your presentation</b><br><br>PDF auto-detects slide count · JPG/PNG also supported.<br>Camera + slide are recorded internally. Notes remain private.</div></div>
+            <div id="pptxStage" class="pptx-stage" aria-label="PowerPoint preview"></div><canvas id="slideCanvas" width="1280" height="720" aria-label="Presentation preview"></canvas>
+            <div class="empty-slide" id="emptySlide"><div><b>Drop in your presentation</b><br><br>PowerPoint, Google Slides, PDF, JPG and PNG are supported.<br>Camera + slide are recorded internally. Notes remain private.</div></div>
             <div class="stage-badge" id="stageBadge">PRIVATE PRESENTER VIEW</div>
             <div class="camera-bubble" id="cameraBubble"><video id="cameraPreview" autoplay muted playsinline></video></div>
             <div class="teleprompter" id="teleprompter">
-              <div class="tele-head"><span>Presenter only · excluded from recording</span><span class="cue" id="nextCue">Next cue: —</span></div>
+              <div class="tele-head"><span>Private guidance · excluded from audience output</span><span class="cue" id="nextCue">Next cue: —</span></div>
               <div class="focus-band" id="focusBand"></div>
               <div class="notes-viewport" id="notesViewport"><div class="notes-text" id="notesText">Your speaker notes will appear here.</div></div>
             </div>
@@ -428,7 +508,7 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
           <button id="restartNotesBtn">↺ Notes</button>
           <button id="nextBtn">Next →</button>
           <button id="scrollToggle">▶ Auto-scroll</button>
-          <button id="teleToggle">Hide notes</button>
+          <button id="teleToggle">Hide notes</button><button id="performancePauseBtn" class="perf-action" disabled>Pause</button><button id="performanceStopBtn" class="perf-action danger" disabled>Stop</button>
           <div class="control-group"><label>Speed</label><input id="speedRange" type="range" min="70" max="220" value="130" /><span class="pill" id="speedLabel">130 WPM</span></div>
           <div class="control-group"><label>Text</label><input id="fontRange" type="range" min="18" max="44" value="29" /></div>
           <div class="hint">←/→ slides · Space scroll · R restart notes · P pause · F focus · H hide notes</div>
@@ -464,8 +544,19 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
       <div><b id="reviewDuration">00:00</b><span>Duration</span></div>
       <div><b id="reviewSlides">0</b><span>Slides reached</span></div>
       <div><b id="reviewWords">0</b><span>Script words</span></div>
+      <div><b id="reviewTarget">00:00</b><span>Target</span></div>
+      <div><b id="reviewDelta">—</b><span>Vs target</span></div>
     </div>
     <div class="row"><a id="downloadLink" class="grow" style="text-decoration:none"><button class="primary" style="width:100%">Download recording</button></a><button id="retakeBtn">Retake</button></div>
+  </div>
+</div>
+
+<div class="modal" id="googleModal">
+  <div class="modal-card" style="width:min(660px,96vw)">
+    <div class="row" style="justify-content:space-between"><div><h3>Import Google Slides</h3><div class="small">Paste a Slides link. Connect Google for private decks + speaker notes, or use the shared-link bridge for public decks.</div></div><button id="closeGoogle">Close</button></div>
+    <label>Google Slides link</label><input id="googleSlidesUrl" type="text" placeholder="https://docs.google.com/presentation/d/.../edit" />
+    <div class="two" style="margin-top:10px"><button id="googleConnectBtn" class="primary">Connect Google</button><button id="googlePublicBtn">Import shared link</button></div>
+    <div id="googleStatus" class="status">Google account import requires a Google OAuth Client ID in <code>config.js</code>. Shared-link import works when Wakanda Studio is run with its included server.</div>
   </div>
 </div>
 
@@ -489,29 +580,33 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 
 <script type="module">
 import * as pdfjsLib from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.7.284/build/pdf.min.mjs';
+import { PptxViewer, RECOMMENDED_ZIP_LIMITS } from 'https://cdn.jsdelivr.net/npm/@aiden0z/pptx-renderer@1.2.4/dist/aiden0z-pptx-renderer.browser.es.js';
+import JSZip from 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm';
+import html2canvas from 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm';
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@5.7.284/build/pdf.worker.min.mjs';
 
 const $ = id => document.getElementById(id);
 const E = {
-  app:$('app'),presentationDrop:$('presentationDrop'),presentationInput:$('presentationInput'),presentationStatus:$('presentationStatus'),slideNumber:$('slideNumber'),totalSlides:$('totalSlides'),slideMini:$('slideMini'),slidePill:$('slidePill'),slideCanvas:$('slideCanvas'),emptySlide:$('emptySlide'),slideProgress:$('slideProgress'),
+  app:$('app'),mobileWarning:$('mobileWarning'),mobileDismiss:$('mobileDismiss'),sidebar:$('sidebar'),workflowNav:$('workflowNav'),presentationDrop:$('presentationDrop'),presentationInput:$('presentationInput'),presentationStatus:$('presentationStatus'),slideNumber:$('slideNumber'),totalSlides:$('totalSlides'),slideMini:$('slideMini'),slidePill:$('slidePill'),slideCanvas:$('slideCanvas'),pptxStage:$('pptxStage'),emptySlide:$('emptySlide'),slideProgress:$('slideProgress'),pptxSource:$('pptxSource'),googleSource:$('googleSource'),pdfSource:$('pdfSource'),imageSource:$('imageSource'),googleImportBtn:$('googleImportBtn'),
   notesDrop:$('notesDrop'),notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),slideNotesCard:$('slideNotesCard'),slideNotesLabel:$('slideNotesLabel'),slideNotesEditor:$('slideNotesEditor'),saveSlideNotes:$('saveSlideNotes'),notesMode:$('notesMode'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),nextCue:$('nextCue'),wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),notesStatus:$('notesStatus'),
-  targetMin:$('targetMin'),countdownSelect:$('countdownSelect'),prompterPosition:$('prompterPosition'),focusPosition:$('focusPosition'),focusBand:$('focusBand'),fitPace:$('fitPace'),autoAdvance:$('autoAdvance'),timingStatus:$('timingStatus'),
+  targetMin:$('targetMin'),durationPresets:$('durationPresets'),countdownSelect:$('countdownSelect'),prompterPosition:$('prompterPosition'),focusPosition:$('focusPosition'),focusBand:$('focusBand'),fitPace:$('fitPace'),autoAdvance:$('autoAdvance'),timingStatus:$('timingStatus'),readingMode:$('readingMode'),opacityRange:$('opacityRange'),paceVerdict:$('paceVerdict'),paceTarget:$('paceTarget'),paceEstimated:$('paceEstimated'),paceDelta:$('paceDelta'),paceList:$('paceList'),rehearseStartBtn:$('rehearseStartBtn'),
   enableMedia:$('enableMedia'),audioTestBtn:$('audioTestBtn'),audioTestState:$('audioTestState'),audioTestPlayer:$('audioTestPlayer'),cameraSelect:$('cameraSelect'),micSelect:$('micSelect'),audioLevel:$('audioLevel'),micHealth:$('micHealth'),mediaStatus:$('mediaStatus'),cameraPreview:$('cameraPreview'),cameraBubble:$('cameraBubble'),camPosition:$('camPosition'),camSize:$('camSize'),shapeBtn:$('shapeBtn'),cameraToggle:$('cameraToggle'),
-  quality:$('quality'),recordingName:$('recordingName'),cleanPreviewBtn:$('cleanPreviewBtn'),practiceBtn:$('practiceBtn'),recordBtn:$('recordBtn'),pauseBtn:$('pauseBtn'),stopBtn:$('stopBtn'),sessionStatus:$('sessionStatus'),
-  recDot:$('recDot'),recText:$('recText'),modePill:$('modePill'),thumbToggle:$('thumbToggle'),thumbDock:$('thumbDock'),thumbTrack:$('thumbTrack'),thumbCount:$('thumbCount'),remaining:$('remaining'),timer:$('timer'),focusBtn:$('focusBtn'),helpBtn:$('helpBtn'),stage:$('stage'),stageBadge:$('stageBadge'),countdown:$('countdown'),
-  prevBtn:$('prevBtn'),nextBtn:$('nextBtn'),restartNotesBtn:$('restartNotesBtn'),scrollToggle:$('scrollToggle'),teleToggle:$('teleToggle'),speedRange:$('speedRange'),speedLabel:$('speedLabel'),fontRange:$('fontRange'),timeProgress:$('timeProgress'),
-  recordCanvas:$('recordCanvas'),previewModal:$('previewModal'),previewCanvas:$('previewCanvas'),closePreview:$('closePreview'),reviewModal:$('reviewModal'),reviewVideo:$('reviewVideo'),reviewDuration:$('reviewDuration'),reviewSlides:$('reviewSlides'),reviewWords:$('reviewWords'),downloadLink:$('downloadLink'),retakeBtn:$('retakeBtn'),closeReview:$('closeReview'),
-  helpModal:$('helpModal'),closeHelp:$('closeHelp'),toast:$('toast'),checkSlides:$('checkSlides'),checkNotes:$('checkNotes'),checkMedia:$('checkMedia'),checkReady:$('checkReady'),readyTitle:$('readyTitle'),readyText:$('readyText')
+  quality:$('quality'),recordingName:$('recordingName'),cleanPreviewBtn:$('cleanPreviewBtn'),audienceBtn:$('audienceBtn'),liveBtn:$('liveBtn'),preflight:$('preflight'),practiceBtn:$('practiceBtn'),recordBtn:$('recordBtn'),pauseBtn:$('pauseBtn'),stopBtn:$('stopBtn'),sessionStatus:$('sessionStatus'),takeCount:$('takeCount'),takeList:$('takeList'),
+  recDot:$('recDot'),recText:$('recText'),modePill:$('modePill'),thumbToggle:$('thumbToggle'),thumbDock:$('thumbDock'),thumbTrack:$('thumbTrack'),thumbCount:$('thumbCount'),paceLive:$('paceLive'),remaining:$('remaining'),timer:$('timer'),focusBtn:$('focusBtn'),helpBtn:$('helpBtn'),stage:$('stage'),stageBadge:$('stageBadge'),countdown:$('countdown'),
+  prevBtn:$('prevBtn'),nextBtn:$('nextBtn'),restartNotesBtn:$('restartNotesBtn'),scrollToggle:$('scrollToggle'),teleToggle:$('teleToggle'),performancePauseBtn:$('performancePauseBtn'),performanceStopBtn:$('performanceStopBtn'),speedRange:$('speedRange'),speedLabel:$('speedLabel'),fontRange:$('fontRange'),timeProgress:$('timeProgress'),
+  recordCanvas:$('recordCanvas'),previewModal:$('previewModal'),previewCanvas:$('previewCanvas'),closePreview:$('closePreview'),reviewModal:$('reviewModal'),reviewVideo:$('reviewVideo'),reviewDuration:$('reviewDuration'),reviewSlides:$('reviewSlides'),reviewWords:$('reviewWords'),reviewTarget:$('reviewTarget'),reviewDelta:$('reviewDelta'),downloadLink:$('downloadLink'),retakeBtn:$('retakeBtn'),closeReview:$('closeReview'),googleModal:$('googleModal'),googleSlidesUrl:$('googleSlidesUrl'),googleConnectBtn:$('googleConnectBtn'),googlePublicBtn:$('googlePublicBtn'),googleStatus:$('googleStatus'),closeGoogle:$('closeGoogle'),
+  helpModal:$('helpModal'),closeHelp:$('closeHelp'),toast:$('toast'),checkSlides:$('checkSlides'),checkNotes:$('checkNotes'),checkMedia:$('checkMedia'),checkReady:$('checkReady'),readyTitle:$('readyTitle'),readyText:$('readyText'),sessionRecovery:$('sessionRecovery'),restoreSessionBtn:$('restoreSessionBtn'),recordingRecovery:$('recordingRecovery'),recoverRecordingBtn:$('recoverRecordingBtn')
 };
 
-let pdfDoc=null,presentationType=null,imageSlides=[],currentSlide=1,totalSlides=0,renderToken=0,presentationLoadToken=0,thumbToken=0;
+let pdfDoc=null,pptxViewer=null,pptxBuffer=null,pptxThumbHandles=[],presentationType=null,imageSlides=[],currentSlide=1,totalSlides=0,renderToken=0,presentationLoadToken=0,thumbToken=0;
 let notesRaw='',notesBySlide=new Map(),continuousNotes='';
 let mediaStream=null,audioCtx=null,analyser=null,meterRAF=null,clipHold=0,mediaRequestToken=0,audioTestRecorder=null,audioTestChunks=[],audioTestUrl=null;
 let cameraHidden=false,cameraCircle=false;
 let autoScrolling=false,scrollRAF=null,lastScrollTs=0,autoAdvanceArmed=false,scrollWasRunningBeforePause=false;
 let sessionMode='idle',sessionStartedAt=0,pausedAt=0,totalPausedMs=0,lastSessionMs=0,timerInterval=null;
 let recorder=null,recordingStream=null,chunks=[],composeRAF=null,previewRAF=null,lastRecordingUrl=null,maxSlideReached=1;
-let focusMode=false;
+let focusMode=false,currentFlow='import',pausedFromMode='practice',audienceWin=null,audienceCanvas=null,takes=[],googleAccessToken=null,protectedSeq=0,chunkWritePromises=[];
+let plannedSlideSeconds=[];
 
 function setStatus(el,text,cls=''){el.className='status '+cls;el.innerHTML=text}
 function toast(msg){E.toast.textContent=msg;E.toast.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>E.toast.classList.remove('show'),1800)}
@@ -523,17 +618,211 @@ function closeModal(el){el.classList.remove('show')}
 function closeReviewModal(){E.reviewVideo.pause();closeModal(E.reviewModal)}
 function drawRoundedPath(ctx,x,y,w,h,r){const rr=Math.max(0,Math.min(r,Math.min(w,h)/2));ctx.beginPath();if(typeof ctx.roundRect==='function'){ctx.roundRect(x,y,w,h,rr);return}ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath()}
 
+function setFlow(flow,{force=false}={}){
+  if(!force && sessionMode!=='idle' && flow!=='present') return toast('Finish the current session first');
+  currentFlow=flow;
+  E.sidebar.dataset.flow=flow;
+  E.workflowNav.querySelectorAll('.flow-btn').forEach(b=>b.classList.toggle('active',b.dataset.flow===flow));
+  if(flow==='rehearse') renderPacePlan();
+  if(flow==='present') renderPreflight();
+  if(flow==='review') renderTakeList();
+  savePrefs();
+}
+
+let wakandaDbPromise=null;
+function openWakandaDb(){
+  if(!('indexedDB' in window))return Promise.resolve(null);
+  if(wakandaDbPromise)return wakandaDbPromise;
+  wakandaDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open('wakanda-studio-v4',1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('kv'))db.createObjectStore('kv',{keyPath:'key'});if(!db.objectStoreNames.contains('chunks'))db.createObjectStore('chunks',{keyPath:'seq'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}).catch(e=>{console.warn('IndexedDB unavailable',e);return null});
+  return wakandaDbPromise;
+}
+async function dbPut(store,value){const db=await openWakandaDb();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)}).catch(e=>console.warn('DB write failed',e))}
+async function dbGet(store,key){const db=await openWakandaDb();if(!db)return null;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)}).catch(()=>null)}
+async function dbGetAll(store){const db=await openWakandaDb();if(!db)return[];return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)}).catch(()=>[])}
+async function dbClear(store){const db=await openWakandaDb();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)}).catch(()=>{})}
+async function persistPresentation(files){try{await dbPut('kv',{key:'presentation',files:[...files],savedAt:Date.now()});E.sessionRecovery.hidden=false}catch{}}
+async function checkRecovery(){
+  const deck=await dbGet('kv','presentation');E.sessionRecovery.hidden=!deck?.files?.length;
+  const chunks=await dbGetAll('chunks');E.recordingRecovery.hidden=!chunks.length;
+}
+async function restoreLastPresentation(){const deck=await dbGet('kv','presentation');if(!deck?.files?.length)return toast('No previous deck found');await loadPresentation(deck.files,{persist:false});E.sessionRecovery.hidden=true;toast('Previous deck restored')}
+async function protectChunk(blob){if(!blob?.size)return;const seq=++protectedSeq;return dbPut('chunks',{seq,blob,savedAt:Date.now()})}
+async function recoverProtectedRecording(){
+  const rows=(await dbGetAll('chunks')).sort((a,b)=>a.seq-b.seq);if(!rows.length)return toast('No protected recording found');const type=rows.find(x=>x.blob?.type)?.blob?.type||'video/webm',blob=new Blob(rows.map(x=>x.blob),{type}),url=URL.createObjectURL(blob),filename=`wakanda-recovered-${Date.now()}.webm`;takes.unshift({url,duration:0,delta:0,deltaLabel:'Recovered',filename,best:!takes.length});E.reviewVideo.src=url;E.downloadLink.href=url;E.downloadLink.download=filename;E.reviewDuration.textContent='Recovered';E.reviewSlides.textContent='—';E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(targetSeconds());E.reviewDelta.textContent='Recovered';E.reviewModal.classList.add('show');renderTakeList();await dbClear('chunks');E.recordingRecovery.hidden=true;setFlow('review',{force:true})
+}
+function updateDurationPreset(){
+  const v=parseFloat(E.targetMin.value)||0;
+  E.durationPresets.querySelectorAll('button').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.min)===v));
+}
+function guidanceHtml(text=''){
+  const safeLine=line=>escapeHtml(line).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  return String(text||'').split(/\n/).map(raw=>{
+    const line=raw.trimEnd();
+    const m=line.match(/^\s*\[(REMINDER|CUE|PAUSE|TRANSITION|SLOW)\]\s*(.*)$/i);
+    if(m){
+      const type=m[1].toLowerCase(),label=m[1].toUpperCase(),rest=safeLine(m[2]||'');
+      const cls=type==='reminder'||type==='slow'?'reminder':type==='pause'?'pause':'';
+      return `<div class="guidance-line"><span class="guidance-special ${cls}">${label}${rest?' · '+rest:''}</span></div>`;
+    }
+    return `<div class="guidance-line">${line?safeLine(line):'&nbsp;'}</div>`;
+  }).join('');
+}
+function updateReadingFocus(){
+  const lines=[...E.notesText.querySelectorAll('.guidance-line')];
+  if(!lines.length)return;
+  const focusY=E.notesViewport.scrollTop+E.notesViewport.clientHeight*(parseFloat(E.focusPosition.value)||43)/100;
+  let best=null,bestDist=Infinity;
+  for(const line of lines){const center=line.offsetTop+line.offsetHeight/2,d=Math.abs(center-focusY);if(d<bestDist){bestDist=d;best=line}}
+  lines.forEach(l=>l.classList.toggle('active',l===best));
+}
+function targetSeconds(){return Math.max(.5,parseFloat(E.targetMin.value)||5)*60}
+function buildPlannedSlideSeconds(){
+  if(!totalSlides){plannedSlideSeconds=[];return plannedSlideSeconds}
+  const weights=[];
+  for(let i=1;i<=totalSlides;i++)weights.push(Math.max(1,countWords(noteForSlide(i)==='No notes for this slide.'?'':noteForSlide(i))));
+  const sum=weights.reduce((a,b)=>a+b,0)||totalSlides;
+  plannedSlideSeconds=weights.map(w=>targetSeconds()*w/sum);
+  return plannedSlideSeconds;
+}
+function renderPacePlan(){
+  const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,target=targetSeconds(),estimated=words?wpm?words/wpm*60:0:0;
+  E.paceTarget.textContent=fmt(target);E.paceEstimated.textContent=fmt(estimated);
+  const delta=estimated-target;
+  E.paceDelta.textContent=!words?'—':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`;
+  E.paceDelta.style.color=Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';
+  E.paceVerdict.textContent=!words?'Add guidance':Math.abs(delta)<=10?'On target':delta>0?'Over target':'Under target';
+  buildPlannedSlideSeconds();
+  E.paceList.innerHTML='';
+  if(!totalSlides||!words){E.paceList.innerHTML='<div class="status">Add slide-aware guidance to build a per-slide timing plan.</div>';return}
+  for(let i=1;i<=totalSlides;i++){
+    const sw=countWords(noteForSlide(i)==='No notes for this slide.'?'':noteForSlide(i));
+    const est=sw/wpm*60,plan=plannedSlideSeconds[i-1]||0,d=est-plan;
+    const row=document.createElement('div');row.className='pace-row'+(d>15?' warn':'');
+    row.innerHTML=`<b>S${i}</b><div><div class="bar"><i style="width:${Math.min(100,Math.max(5,plan/Math.max(...plannedSlideSeconds,1)*100))}%"></i></div><span>${sw} words</span></div><span>${fmt(plan)}</span><span style="color:${Math.abs(d)<=8?'var(--good)':d>0?'var(--warn)':'var(--accent)'}">${d>=0?'+':'−'}${fmt(Math.abs(d))}</span>`;
+    row.addEventListener('click',()=>{currentSlide=i;renderSlide();setFlow('prepare')});
+    E.paceList.appendChild(row);
+  }
+}
+function livePaceDeltaSeconds(){
+  if(!sessionStartedAt||!plannedSlideSeconds.length)return 0;
+  let expected=plannedSlideSeconds.slice(0,Math.max(0,currentSlide-1)).reduce((a,b)=>a+b,0);
+  const max=Math.max(1,E.notesViewport.scrollHeight-E.notesViewport.clientHeight),frac=clamp(E.notesViewport.scrollTop/max,0,1);
+  expected+=(plannedSlideSeconds[currentSlide-1]||0)*frac;
+  return sessionElapsedMs()/1000-expected;
+}
+function renderLivePace(){
+  if(sessionMode==='idle'||sessionMode==='countdown'||!plannedSlideSeconds.length){E.paceLive.textContent='On pace';E.paceLive.className='pace-live';return}
+  const d=livePaceDeltaSeconds();
+  if(Math.abs(d)<5){E.paceLive.textContent='On pace';E.paceLive.className='pace-live'}
+  else if(d>0){E.paceLive.textContent=`${Math.round(d)}s behind`;E.paceLive.className='pace-live behind'}
+  else{E.paceLive.textContent=`${Math.round(Math.abs(d))}s ahead`;E.paceLive.className='pace-live ahead'}
+}
+function renderPreflight(){
+  const target=targetSeconds(),words=countWords(notesRaw),estimated=words/(parseInt(E.speedRange.value)||130)*60;
+  const items=[
+    ['Presentation',totalSlides?`${totalSlides} slides loaded`:'Missing',!!totalSlides],
+    ['Private guidance',words?`${words} words`:'Missing',!!words],
+    ['Camera + mic',mediaStream?'Connected':'Not connected',!!mediaStream],
+    ['Audio',E.audioTestState.textContent==='Ready'?'Test played back':E.micHealth.textContent,E.micHealth.textContent==='Good'||E.audioTestState.textContent==='Ready'],
+    ['Timing',words?`${fmt(estimated)} vs ${fmt(target)}`:'Not calculated',words&&Math.abs(estimated-target)<=45],
+    ['Output',`${E.quality.value}p · private notes`,true]
+  ];
+  E.preflight.innerHTML=items.map(([a,b,ok])=>`<div class="preflight-item ${ok?'ok':'warn'}"><b>${escapeHtml(a)}</b>${escapeHtml(String(b))}</div>`).join('');
+}
+function enterPerformanceMode(){E.app.classList.add('performance')}
+function exitPerformanceMode(){E.app.classList.remove('performance')}
+function openAudienceView(){
+  if(!totalSlides)return toast('Import a presentation first');
+  if(audienceWin&&!audienceWin.closed){audienceWin.focus();composeAudience();return}
+  audienceWin=window.open('','wakanda-audience','popup,width=1280,height=720');
+  if(!audienceWin)return toast('Allow pop-ups to open Audience View');
+  audienceWin.document.write(`<!doctype html><html><head><title>Wakanda Audience View</title><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}canvas{width:100%;height:100%;object-fit:contain;background:#000}</style></head><body><canvas id="audienceCanvas" width="1920" height="1080"></canvas></body></html>`);
+  audienceWin.document.close();audienceCanvas=audienceWin.document.getElementById('audienceCanvas');composeAudience();
+}
+function composeAudience(){if(!audienceWin||audienceWin.closed||!audienceCanvas)return;composeOnce(audienceCanvas,false)}
+function renderTakeList(){
+  E.takeCount.textContent=`${takes.length} take${takes.length===1?'':'s'}`;
+  if(!takes.length){E.takeList.innerHTML='<div class="status">Record a take and it will appear here for comparison.</div>';return}
+  E.takeList.innerHTML='';takes.forEach((t,idx)=>{
+    const item=document.createElement('div');item.className='take-item';
+    item.innerHTML=`<div class="take-top"><b>Take ${takes.length-idx}${t.best?' ★':''}</b><span>${fmt(t.duration)} · ${t.deltaLabel}</span></div><div class="take-actions"><button data-a="play">Play</button><button data-a="download">Download</button><button data-a="best">${t.best?'Best':'Mark best'}</button><button data-a="delete">Delete</button></div>`;
+    item.querySelector('[data-a="play"]').onclick=()=>{E.reviewVideo.src=t.url;E.reviewModal.classList.add('show')};
+    item.querySelector('[data-a="download"]').onclick=()=>{const a=document.createElement('a');a.href=t.url;a.download=t.filename;a.click()};
+    item.querySelector('[data-a="best"]').onclick=()=>{takes.forEach(x=>x.best=false);t.best=true;renderTakeList()};
+    item.querySelector('[data-a="delete"]').onclick=()=>{URL.revokeObjectURL(t.url);takes=takes.filter(x=>x!==t);renderTakeList()};
+    E.takeList.appendChild(item);
+  })
+}
+function slideIdFromGoogleUrl(url=''){const m=String(url).match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/);return m?m[1]:null}
+async function extractGoogleSpeakerNotes(presentation){
+  const map=new Map();
+  (presentation.slides||[]).forEach((slide,idx)=>{
+    const notes=slide.slideProperties?.notesPage, id=notes?.notesProperties?.speakerNotesObjectId;
+    if(!id)return;const el=(notes.pageElements||[]).find(x=>x.objectId===id);const text=(el?.shape?.text?.textElements||[]).map(t=>t.textRun?.content||'').join('').trim();if(text)map.set(idx+1,text);
+  });return map;
+}
+function applyImportedNotes(map,label='Imported notes'){
+  if(!map||!map.size)return;
+  notesBySlide=new Map(map);serializeSlideNotes();continuousNotes=notesRaw;E.notesPaste.value=notesRaw;updateStats();updateNotes(true);syncSlideNotesEditor();setStatus(E.notesStatus,`${escapeHtml(label)} · ${map.size} slides with guidance.`,'good');
+}
+async function importGoogleWithOAuth(){
+  const id=slideIdFromGoogleUrl(E.googleSlidesUrl.value);if(!id)return setStatus(E.googleStatus,'Paste a valid Google Slides link first.','warn');
+  const clientId=window.WAKANDA_CONFIG?.googleClientId;
+  if(!clientId)return setStatus(E.googleStatus,'Google OAuth is not configured yet. Add your Google OAuth Client ID to config.js, or use the shared-link import.','warn');
+  if(!window.google?.accounts?.oauth2)return setStatus(E.googleStatus,'Google sign-in is still loading. Try again in a moment.','warn');
+  setStatus(E.googleStatus,'Waiting for Google permission…');
+  const token=await new Promise((resolve,reject)=>{const c=google.accounts.oauth2.initTokenClient({client_id:clientId,scope:'https://www.googleapis.com/auth/presentations.readonly https://www.googleapis.com/auth/drive.readonly',callback:r=>r?.access_token?resolve(r.access_token):reject(new Error(r?.error||'Authorization failed'))});c.requestAccessToken()}).catch(e=>{setStatus(E.googleStatus,escapeHtml(e.message),'danger');return null});
+  if(!token)return;googleAccessToken=token;setStatus(E.googleStatus,'Importing slides and speaker notes…');
+  try{
+    const headers={Authorization:`Bearer ${token}`};
+    const [presRes,pdfRes]=await Promise.all([
+      fetch(`https://slides.googleapis.com/v1/presentations/${id}`,{headers}),
+      fetch(`https://www.googleapis.com/drive/v3/files/${id}/export?mimeType=${encodeURIComponent('application/pdf')}`,{headers})
+    ]);
+    if(!presRes.ok)throw new Error(`Slides API ${presRes.status}`);if(!pdfRes.ok)throw new Error(`Drive export ${pdfRes.status}`);
+    const presentation=await presRes.json(),notes=await extractGoogleSpeakerNotes(presentation),blob=await pdfRes.blob();
+    await loadPresentation([new File([blob],`${presentation.title||'google-slides'}.pdf`,{type:'application/pdf'})]);applyImportedNotes(notes,'Google speaker notes');
+    setStatus(E.googleStatus,`Imported <b>${escapeHtml(presentation.title||'Google Slides')}</b> with ${notes.size} speaker-note sections.`,'good');closeModal(E.googleModal);setFlow('prepare');
+  }catch(e){console.error(e);setStatus(E.googleStatus,`Google import failed: ${escapeHtml(e.message)}`,'danger')}
+}
+async function importGoogleShared(){
+  const url=E.googleSlidesUrl.value.trim();if(!slideIdFromGoogleUrl(url))return setStatus(E.googleStatus,'Paste a valid Google Slides link first.','warn');
+  setStatus(E.googleStatus,'Importing the shared presentation…');
+  try{const r=await fetch(`/api/google-slides?url=${encodeURIComponent(url)}`);if(!r.ok)throw new Error((await r.text())||`HTTP ${r.status}`);const blob=await r.blob();await loadPresentation([new File([blob],'google-slides.pdf',{type:'application/pdf'})]);setStatus(E.googleStatus,'Shared Google Slides deck imported. Add private guidance manually or connect Google to import speaker notes.','good');closeModal(E.googleModal);setFlow('prepare')}catch(e){setStatus(E.googleStatus,'Shared-link bridge unavailable here. Run Wakanda with its included server, or use Connect Google after configuring OAuth.','warn')}
+}
+function normalizeZipPath(base,target){const parts=(base+'/'+target).split('/'),out=[];for(const part of parts){if(!part||part==='.')continue;if(part==='..')out.pop();else out.push(part)}return out.join('/')}
+async function extractPptxNotes(buffer){
+  try{const zip=await JSZip.loadAsync(buffer),map=new Map();for(let i=1;i<=totalSlides;i++){
+    const relFile=zip.file(`ppt/slides/_rels/slide${i}.xml.rels`);if(!relFile)continue;const relXml=new DOMParser().parseFromString(await relFile.async('string'),'application/xml');const rel=[...relXml.getElementsByTagNameNS('*','Relationship')].find(r=>(r.getAttribute('Type')||'').endsWith('/notesSlide'));if(!rel)continue;
+    const path=normalizeZipPath('ppt/slides',rel.getAttribute('Target')||'');const nf=zip.file(path);if(!nf)continue;const doc=new DOMParser().parseFromString(await nf.async('string'),'application/xml');
+    let text='';for(const sp of [...doc.getElementsByTagNameNS('*','sp')]){const ph=sp.getElementsByTagNameNS('*','ph')[0];if(ph?.getAttribute('type')==='body'){text=[...sp.getElementsByTagNameNS('*','t')].map(x=>x.textContent||'').join(' ').trim();if(text)break}}
+    if(text)map.set(i,text);
+  }return map}catch(e){console.warn('PPTX notes extraction failed',e);return new Map()}
+}
+async function loadPptx(file,loadToken){
+  const buffer=await file.arrayBuffer();if(loadToken!==presentationLoadToken)return;
+  if(pptxViewer){try{pptxViewer.destroy()}catch{}}pptxThumbHandles.forEach(h=>{try{h.dispose()}catch{}});pptxThumbHandles=[];E.pptxStage.innerHTML='';
+  const viewer=await PptxViewer.open(buffer,E.pptxStage,{renderMode:'slide',zipLimits:RECOMMENDED_ZIP_LIMITS,lazySlides:true,lazyMedia:true,pdfjs:false});if(loadToken!==presentationLoadToken){viewer.destroy();return}
+  pptxViewer=viewer;pptxBuffer=buffer;presentationType='pptx';totalSlides=viewer.slideCount;E.pptxStage.classList.add('active');E.slideCanvas.style.visibility='hidden';
+  const notes=await extractPptxNotes(buffer);if(notes.size)applyImportedNotes(notes,'PowerPoint speaker notes');
+  setStatus(E.presentationStatus,`Loaded <b>${escapeHtml(file.name)}</b> · ${totalSlides} PowerPoint slides${notes.size?` · ${notes.size} note sections imported`:''}.`,'good');
+}
+async function rasterizePptxToSlideCanvas(){
+  if(!pptxViewer)return;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const snap=await html2canvas(E.pptxStage,{backgroundColor:'#000',useCORS:true,logging:false,scale:1});const ctx=E.slideCanvas.getContext('2d');drawContained(ctx,snap,0,0,E.slideCanvas.width,E.slideCanvas.height,'#000');
+}
+
 function savePrefs(){
-  localStorage.setItem('wakandaStudioV3', JSON.stringify({
+  localStorage.setItem('wakandaStudioV4', JSON.stringify({
     notes:notesRaw,target:E.targetMin.value,wpm:E.speedRange.value,font:E.fontRange.value,notesMode:E.notesMode.value,
     prompter:E.prompterPosition.value,focus:E.focusPosition.value,autoAdvance:E.autoAdvance.checked,camPos:E.camPosition.value,
     camSize:E.camSize.value,circle:cameraCircle,hidden:cameraHidden,quality:E.quality.value,name:E.recordingName.value,
-    countdown:E.countdownSelect.value,thumbsHidden:E.thumbDock.classList.contains('hidden')
+    countdown:E.countdownSelect.value,thumbsHidden:E.thumbDock.classList.contains('hidden'),readingMode:E.readingMode.value,opacity:E.opacityRange.value,flow:currentFlow
   }));
 }
 function loadPrefs(){
   try{
-    const p=JSON.parse(localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
+    const p=JSON.parse(localStorage.getItem('wakandaStudioV4')||localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
     if(p.notes){notesRaw=p.notes;E.notesPaste.value=p.notes}
     if(p.target)E.targetMin.value=p.target;
     if(p.wpm)E.speedRange.value=p.wpm;
@@ -548,65 +837,43 @@ function loadPrefs(){
     if(p.name)E.recordingName.value=p.name;
     if(p.countdown!==undefined)E.countdownSelect.value=String(p.countdown);
     if(p.thumbsHidden)E.thumbDock.classList.add('hidden');
+    if(p.readingMode)E.readingMode.value=p.readingMode;
+    if(p.opacity)E.opacityRange.value=p.opacity;
+    if(p.flow)currentFlow=p.flow;
     cameraCircle=!!p.circle;
     cameraHidden=!!p.hidden;
   }catch{}
 }
 
 function updateReadiness(){
-  const hasSlides=totalSlides>0, hasNotes=countWords(notesRaw)>0, hasMedia=!!mediaStream;
-  E.checkSlides.classList.toggle('ok',hasSlides);
-  E.checkNotes.classList.toggle('ok',hasNotes);
-  E.checkMedia.classList.toggle('ok',hasMedia);
-  const count=[hasSlides,hasNotes,hasMedia].filter(Boolean).length;
-  const ready=hasSlides&&hasNotes&&hasMedia;
-  E.checkReady.classList.toggle('ok',ready);
-  E.readyTitle.textContent=ready?'Ready to record':`Setup ${count}/3`;
-  E.readyText.textContent=!hasSlides?'Add your presentation first':!hasNotes?'Add speaker notes':!hasMedia?'Enable camera + microphone':'Everything looks ready';
-  E.recordBtn.disabled=!ready || sessionMode!=='idle';
-  if(sessionMode==='idle') E.recText.textContent=ready?'Ready':'Setup';
+  const hasSlides=totalSlides>0,hasNotes=countWords(notesRaw)>0,hasMedia=!!mediaStream;
+  E.checkSlides.classList.toggle('ok',hasSlides);E.checkNotes.classList.toggle('ok',hasNotes);E.checkMedia.classList.toggle('ok',hasMedia);
+  const count=[hasSlides,hasNotes,hasMedia].filter(Boolean).length,ready=hasSlides&&hasNotes&&hasMedia;
+  E.checkReady.classList.toggle('ok',ready);E.readyTitle.textContent=ready?'Ready to perform':`Setup ${count}/3`;
+  E.readyText.textContent=!hasSlides?'Import your presentation':!hasNotes?'Add private guidance':!hasMedia?'Check camera + microphone':'Ready for rehearsal, live presentation or recording';
+  E.recordBtn.disabled=!ready||sessionMode!=='idle';E.liveBtn.disabled=!hasSlides||!hasNotes||sessionMode!=='idle';
+  if(sessionMode==='idle')E.recText.textContent=ready?'Ready':'Setup';renderPreflight();renderPacePlan();
 }
 
-async function loadPresentation(files){
-  if(!files?.length)return;
-  const loadToken=++presentationLoadToken; thumbToken++;
-  const first=files[0];
+async function loadPresentation(files,{persist=true}={}){
+  if(!files?.length)return;const loadToken=++presentationLoadToken;thumbToken++;const first=files[0],name=first.name.toLowerCase();
   try{
-    presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;renderToken++;
-    E.thumbTrack.innerHTML='';E.thumbCount.textContent='Loading…';E.slideProgress.innerHTML='';updateReadiness();
-    setStatus(E.presentationStatus,'Loading presentation…');
-    if(first.type==='application/pdf'||first.name.toLowerCase().endsWith('.pdf')){
-      const data=new Uint8Array(await first.arrayBuffer());
-      const doc=await pdfjsLib.getDocument({data}).promise;
-      if(loadToken!==presentationLoadToken)return;
-      presentationType='pdf';pdfDoc=doc;totalSlides=doc.numPages;
-      setStatus(E.presentationStatus,`Loaded <b>${escapeHtml(first.name)}</b> · ${totalSlides} slides detected automatically.`,'good');
+    presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;renderToken++;E.pptxStage.classList.remove('active');E.pptxStage.innerHTML='';E.slideCanvas.style.visibility='visible';
+    if(pptxViewer){try{pptxViewer.destroy()}catch{}pptxViewer=null}pptxBuffer=null;pptxThumbHandles.forEach(h=>{try{h.dispose()}catch{}});pptxThumbHandles=[];
+    E.thumbTrack.innerHTML='';E.thumbCount.textContent='Loading…';E.slideProgress.innerHTML='';updateReadiness();setStatus(E.presentationStatus,'Loading presentation…');
+    if(name.endsWith('.pptx')||first.type==='application/vnd.openxmlformats-officedocument.presentationml.presentation'){
+      await loadPptx(first,loadToken);
+    }else if(first.type==='application/pdf'||name.endsWith('.pdf')){
+      const data=new Uint8Array(await first.arrayBuffer()),doc=await pdfjsLib.getDocument({data}).promise;if(loadToken!==presentationLoadToken)return;presentationType='pdf';pdfDoc=doc;totalSlides=doc.numPages;E.slideCanvas.style.visibility='visible';setStatus(E.presentationStatus,`Loaded <b>${escapeHtml(first.name)}</b> · ${totalSlides} slides detected automatically.`,'good');
     }else{
-      const imgFiles=[...files].filter(f=>f.type.startsWith('image/'));
-      if(!imgFiles.length)throw new Error('No supported image slides found');
-      const imgs=[];
-      for(const f of imgFiles){imgs.push(await fileToImage(f));if(loadToken!==presentationLoadToken)return}
-      if(loadToken!==presentationLoadToken)return;
-      presentationType='images';imageSlides=imgs;totalSlides=imgs.length;
-      setStatus(E.presentationStatus,`Loaded <b>${totalSlides}</b> slide image${totalSlides===1?'':'s'}.`,'good');
+      const imgFiles=[...files].filter(f=>f.type.startsWith('image/'));if(!imgFiles.length)throw new Error('Unsupported presentation format');const imgs=[];for(const f of imgFiles){imgs.push(await fileToImage(f));if(loadToken!==presentationLoadToken)return}presentationType='images';imageSlides=imgs;totalSlides=imgs.length;E.slideCanvas.style.visibility='visible';setStatus(E.presentationStatus,`Loaded <b>${totalSlides}</b> slide image${totalSlides===1?'':'s'}.`,'good');
     }
-    if(loadToken!==presentationLoadToken)return;
-    currentSlide=1;E.totalSlides.value=totalSlides;maxSlideReached=1;
-    buildSlideProgress();
-    await renderSlide();
-    if(loadToken!==presentationLoadToken)return;
-    buildThumbnails();
-    updateReadiness();savePrefs();
+    if(loadToken!==presentationLoadToken||!totalSlides)return;currentSlide=1;E.totalSlides.value=totalSlides;maxSlideReached=1;buildSlideProgress();await renderSlide();if(loadToken!==presentationLoadToken)return;buildThumbnails();updateReadiness();savePrefs();if(persist)persistPresentation(files);setFlow('prepare');
   }catch(err){
-    if(loadToken!==presentationLoadToken)return;
-    console.error(err);
-    presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;
-    clearSlideCanvas();E.emptySlide.style.display='grid';
-    E.totalSlides.value=1;E.slideNumber.value=1;E.slideMini.textContent='—';E.slidePill.textContent='Slide —';
-    E.slideProgress.innerHTML='';E.thumbTrack.innerHTML='';E.thumbCount.textContent='No slides loaded';
-    setStatus(E.presentationStatus,`Could not load presentation: ${escapeHtml(err.message)}`,'danger');updateReadiness();
+    if(loadToken!==presentationLoadToken)return;console.error(err);presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;E.pptxStage.classList.remove('active');E.pptxStage.innerHTML='';E.slideCanvas.style.visibility='visible';clearSlideCanvas();E.emptySlide.style.display='grid';E.totalSlides.value=1;E.slideNumber.value=1;E.slideMini.textContent='—';E.slidePill.textContent='Slide —';E.slideProgress.innerHTML='';E.thumbTrack.innerHTML='';E.thumbCount.textContent='No slides loaded';setStatus(E.presentationStatus,`Could not load presentation: ${escapeHtml(err.message)}`,'danger');updateReadiness();
   }
 }
+
 function fileToImage(file){
   return new Promise((resolve,reject)=>{
     const img=new Image();
@@ -618,41 +885,19 @@ function fileToImage(file){
 }
 function clearSlideCanvas(){const ctx=E.slideCanvas.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,E.slideCanvas.width,E.slideCanvas.height)}
 async function renderSlide(){
-  if(!totalSlides){clearSlideCanvas();E.emptySlide.style.display='grid';return}
-  currentSlide=clamp(currentSlide,1,totalSlides);
-  maxSlideReached=Math.max(maxSlideReached,currentSlide);
-  E.slideNumber.value=currentSlide;
-  E.slideMini.textContent=`${currentSlide}/${totalSlides}`;
-  E.slidePill.textContent=`Slide ${currentSlide} / ${totalSlides}`;
-  E.emptySlide.style.display='none';
-  const token=++renderToken;
-  const canvas=E.slideCanvas, ctx=canvas.getContext('2d');
-  ctx.fillStyle='#000'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  if(!totalSlides){clearSlideCanvas();E.emptySlide.style.display='grid';return}currentSlide=clamp(currentSlide,1,totalSlides);maxSlideReached=Math.max(maxSlideReached,currentSlide);E.slideNumber.value=currentSlide;E.slideMini.textContent=`${currentSlide}/${totalSlides}`;E.slidePill.textContent=`Slide ${currentSlide} / ${totalSlides}`;E.emptySlide.style.display='none';const token=++renderToken,canvas=E.slideCanvas,ctx=canvas.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,canvas.width,canvas.height);
   try{
     if(presentationType==='pdf'){
-      const page=await pdfDoc.getPage(currentSlide);
-      const base=page.getViewport({scale:1});
-      const scale=Math.min(canvas.width/base.width,canvas.height/base.height);
-      const viewport=page.getViewport({scale});
-      const temp=document.createElement('canvas');
-      temp.width=Math.round(viewport.width); temp.height=Math.round(viewport.height);
-      await page.render({canvasContext:temp.getContext('2d'),viewport}).promise;
-      if(token!==renderToken) return;
-      ctx.drawImage(temp,Math.round((canvas.width-temp.width)/2),Math.round((canvas.height-temp.height)/2));
+      E.pptxStage.classList.remove('active');canvas.style.visibility='visible';const page=await pdfDoc.getPage(currentSlide),base=page.getViewport({scale:1}),scale=Math.min(canvas.width/base.width,canvas.height/base.height),viewport=page.getViewport({scale}),temp=document.createElement('canvas');temp.width=Math.round(viewport.width);temp.height=Math.round(viewport.height);await page.render({canvasContext:temp.getContext('2d'),viewport}).promise;if(token!==renderToken)return;ctx.drawImage(temp,Math.round((canvas.width-temp.width)/2),Math.round((canvas.height-temp.height)/2));
     }else if(presentationType==='images'){
-      drawContained(ctx,imageSlides[currentSlide-1],0,0,canvas.width,canvas.height,'#000');
+      E.pptxStage.classList.remove('active');canvas.style.visibility='visible';drawContained(ctx,imageSlides[currentSlide-1],0,0,canvas.width,canvas.height,'#000');
+    }else if(presentationType==='pptx'){
+      E.pptxStage.classList.add('active');canvas.style.visibility='hidden';await pptxViewer.goToSlide(currentSlide-1,{behavior:'instant'});if(token!==renderToken)return;await rasterizePptxToSlideCanvas();
     }
-  }catch(err){
-    console.error(err);
-    toast('Slide render failed');
-  }
-  updateNotes(true);
-  syncSlideNotesEditor();
-  buildSlideProgress();
-  updateActiveThumbnail();
-  composeOnce(E.previewCanvas);
-  savePrefs();
+  }catch(err){console.error(err);toast('Slide render failed')}
+  updateNotes(true);syncSlideNotesEditor();buildSlideProgress();updateActiveThumbnail();composeOnce(E.previewCanvas);composeAudience();renderLivePace();savePrefs();
 }
+
 function drawContained(ctx,source,x,y,w,h,bg='#000'){
   ctx.fillStyle=bg; ctx.fillRect(x,y,w,h);
   const sw=source.videoWidth||source.naturalWidth||source.width, sh=source.videoHeight||source.naturalHeight||source.height;
@@ -678,37 +923,21 @@ function buildSlideProgress(){
 
 
 async function buildThumbnails(){
-  const token=++thumbToken;
-  E.thumbTrack.innerHTML='';
-  if(!totalSlides){E.thumbCount.textContent='No slides loaded';return}
-  E.thumbCount.textContent=`${totalSlides} slide${totalSlides===1?'':'s'}`;
-  const limit=Math.min(totalSlides,50);
+  const token=++thumbToken;E.thumbTrack.innerHTML='';pptxThumbHandles.forEach(h=>{try{h.dispose()}catch{}});pptxThumbHandles=[];if(!totalSlides){E.thumbCount.textContent='No slides loaded';return}E.thumbCount.textContent=`${totalSlides} slide${totalSlides===1?'':'s'}`;const limit=Math.min(totalSlides,60);
   for(let i=1;i<=limit;i++){
-    const item=document.createElement('div');
-    item.className='thumb'; item.dataset.slide=i; item.title=`Go to slide ${i}`;
-    const c=document.createElement('canvas'); c.width=240; c.height=135;
-    const label=document.createElement('span'); label.textContent=`Slide ${i}`;
-    item.append(c,label); E.thumbTrack.appendChild(item);
-    item.addEventListener('click',()=>{currentSlide=i;renderSlide()});
+    const item=document.createElement('div');item.className='thumb';item.dataset.slide=i;item.title=`Go to slide ${i}`;const label=document.createElement('span');label.textContent=`Slide ${i}`;item.addEventListener('click',()=>{currentSlide=i;renderSlide()});E.thumbTrack.appendChild(item);
     try{
-      const ctx=c.getContext('2d'); ctx.fillStyle='#000'; ctx.fillRect(0,0,c.width,c.height);
-      if(presentationType==='images'){
-        drawContained(ctx,imageSlides[i-1],0,0,c.width,c.height,'#000');
-      }else if(presentationType==='pdf'){
-        const page=await pdfDoc.getPage(i);
-        const base=page.getViewport({scale:1});
-        const scale=Math.min(c.width/base.width,c.height/base.height);
-        const viewport=page.getViewport({scale});
-        const temp=document.createElement('canvas');
-        temp.width=Math.max(1,Math.round(viewport.width)); temp.height=Math.max(1,Math.round(viewport.height));
-        await page.render({canvasContext:temp.getContext('2d'),viewport}).promise;
-        if(token!==thumbToken)return;
-        ctx.drawImage(temp,(c.width-temp.width)/2,(c.height-temp.height)/2);
+      if(presentationType==='pptx'){
+        const slot=document.createElement('div');slot.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:9px';item.append(slot,label);const h=pptxViewer.renderThumbnailToContainer(i-1,slot,{width:120});if(h){pptxThumbHandles.push(h);await h.ready}
+      }else{
+        const c=document.createElement('canvas');c.width=240;c.height=135;item.append(c,label);const ctx=c.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,c.width,c.height);
+        if(presentationType==='images')drawContained(ctx,imageSlides[i-1],0,0,c.width,c.height,'#000');
+        else if(presentationType==='pdf'){const page=await pdfDoc.getPage(i),base=page.getViewport({scale:1}),scale=Math.min(c.width/base.width,c.height/base.height),viewport=page.getViewport({scale}),temp=document.createElement('canvas');temp.width=Math.max(1,Math.round(viewport.width));temp.height=Math.max(1,Math.round(viewport.height));await page.render({canvasContext:temp.getContext('2d'),viewport}).promise;if(token!==thumbToken)return;ctx.drawImage(temp,(c.width-temp.width)/2,(c.height-temp.height)/2)}
       }
     }catch(err){console.warn('Thumbnail render failed',i,err)}
-  }
-  if(token===thumbToken)updateActiveThumbnail();
+  }if(token===thumbToken)updateActiveThumbnail();
 }
+
 function updateActiveThumbnail(){
   E.thumbTrack.querySelectorAll('.thumb').forEach(t=>t.classList.toggle('active',Number(t.dataset.slide)===currentSlide));
   const active=E.thumbTrack.querySelector('.thumb.active');
@@ -757,7 +986,7 @@ function syncSlideNotesEditor(){
   }else{
     E.slideNotesEditor.disabled=false; E.saveSlideNotes.disabled=false;
     E.slideNotesCard.style.opacity='1';
-    E.saveSlideNotes.textContent='Save current slide notes';
+    E.saveSlideNotes.textContent='Save current slide guidance';
     E.slideNotesEditor.value=notesBySlide.get(currentSlide)||'';
   }
 }
@@ -778,33 +1007,17 @@ function saveCurrentSlideNotes(){
 }
 
 function updateNotes(reset=true){
-  const continuous=E.notesMode.value==='continuous';
-  E.notesText.textContent=continuous ? (continuousNotes||'No notes loaded.') : noteForSlide(currentSlide);
-  E.nextCue.textContent='Next cue: '+(continuous?'continuous script':nextNote(currentSlide));
-  E.modePill.textContent=continuous?'CONTINUOUS':'SLIDE SYNC';
-  if(reset){ E.notesViewport.scrollTop=0; autoAdvanceArmed=false; }
-  if(autoScrolling) setTimeout(()=>{ lastScrollTs=performance.now(); },0);
+  const continuous=E.notesMode.value==='continuous',text=continuous?(continuousNotes||'No guidance loaded.'):noteForSlide(currentSlide);E.notesText.innerHTML=guidanceHtml(text);E.nextCue.textContent='Next cue: '+(continuous?'continuous guidance':nextNote(currentSlide));E.modePill.textContent=continuous?'CONTINUOUS':'SLIDE SYNC';if(reset){E.notesViewport.scrollTop=0;autoAdvanceArmed=false}updateReadingFocus();if(autoScrolling)setTimeout(()=>{lastScrollTs=performance.now()},0);
 }
+
 function updateStats(){
-  const words=countWords(notesRaw), wpm=parseInt(E.speedRange.value)||130, mins=words/wpm, target=Math.max(.5,parseFloat(E.targetMin.value)||5), fit=Math.round(words/target);
-  E.wordCount.textContent=words;
-  E.estTime.textContent=fmt(mins*60);
-  E.paceFit.textContent=words?fit:'—';
-  if(sessionMode==='idle') E.remaining.textContent=`Target ${fmt(target*60)}`;
-  let cls='';
-  if(words){ cls=(fit>180 || fit<90) ? 'warn' : 'good'; }
-  setStatus(E.timingStatus, words ? `At <b>${wpm} WPM</b>, your script takes about <b>${fmt(mins*60)}</b>. To finish in ${target} min: <b>${fit} WPM</b>.` : 'Add notes to calculate pacing.', cls);
-  updateReadiness();
+  const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,mins=words/wpm,target=Math.max(.5,parseFloat(E.targetMin.value)||5),fit=Math.round(words/target),delta=mins*60-target*60;E.wordCount.textContent=words;E.estTime.textContent=fmt(mins*60);E.paceFit.textContent=words?(Math.abs(delta)<=9?'On target':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`):'—';if(sessionMode==='idle')E.remaining.textContent=`Target ${fmt(target*60)}`;let cls='';if(words)cls=Math.abs(delta)<=15?'good':Math.abs(delta)<=60?'warn':'danger';setStatus(E.timingStatus,words?`Estimated <b>${fmt(mins*60)}</b> for a <b>${fmt(target*60)}</b> target. Advanced pace: ${wpm} WPM${fit!==wpm?` · target-fit ${fit} WPM`:''}.`:'Add guidance to calculate pacing.',cls);updateDurationPreset();renderPacePlan();renderPreflight();updateReadiness();
 }
 
 function applyPrompterStyle(){
-  E.teleprompter.classList.remove('top','middle');
-  const p=E.prompterPosition.value;
-  if(p==='top' || p==='middle') E.teleprompter.classList.add(p);
-  E.focusBand.style.top=E.focusPosition.value+'%';
-  E.notesText.style.fontSize=E.fontRange.value+'px';
-  savePrefs();
+  E.teleprompter.classList.remove('top','middle');const p=E.prompterPosition.value;if(p==='top'||p==='middle')E.teleprompter.classList.add(p);E.focusBand.style.top=E.focusPosition.value+'%';E.notesText.style.fontSize=E.fontRange.value+'px';E.teleprompter.style.setProperty('--prompter-alpha',String((parseInt(E.opacityRange.value)||86)/100));updateReadingFocus();savePrefs();
 }
+
 function currentScrollDuration(){
   const txt=E.notesMode.value==='continuous' ? continuousNotes : noteForSlide(currentSlide);
   const words=Math.max(1,countWords(txt)), wpm=Math.max(70,parseInt(E.speedRange.value)||130);
@@ -823,7 +1036,7 @@ function scrollStep(ts){
   }
   const pxPerSec=max/duration, dt=Math.min(.05, (ts-lastScrollTs)/1000 || 0);
   vp.scrollTop+=pxPerSec*dt;
-  lastScrollTs=ts;
+  lastScrollTs=ts;updateReadingFocus();renderLivePace();
   if(vp.scrollTop>=max-2 && E.autoAdvance.checked && E.notesMode.value==='slide' && !autoAdvanceArmed && currentSlide<totalSlides){
     autoAdvanceArmed=true;
     setTimeout(()=>{ if(autoScrolling && autoAdvanceArmed) nextSlide(); }, 900);
@@ -870,6 +1083,7 @@ async function startMedia(){
       mediaStream=null; E.cameraPreview.srcObject=null; activeStream.getTracks().forEach(t=>{if(t.readyState==='live')t.stop()});
       analyser=null;cancelAnimationFrame(meterRAF);if(audioCtx)audioCtx.close().catch(()=>{});audioCtx=null;
       E.audioLevel.style.width='0%'; E.micHealth.textContent='Disconnected'; E.micHealth.style.color='var(--danger)';
+      if(sessionMode==='recording'){togglePause();setStatus(E.sessionStatus,'Recording paused automatically because a camera or microphone disconnected. Re-enable media, then resume.','danger')}
       setStatus(E.mediaStatus,'Camera or microphone disconnected. Re-enable media before recording.','danger'); updateReadiness();
     }));
     E.cameraPreview.srcObject=mediaStream;
@@ -978,17 +1192,11 @@ function drawCamera(ctx,canvas){
   ctx.stroke();
   ctx.restore();
 }
-function composeOnce(target=E.recordCanvas){
-  const ctx=target.getContext('2d');
-  ctx.fillStyle='#000'; ctx.fillRect(0,0,target.width,target.height);
-  drawContained(ctx,E.slideCanvas,0,0,target.width,target.height,'#000');
-  drawCamera(ctx,target);
+function composeOnce(target=E.recordCanvas,includeCamera=true){
+  const ctx=target.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,target.width,target.height);drawContained(ctx,E.slideCanvas,0,0,target.width,target.height,'#000');if(includeCamera)drawCamera(ctx,target);
 }
-function compositionLoop(){
-  composeOnce(E.recordCanvas);
-  if(E.previewModal.classList.contains('show')) composeOnce(E.previewCanvas);
-  if(sessionMode==='recording') composeRAF=requestAnimationFrame(compositionLoop);
-}
+function compositionLoop(){composeOnce(E.recordCanvas);if(E.previewModal.classList.contains('show'))composeOnce(E.previewCanvas);composeAudience();if(sessionMode==='recording'||sessionMode==='live')composeRAF=requestAnimationFrame(compositionLoop);}
+
 function previewLoop(){
   if(!E.previewModal.classList.contains('show') || sessionMode==='recording') return;
   composeOnce(E.previewCanvas);
@@ -1014,16 +1222,16 @@ function sessionElapsedMs(){
   return Math.max(0, now-sessionStartedAt-totalPausedMs);
 }
 function setSessionLock(locked){
-  const controls=[E.presentationInput,E.notesInput,E.notesPaste,E.applyNotes,E.notesMode,E.targetMin,E.countdownSelect,E.prompterPosition,E.focusPosition,E.fitPace,E.autoAdvance,E.enableMedia,E.cameraSelect,E.micSelect,E.camPosition,E.camSize,E.shapeBtn,E.cameraToggle,E.quality,E.recordingName,E.cleanPreviewBtn,E.audioTestBtn];
+  const controls=[E.presentationInput,E.notesInput,E.notesPaste,E.applyNotes,E.notesMode,E.targetMin,E.countdownSelect,E.prompterPosition,E.focusPosition,E.readingMode,E.opacityRange,E.fitPace,E.autoAdvance,E.enableMedia,E.cameraSelect,E.micSelect,E.camPosition,E.camSize,E.shapeBtn,E.cameraToggle,E.quality,E.recordingName,E.cleanPreviewBtn,E.audioTestBtn,E.googleImportBtn,E.liveBtn,E.audienceBtn];
   controls.forEach(el=>{if(el)el.disabled=locked});
   if(!locked)syncSlideNotesEditor();
   else{E.slideNotesEditor.disabled=true;E.saveSlideNotes.disabled=true}
 }function resetSessionChrome(){
   setSessionLock(false);
-  E.pauseBtn.disabled=true;
-  E.pauseBtn.textContent='Pause';
-  E.stopBtn.disabled=true;
-  E.practiceBtn.disabled=false;
+  E.pauseBtn.disabled=true;E.performancePauseBtn.disabled=true;
+  E.pauseBtn.textContent='Pause';E.performancePauseBtn.textContent='Pause';
+  E.stopBtn.disabled=true;E.performanceStopBtn.disabled=true;
+  E.practiceBtn.disabled=false;E.liveBtn.disabled=false;
   E.recDot.className='dot';
   E.recText.textContent='Ready';
   if(autoScrolling) toggleScroll(false);
@@ -1031,33 +1239,28 @@ function setSessionLock(locked){
   cancelAnimationFrame(previewRAF);
   clearInterval(timerInterval);
   sessionStartedAt=0; pausedAt=0; totalPausedMs=0;
-  scrollWasRunningBeforePause=false;
+  scrollWasRunningBeforePause=false;exitPerformanceMode();renderLivePace();
 }
 function beginClock(kind){
-  setSessionLock(true);
-  sessionStartedAt=Date.now(); pausedAt=0; totalPausedMs=0; lastSessionMs=0; maxSlideReached=currentSlide;
-  clearInterval(timerInterval); timerInterval=setInterval(updateTimer,150); updateTimer();
-  if(!autoScrolling) toggleScroll(true);
-  E.pauseBtn.disabled=false; E.stopBtn.disabled=false; E.practiceBtn.disabled=true; E.recordBtn.disabled=true;
-  E.recDot.className='dot '+(kind==='practice'?'practice':'live');
-  E.recText.textContent=kind==='practice'?'Rehearsing':'Recording';
+  setSessionLock(true);enterPerformanceMode();buildPlannedSlideSeconds();sessionStartedAt=Date.now();pausedAt=0;totalPausedMs=0;lastSessionMs=0;maxSlideReached=currentSlide;clearInterval(timerInterval);timerInterval=setInterval(updateTimer,150);updateTimer();if(E.readingMode.value==='auto'&&!autoScrolling)toggleScroll(true);E.pauseBtn.disabled=false;E.performancePauseBtn.disabled=false;E.stopBtn.disabled=false;E.performanceStopBtn.disabled=false;E.practiceBtn.disabled=true;E.liveBtn.disabled=true;E.recordBtn.disabled=true;const isRec=kind==='recording',isLive=kind==='live';E.recDot.className='dot '+(isRec?'live':isLive?'practice':'practice');E.recText.textContent=isRec?'Recording':isLive?'Presenting Live':'Rehearsing';
 }
+
 function updateTimer(){
-  const sec=Math.floor(sessionElapsedMs()/1000), target=Math.max(.5,parseFloat(E.targetMin.value)||5)*60;
-  E.timer.textContent=fmt(sec);
-  E.remaining.textContent=sec<=target ? `${fmt(target-sec)} remaining` : `+${fmt(sec-target)} over`;
-  E.remaining.style.color=sec>target ? 'var(--danger)' : (target-sec<30 ? 'var(--warn)' : 'var(--muted)');
-  E.timeProgress.style.width=`${Math.min(100, sec/target*100)}%`;
+  const sec=Math.floor(sessionElapsedMs()/1000),target=targetSeconds();E.timer.textContent=fmt(sec);E.remaining.textContent=sec<=target?`${fmt(target-sec)} remaining`:`+${fmt(sec-target)} over`;E.remaining.style.color=sec>target?'var(--danger)':(target-sec<30?'var(--warn)':'var(--muted)');E.timeProgress.style.width=`${Math.min(100,sec/target*100)}%`;renderLivePace();
 }
+
 async function startPractice(){
   if(sessionMode!=='idle') return;
   if(audioTestRecorder?.state==='recording')return toast('Finish the microphone test first');
-  if(!totalSlides || !countWords(notesRaw)) return toast('Add slides and notes first');
+  if(!totalSlides || !countWords(notesRaw)) return toast('Add a presentation and private guidance first');
   sessionMode='countdown'; setSessionLock(true); E.practiceBtn.disabled=true; E.recordBtn.disabled=true;
   await runCountdown();
   sessionMode='practice';
   beginClock('practice');
   setStatus(E.sessionStatus,'Rehearsal running. Nothing is being recorded.','good');
+}
+async function startLive(){
+  if(sessionMode!=='idle')return;if(!totalSlides||!countWords(notesRaw))return toast('Add a presentation and private guidance first');openAudienceView();if(!audienceWin||audienceWin.closed)return;sessionMode='countdown';setSessionLock(true);E.practiceBtn.disabled=true;E.recordBtn.disabled=true;await runCountdown();sessionMode='live';beginClock('live');cancelAnimationFrame(composeRAF);compositionLoop();setStatus(E.sessionStatus,'Live presentation running. Share the Audience View window; private guidance remains here.','good');toast('Live presentation started');
 }
 async function startRecording(){
   if(sessionMode!=='idle') return;
@@ -1076,10 +1279,10 @@ async function startRecording(){
     const mic=mediaStream.getAudioTracks()[0];
     const micClone=mic?mic.clone():null;
     recordingStream=new MediaStream([...canvasStream.getVideoTracks(), ...(micClone?[micClone]:[])]);
-    chunks=[];
+    chunks=[];protectedSeq=0;chunkWritePromises=[];await dbClear('chunks');
     const mime=pickMime();
     recorder=new MediaRecorder(recordingStream, mime ? {mimeType:mime, videoBitsPerSecond:E.quality.value==='1080'?7000000:4200000, audioBitsPerSecond:128000} : {videoBitsPerSecond:6000000});
-    recorder.ondataavailable=e=>{ if(e.data.size) chunks.push(e.data); };
+    recorder.ondataavailable=e=>{if(e.data.size){chunks.push(e.data);chunkWritePromises.push(protectChunk(e.data))}};
     recorder.onerror=e=>{ console.error(e); setStatus(E.sessionStatus,'Recording failed unexpectedly. Try again.','danger'); };
     recorder.onstop=finalizeRecording;
     recorder.start(1000);
@@ -1099,73 +1302,29 @@ async function startRecording(){
   }
 }
 function togglePause(){
-  if(sessionMode==='idle' || sessionMode==='stopping' || sessionMode==='countdown') return;
+  if(sessionMode==='idle'||sessionMode==='stopping'||sessionMode==='countdown')return;
   if(sessionMode==='paused'){
-    totalPausedMs+=Date.now()-pausedAt; pausedAt=0;
-    if(recorder && recorder.state==='paused') recorder.resume();
-    sessionMode=recorder ? 'recording' : 'practice';
-    E.pauseBtn.textContent='Pause';
-    E.recDot.className='dot '+(recorder?'live':'practice');
-    E.recText.textContent=recorder?'Recording':'Rehearsing';
-    if(scrollWasRunningBeforePause) toggleScroll(true);
+    totalPausedMs+=Date.now()-pausedAt;pausedAt=0;if(recorder&&recorder.state==='paused')recorder.resume();sessionMode=pausedFromMode;E.pauseBtn.textContent='Pause';E.performancePauseBtn.textContent='Pause';E.recDot.className='dot '+(sessionMode==='recording'?'live':'practice');E.recText.textContent=sessionMode==='recording'?'Recording':sessionMode==='live'?'Presenting Live':'Rehearsing';if(scrollWasRunningBeforePause)toggleScroll(true);if(sessionMode==='recording'||sessionMode==='live')compositionLoop();
   }else{
-    scrollWasRunningBeforePause=autoScrolling;
-    if(recorder?.state==='recording') recorder.pause();
-    pausedAt=Date.now();
-    sessionMode='paused';
-    E.pauseBtn.textContent='Resume';
-    E.recDot.className='dot paused';
-    E.recText.textContent='Paused';
-    if(autoScrolling) toggleScroll(false);
+    pausedFromMode=sessionMode;scrollWasRunningBeforePause=autoScrolling;if(recorder?.state==='recording')recorder.pause();pausedAt=Date.now();sessionMode='paused';E.pauseBtn.textContent='Resume';E.performancePauseBtn.textContent='Resume';E.recDot.className='dot paused';E.recText.textContent='Paused';if(autoScrolling)toggleScroll(false);cancelAnimationFrame(composeRAF);
   }
 }
+
 function stopSession(){
-  if(sessionMode==='idle' || sessionMode==='stopping') return;
-  lastSessionMs=sessionElapsedMs();
-  const wasRecording=!!recorder && (recorder.state==='recording' || recorder.state==='paused');
-  sessionMode='stopping';
-  clearInterval(timerInterval);
-  cancelAnimationFrame(composeRAF);
-  if(autoScrolling) toggleScroll(false);
-  if(wasRecording){
-    try{ if(recorder.state==='paused') recorder.resume(); }catch{}
-    recorder.stop();
-  }else{
-    finishPractice(lastSessionMs);
-    sessionMode='idle';
-    resetSessionChrome();
-    updateReadiness();
-  }
+  if(sessionMode==='idle'||sessionMode==='stopping'||sessionMode==='countdown')return;lastSessionMs=sessionElapsedMs();const previous=sessionMode==='paused'?pausedFromMode:sessionMode,wasRecording=!!recorder&&(recorder.state==='recording'||recorder.state==='paused');sessionMode='stopping';clearInterval(timerInterval);cancelAnimationFrame(composeRAF);if(autoScrolling)toggleScroll(false);
+  if(wasRecording){try{if(recorder.state==='paused')recorder.resume()}catch{}recorder.stop()}
+  else{if(previous==='live')finishLive(lastSessionMs);else finishPractice(lastSessionMs);sessionMode='idle';resetSessionChrome();updateReadiness()}
 }
+
 function finishPractice(ms){
   const d=Math.floor((ms||sessionElapsedMs())/1000);
   setStatus(E.sessionStatus,`Rehearsal finished at <b>${fmt(d)}</b>. Adjust pace or notes, then record.`,'good');
   toast(`Rehearsal ${fmt(d)}`);
 }
-function finalizeRecording(){
-  const duration=Math.floor((lastSessionMs || sessionElapsedMs())/1000);
-  const type=recorder?.mimeType||'video/webm';
-  const blob=new Blob(chunks,{type});
-  if(recordingStream){recordingStream.getTracks().forEach(t=>t.stop());recordingStream=null}
-  if(!blob.size){
-    recorder=null;chunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();
-    setStatus(E.sessionStatus,'The browser returned an empty recording. Please try a short test recording again.','danger');return;
-  }
-  if(lastRecordingUrl) URL.revokeObjectURL(lastRecordingUrl);
-  lastRecordingUrl=URL.createObjectURL(blob);
-  E.reviewVideo.src=lastRecordingUrl;
-  const ext=type.includes('mp4')?'mp4':'webm';
-  const clean=(E.recordingName.value||'wakanda-studio-recording').trim().replace(/[^a-z0-9_-]+/gi,'-') || 'wakanda-studio-recording';
-  E.downloadLink.href=lastRecordingUrl;
-  E.downloadLink.download=`${clean}.${ext}`;
-  E.reviewDuration.textContent=fmt(duration);
-  E.reviewSlides.textContent=`${maxSlideReached}/${totalSlides}`;
-  E.reviewWords.textContent=countWords(notesRaw);
-  E.reviewModal.classList.add('show');
-  setStatus(E.sessionStatus,`Recording complete · ${fmt(duration)} · ready to review.`,'good');
-  recorder=null; chunks=[]; sessionMode='idle';
-  resetSessionChrome();
-  updateReadiness();
+function finishLive(ms){const d=Math.floor((ms||sessionElapsedMs())/1000);setStatus(E.sessionStatus,`Live presentation finished at <b>${fmt(d)}</b>. Audience View can remain open for your next run.`,'good');toast(`Live session ${fmt(d)}`);setFlow('review',{force:true})}
+async function finalizeRecording(){
+  const duration=Math.floor((lastSessionMs||sessionElapsedMs())/1000),type=recorder?.mimeType||'video/webm',blob=new Blob(chunks,{type});await Promise.allSettled(chunkWritePromises);await dbClear('chunks');E.recordingRecovery.hidden=true;if(recordingStream){recordingStream.getTracks().forEach(t=>t.stop());recordingStream=null}if(!blob.size){recorder=null;chunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'The browser returned an empty recording. Please try a short test recording again.','danger');return}
+  lastRecordingUrl=URL.createObjectURL(blob);E.reviewVideo.src=lastRecordingUrl;const ext=type.includes('mp4')?'mp4':'webm',clean=(E.recordingName.value||'wakanda-studio-recording').trim().replace(/[^a-z0-9_-]+/gi,'-')||'wakanda-studio-recording',filename=`${clean}-take-${takes.length+1}.${ext}`;E.downloadLink.href=lastRecordingUrl;E.downloadLink.download=filename;const target=targetSeconds(),delta=duration-target,deltaLabel=Math.abs(delta)<=4?'On target':`${Math.round(Math.abs(delta))}s ${delta>0?'over':'under'}`;E.reviewDuration.textContent=fmt(duration);E.reviewSlides.textContent=`${maxSlideReached}/${totalSlides}`;E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(target);E.reviewDelta.textContent=deltaLabel;E.reviewDelta.style.color=Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';takes.unshift({url:lastRecordingUrl,duration,delta,deltaLabel,filename,best:takes.length===0});while(takes.length>6){const old=takes.pop();URL.revokeObjectURL(old.url)}renderTakeList();E.reviewModal.classList.add('show');setStatus(E.sessionStatus,`Recording complete · ${fmt(duration)} · ${deltaLabel}.`,'good');recorder=null;chunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setFlow('review',{force:true});
 }
 
 function applyCameraLocal(){
@@ -1203,16 +1362,17 @@ E.nextBtn.addEventListener('click',nextSlide);
 E.stage.addEventListener('click',e=>{ if(e.target.closest('.teleprompter') || e.target.closest('.camera-bubble') || e.target.closest('.countdown')) return; nextSlide(); });
 
 E.notesInput.addEventListener('change',()=>loadNotesFile(E.notesInput.files?.[0]));
-E.applyNotes.addEventListener('click',()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); setStatus(E.notesStatus,'Speaker notes applied and saved locally.','good'); });
+E.applyNotes.addEventListener('click',()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); setStatus(E.notesStatus,'Private guidance applied and saved locally.','good'); });
 E.notesPaste.addEventListener('input',()=>{ clearTimeout(E.notesPaste.t); E.notesPaste.t=setTimeout(()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); },450); });
 E.notesMode.addEventListener('change',()=>{ updateNotes(true); syncSlideNotesEditor(); savePrefs(); });
 E.saveSlideNotes.addEventListener('click',saveCurrentSlideNotes);
 
-E.targetMin.addEventListener('input',()=>{ updateStats(); savePrefs(); });
+E.targetMin.addEventListener('input',()=>{ updateStats(); updateDurationPreset(); savePrefs(); });
+E.durationPresets.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{E.targetMin.value=b.dataset.min;updateStats();updateDurationPreset();savePrefs()}));
 E.countdownSelect.addEventListener('change',savePrefs);
 E.fitPace.addEventListener('click',()=>{
   const words=countWords(notesRaw), target=Math.max(.5,parseFloat(E.targetMin.value)||5);
-  if(!words) return toast('Add speaker notes first');
+  if(!words) return toast('Add private guidance first');
   E.speedRange.value=clamp(Math.round(words/target),70,220);
   E.speedRange.dispatchEvent(new Event('input'));
   toast('Teleprompter pace fitted to target');
@@ -1220,6 +1380,8 @@ E.fitPace.addEventListener('click',()=>{
 E.prompterPosition.addEventListener('change',applyPrompterStyle);
 E.focusPosition.addEventListener('change',applyPrompterStyle);
 E.autoAdvance.addEventListener('change',savePrefs);
+E.readingMode.addEventListener('change',savePrefs);
+E.opacityRange.addEventListener('input',applyPrompterStyle);
 
 E.enableMedia.addEventListener('click',startMedia);
 E.audioTestBtn.addEventListener('click',runAudioTest);
@@ -1236,9 +1398,12 @@ E.previewModal.addEventListener('click',e=>{ if(e.target===E.previewModal) stopP
 E.quality.addEventListener('change',()=>{ setOutputResolution(); savePrefs(); });
 E.recordingName.addEventListener('input',savePrefs);
 E.practiceBtn.addEventListener('click',startPractice);
+E.rehearseStartBtn.addEventListener('click',startPractice);
+E.audienceBtn.addEventListener('click',openAudienceView);
+E.liveBtn.addEventListener('click',startLive);
 E.recordBtn.addEventListener('click',startRecording);
-E.pauseBtn.addEventListener('click',togglePause);
-E.stopBtn.addEventListener('click',stopSession);
+E.pauseBtn.addEventListener('click',togglePause);E.performancePauseBtn.addEventListener('click',togglePause);
+E.stopBtn.addEventListener('click',stopSession);E.performanceStopBtn.addEventListener('click',stopSession);
 
 E.restartNotesBtn.addEventListener('click',restartNotes);
 E.scrollToggle.addEventListener('click',()=>toggleScroll());
@@ -1249,7 +1414,16 @@ E.teleToggle.addEventListener('click',()=>{
 E.speedRange.addEventListener('input',()=>{ E.speedLabel.textContent=E.speedRange.value+' WPM'; updateStats(); savePrefs(); });
 E.fontRange.addEventListener('input',applyPrompterStyle);
 E.notesViewport.addEventListener('wheel',()=>{ if(autoScrolling) toggleScroll(false); },{passive:true});
+E.notesViewport.addEventListener('scroll',()=>{updateReadingFocus();renderLivePace()},{passive:true});
 
+E.restoreSessionBtn.addEventListener('click',restoreLastPresentation);E.recoverRecordingBtn.addEventListener('click',recoverProtectedRecording);
+E.workflowNav.querySelectorAll('.flow-btn').forEach(b=>b.addEventListener('click',()=>setFlow(b.dataset.flow)));
+const choosePresentation=(accept,multiple=false)=>{E.presentationInput.accept=accept;E.presentationInput.multiple=multiple;E.presentationInput.click()};
+E.pptxSource.addEventListener('click',()=>choosePresentation('.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',false));
+E.pdfSource.addEventListener('click',()=>choosePresentation('.pdf,application/pdf',false));
+E.imageSource.addEventListener('click',()=>choosePresentation('image/png,image/jpeg,.png,.jpg,.jpeg',true));
+const showGoogle=()=>E.googleModal.classList.add('show');E.googleSource.addEventListener('click',showGoogle);E.googleImportBtn.addEventListener('click',showGoogle);
+E.closeGoogle.addEventListener('click',()=>closeModal(E.googleModal));E.googleModal.addEventListener('click',e=>{if(e.target===E.googleModal)closeModal(E.googleModal)});E.googleConnectBtn.addEventListener('click',importGoogleWithOAuth);E.googlePublicBtn.addEventListener('click',importGoogleShared);
 E.thumbToggle.addEventListener('click',()=>{E.thumbDock.classList.toggle('hidden');E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slides':'Slides';savePrefs()});
 E.focusBtn.addEventListener('click',toggleFocus);
 E.helpBtn.addEventListener('click',()=>E.helpModal.classList.add('show'));
@@ -1258,6 +1432,7 @@ E.helpModal.addEventListener('click',e=>{ if(e.target===E.helpModal) closeModal(
 E.closeReview.addEventListener('click',closeReviewModal);
 E.reviewModal.addEventListener('click',e=>{if(e.target===E.reviewModal)closeReviewModal()});
 E.retakeBtn.addEventListener('click',()=>{ closeReviewModal(); currentSlide=1; renderSlide(); restartNotes(); toast('Ready for retake'); });
+E.mobileDismiss.addEventListener('click',()=>E.mobileWarning.classList.add('dismissed'));
 
 document.addEventListener('keydown',e=>{
   if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
@@ -1266,6 +1441,7 @@ document.addEventListener('keydown',e=>{
     if(E.reviewModal.classList.contains('show'))closeReviewModal();
     if(E.previewModal.classList.contains('show'))stopPreview();
     if(E.helpModal.classList.contains('show'))closeModal(E.helpModal);
+    if(E.googleModal.classList.contains('show'))closeModal(E.googleModal);
     return;
   }
   if(e.key==='ArrowRight'){ e.preventDefault(); nextSlide(); }
@@ -1282,6 +1458,7 @@ document.addEventListener('keydown',e=>{
 wireDropZone(E.presentationDrop,E.presentationInput,files=>loadPresentation(files));
 wireDropZone(E.notesDrop,E.notesInput,files=>loadNotesFile(files[0]));
 loadPrefs();
+setFlow(currentFlow,{force:true});updateDurationPreset();
 E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slides':'Slides';
 E.speedLabel.textContent=E.speedRange.value+' WPM';
 E.notesText.style.fontSize=E.fontRange.value+'px';
@@ -1290,7 +1467,7 @@ applyCameraLocal();
 setOutputResolution();
 clearSlideCanvas();
 if(notesRaw) parseNotes(notesRaw); else {updateStats();syncSlideNotesEditor();}
-updateReadiness();
+updateReadiness();checkRecovery();
 </script>
 </body>
 </html>

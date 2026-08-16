@@ -1,62 +1,147 @@
-# Wakanda Studio V3
+# Wakanda Studio V4
 
-**Record presentations while reading private speaker notes — without showing the notes in the final video.**
+> **Present better. Not harder.**
 
-Wakanda Studio is a browser-based presentation recorder built for short assignment walkthroughs, product demos, portfolio presentations, and other situations where you need to present naturally while keeping a teleprompter private.
+Wakanda Studio is a presentation performance workspace that helps you **prepare, rehearse, present, record, and improve** without exposing your private guidance to the audience.
 
-> The presenter sees the slide, teleprompter, timer, controls, and camera preview. The recording contains only the presentation slide, optional camera bubble, and microphone audio.
+V4 moves beyond the original teleprompter-recorder concept. The product is organized around the complete presentation workflow:
 
-## Why this exists
+**Import → Prepare → Rehearse → Present → Review**
 
-Recording a polished 5-minute presentation can be surprisingly difficult. Switching between slides and notes breaks eye contact, timing drifts, microphone levels are inconsistent, and screen-recording tools can expose whatever is visible on screen.
+## Why it exists
 
-Wakanda Studio separates the **presenter interface** from the **recorded output**.
+Screen recorders solve the capture problem. They do not solve the delivery problem.
 
-## V3 highlights
+Wakanda Studio is designed for the moment when you already have a deck but still need to:
 
-- Drag-and-drop presentation upload.
-- PDF and JPG/PNG slide support.
-- Automatic PDF slide count.
-- Clickable slide thumbnail navigator.
-- Markdown/TXT speaker-note import.
-- Slide-aware notes using `## Slide 1`, `## Slide 2`, etc.
-- Per-slide note editing inside the app.
-- Slide-sync or continuous movie-credit teleprompter mode.
-- Adjustable WPM, font size, teleprompter position, and focus line.
-- Target-duration pacing calculator for 5-minute or custom-length presentations.
-- Optional automatic slide advance.
-- Camera position, size, shape, and hide/show controls.
-- Live microphone level and health indication.
-- 5-second microphone recording/playback test.
-- Rehearsal mode.
-- 3- or 5-second recording countdown.
-- Pause/resume recording.
-- 720p or 1080p output.
-- Clean-output preview before recording.
-- Recording review and retake flow.
-- Local preference and speaker-note autosave.
-- Keyboard shortcuts and focus mode.
-- macOS-inspired interface.
+- stay within a target duration,
+- remember what to say,
+- keep your eyes close to the camera,
+- avoid poor microphone settings,
+- recover from interruptions,
+- present live without sharing your notes,
+- compare takes before choosing the final one.
 
-## Private recording architecture
+## V4 highlights
 
-Wakanda Studio does **not** record the whole browser interface.
+### Import
+- **PowerPoint `.pptx`** import with browser-side slide rendering.
+- Extracts PowerPoint speaker notes when available.
+- **Google Slides** import through either:
+  - Google OAuth for private decks, including speaker-note retrieval, or
+  - a shareable/public Slides link through the included Node bridge.
+- **PDF** import with automatic slide count.
+- **JPG / PNG** slide import.
+- Drag-and-drop import and clickable slide thumbnails.
 
-It internally creates a dedicated HTML canvas and draws only:
+### Prepare
+- Private Guidance instead of a single plain-text notes box.
+- Markdown / TXT upload, paste, or per-slide editing.
+- Slide-aware headings such as `## Slide 4`.
+- Guidance cues such as `[REMINDER]`, `[CUE]`, `[PAUSE]`, `[TRANSITION]`, and `[SLOW]`.
+- Duration presets: **5, 7, 10, 15, 20 minutes** plus custom duration.
+- Automatic timing estimate and per-slide time budget.
+- Camera position / size / shape controls.
+- Private guidance position, opacity, font size, and reading-line controls.
 
-1. the current presentation slide;
-2. the optional camera feed.
+### Rehearse
+- Rehearsal without recording.
+- Per-slide timing plan.
+- Expected finish vs target.
+- Live **ahead / behind** indicator.
+- Auto-paced or manual guidance scrolling.
+- Audio level / clipping health indicator.
+- 5-second microphone test with playback.
 
-The microphone audio track is then combined with that canvas video stream and recorded through the browser's `MediaRecorder` API.
+### Present
+Two performance modes:
 
-The teleprompter, timer, slide thumbnails, controls, and setup sidebar remain DOM elements outside the recording canvas and therefore do not enter the final video.
+**Record**
+- Internally composes only the slide + optional camera into the recorded canvas.
+- Private Guidance, controls, timer, thumbnails, and sidebar are excluded from the video.
+- 720p / 1080p output.
+- Pause / resume and countdown.
 
-## Quick start
+**Live Present**
+- Opens a separate clean Audience View.
+- You keep the presenter view with private guidance and timing.
+- Share/project the Audience View rather than your private presenter interface.
 
-Wakanda Studio should be served from `localhost` or HTTPS so camera and microphone permissions work correctly.
+### Review
+- Review recording before download.
+- Target vs actual duration.
+- Slides reached.
+- Script word count.
+- Stores multiple takes for comparison.
+- Play, download, mark best, or delete a take.
+
+### Reliability
+- Restores the last presentation session where possible.
+- Saves notes and presentation preferences locally.
+- Progressive recording-chunk protection using IndexedDB.
+- Can recover protected chunks after an interrupted session.
+- Warns when camera or microphone access fails or disconnects.
+- Locks risky setup changes while a presentation session is active.
+
+## Privacy model
+
+The key promise is simple:
+
+> **Private guidance stays private.**
+
+For recorded sessions, Wakanda Studio creates a dedicated internal recording canvas. Only the rendered presentation and optional camera feed are drawn to it.
+
+The following remain outside the recording canvas:
+
+- Private Guidance / teleprompter
+- countdown and presenter timer
+- pacing indicator
+- slide thumbnails
+- setup sidebar
+- presenter buttons and controls
+
+For live sessions, Wakanda Studio creates a separate Audience View that contains the clean presentation output.
+
+## PowerPoint support
+
+V4 uses `@aiden0z/pptx-renderer` to render PowerPoint files directly in the browser and JSZip to inspect the OOXML package for speaker notes.
+
+The goal is **high-fidelity static deck import**, not reproduction of the entire Microsoft PowerPoint slideshow engine. Complex animations, transitions, embedded media, or uncommon PowerPoint effects may not reproduce exactly.
+
+If absolute visual fidelity is critical for a specific deck, PDF remains the safest fallback.
+
+## Google Slides support
+
+There are two paths.
+
+### 1. Connect Google — private decks
+
+Add a Google OAuth Web Client ID to `config.js`:
+
+```js
+window.WAKANDA_CONFIG = {
+  googleClientId: 'YOUR_GOOGLE_OAUTH_WEB_CLIENT_ID'
+};
+```
+
+Wakanda Studio requests read-only presentation / Drive permissions, reads Slides metadata and speaker notes, and exports the presentation as PDF for rendering.
+
+See `GOOGLE_SLIDES_SETUP.md` for setup guidance.
+
+### 2. Shared/public link
+
+When the included Node server is running, paste a shareable Google Slides URL. The `/api/google-slides` bridge attempts to export the presentation as PDF.
+
+This only works when Google permits export without interactive authentication.
+
+## Run locally
+
+### Recommended
+
+Requires **Node.js 20+**.
 
 ```bash
-python3 -m http.server 8080
+npm start
 ```
 
 Then open:
@@ -65,113 +150,100 @@ Then open:
 http://localhost:8080
 ```
 
-Use a recent desktop version of **Google Chrome** or **Microsoft Edge**.
+If port 8080 is occupied:
 
-## Recommended workflow
+```bash
+PORT=8123 npm start
+```
 
-1. Drop in a PDF presentation.
-2. Drop in or paste your Markdown speaker notes.
-3. Set the target duration, such as `5 minutes`.
-4. Click **Fit pace to target**.
-5. Enable camera and microphone.
-6. Record a 5-second mic test and listen back.
-7. Preview the clean output.
-8. Rehearse once.
-9. Record.
-10. Review and download the result.
+and open:
 
-## Speaker-note format
+```text
+http://localhost:8123
+```
+
+`localhost` is important because browsers allow camera and microphone access on secure contexts such as HTTPS and localhost.
+
+## GitHub Pages
+
+The front-end itself can be published on GitHub Pages and works well for:
+
+- PowerPoint import
+- PDF import
+- image slides
+- notes / guidance
+- rehearsal
+- camera / microphone
+- recording
+- Google OAuth import after correctly configuring your OAuth origin
+
+The **shared-link Google Slides bridge** is a Node endpoint and therefore cannot run on GitHub Pages alone. For that path, deploy `server.js` to a Node-capable host or use Connect Google.
+
+See `GITHUB_UPLOAD_GUIDE.md`.
+
+## Speaker guidance format
 
 ```md
 ## Slide 1 — Opening
-Hi everyone. In this presentation I'll walk you through...
+Welcome. Today I am going to walk you through...
+
+[REMINDER] Slow down for the opening.
 
 ## Slide 2 — Problem
-The first issue I identified was...
+The core problem became clear during research...
 
-## Slide 3 — Redesign
-Here is how I approached the redesign...
+[CUE] Point to the chart.
+
+[PAUSE] 2 seconds.
+
+## Slide 3 — Solution
+[TRANSITION] Now let's move from the problem to the solution.
 ```
 
-If slide headings are not used, Wakanda Studio treats the content as one continuous script.
+## Recommended browser
 
-A ready-to-use example is included in [`sample-notes.md`](sample-notes.md).
+Use a recent desktop version of **Google Chrome** or **Microsoft Edge**.
 
-## Keyboard shortcuts
+Wakanda Studio intentionally shows a warning rather than pretending to be fully optimized for small mobile screens.
 
-| Shortcut | Action |
-|---|---|
-| `→` | Next slide |
-| `←` | Previous slide |
-| `Space` | Start/pause teleprompter scroll |
-| `R` | Restart current notes |
-| `P` | Pause/resume session |
-| `F` | Focus mode |
-| `H` | Hide/show notes |
-| `↑ / ↓` | Increase/decrease WPM |
-| `Esc` | Close an open modal |
+## Architecture
 
-## Run on GitHub Pages
+See `ARCHITECTURE.md` for the clean-output, source-import, live presentation, and recording-protection architecture.
 
-This repository is intentionally structured so it can be published directly from the repository root.
+## Test before an important presentation
 
-For a non-technical, click-by-click walkthrough, see [`GITHUB_UPLOAD_GUIDE.md`](GITHUB_UPLOAD_GUIDE.md).
+Use `TEST_CHECKLIST.md`, especially for:
 
-## Repository structure
+1. the real PowerPoint / Slides deck,
+2. your actual camera and microphone,
+3. a 15–30 second recording,
+4. clean-output privacy,
+5. the downloaded video on your machine.
 
-```text
-wakanda-studio/
-├── index.html
-├── README.md
-├── GITHUB_UPLOAD_GUIDE.md
-├── PRODUCT_STORY.md
-├── TEST_CHECKLIST.md
-├── CHANGELOG.md
-├── sample-notes.md
-├── .gitignore
-└── .nojekyll
-```
+## Current boundaries
 
-## Browser and privacy notes
+Wakanda Studio V4 deliberately does **not** try to be:
 
-- Wakanda Studio runs in the browser.
-- Presentation files and speaker notes are processed locally in the browser in the current version.
-- Speaker notes/preferences may be stored in browser `localStorage` for convenience.
-- Recordings are created locally and are not automatically uploaded to Loom or another service.
-- Camera and microphone permissions are controlled by the browser.
+- a full video editor,
+- a PowerPoint animation engine,
+- a generative-AI dashboard,
+- a camera-effects app,
+- an analytics suite full of vanity scores.
 
-## Current limitations
+The final scope is focused on helping a presenter deliver better.
 
-- Direct `.pptx` rendering is not supported yet. Export PowerPoint/Google Slides to PDF first.
-- PDF rendering currently uses Mozilla PDF.js from a CDN, so internet access is required when the app first loads.
-- Browser recording format depends on browser support; Chrome/Edge will normally produce WebM.
-- Presentation animations and PowerPoint transitions are not reproduced from a PDF.
-- There is no cloud account, project sync, or direct Loom upload yet.
+## Third-party libraries
 
-## Product evolution
+V4 currently loads the following browser libraries from jsDelivr:
 
-- **V0:** core proof of concept — presentation + notes + camera/mic.
-- **V1:** teleprompter pacing, countdown, camera controls, pause/resume.
-- **V2:** internal clean-output recording architecture and rehearsal/review flow.
-- **V2.1:** reliability fixes and macOS-inspired visual redesign.
-- **V3:** drag-and-drop, slide thumbnails, per-slide note editor, and microphone playback test.
+- Mozilla PDF.js
+- `@aiden0z/pptx-renderer`
+- JSZip
+- html2canvas
 
-See [`CHANGELOG.md`](CHANGELOG.md) for details. Before an important recording, run the short checks in [`TEST_CHECKLIST.md`](TEST_CHECKLIST.md).
+Their respective licenses and terms remain with their authors/projects.
 
-## Roadmap ideas
+---
 
-- Direct PPTX import.
-- Slide-level retakes and automatic stitching.
-- Local silence trimming.
-- AI script shortening and rewriting through a secure backend.
-- Presentation-specific project saving.
-- Cloud sharing and collaboration.
-- Optional Loom or video-hosting integration.
-
-## Product story
-
-The problem statement, product decisions, architecture, iteration history, and roadmap are documented in [`PRODUCT_STORY.md`](PRODUCT_STORY.md). This is useful if you are reviewing Wakanda Studio as a portfolio/product-management project.
-
-## License
-
-No open-source license is included yet. That is intentional: the repository owner can decide later whether the product should remain all-rights-reserved or be released under an open-source license such as MIT.
+**Wakanda Studio V4**  
+*Import. Prepare. Rehearse. Present. Improve.*

@@ -1,53 +1,61 @@
-# Changelog
+# Wakanda Studio — Changelog
+
+## V4.0 — Final presentation-performance release
+
+### Product model
+- Reframed Wakanda from a presentation recorder into a presentation performance studio.
+- Added five-stage workflow: Import → Prepare → Rehearse → Present → Review.
+- Added Live Present alongside Record.
+
+### Import
+- Added PowerPoint `.pptx` rendering.
+- Added PowerPoint speaker-note extraction.
+- Added Google Slides OAuth import path.
+- Added shared/public Google Slides URL bridge for Node deployment.
+- Retained PDF and JPG/PNG support.
+
+### Timing / rehearsal
+- Added duration presets 5 / 7 / 10 / 15 / 20 minutes and custom target.
+- Added per-slide timing plan.
+- Added expected finish vs target.
+- Added live ahead/behind pacing.
+- Made outcome metrics primary and WPM secondary.
+
+### Private Guidance
+- Added richer cue types: reminder, cue, pause, transition, slow.
+- Added focus reading lane.
+- Added opacity control.
+- Retained manual and auto-paced scrolling.
+
+### Present
+- Added minimal performance mode.
+- Added visible Pause / Stop controls in performance mode.
+- Added clean Audience View for live presenting.
+- Retained internal clean recording architecture.
+
+### Review
+- Added take management.
+- Added target vs actual timing.
+- Added best-take marking.
+
+### Reliability
+- Added last-session presentation restoration.
+- Added progressive recording-chunk protection and recovery.
+- Improved device-disconnect behavior.
+- Locked risky settings during active sessions.
+- Added guards against repeated session starts.
+
+### UI/UX
+- Refined restrained macOS-inspired visual system.
+- Reduced control-panel feel by exposing settings contextually.
+- Added clearer source selection, preflight, and performance status.
 
 ## V3
-
-- Added drag-and-drop presentation import.
-- Added drag-and-drop Markdown/TXT speaker-note import.
-- Added clickable slide thumbnail navigator.
-- Added current-slide notes editor.
-- Added 5-second microphone recording/playback test.
-- Added privacy indicator and slide-dock controls.
-- Added GitHub-ready repository documentation.
-- Added stale-load protection for presentation and media requests.
-- Locked setup-changing controls during countdown/rehearsal/recording.
-- Added safer recording-stream cleanup and empty-recording detection.
-- Added camera/microphone disconnect handling.
-- Added sample notes and product-story documentation.
-
-## V2.1
-
-- Redesigned the UI with a macOS-inspired visual language.
-- Fixed media readiness after failed permission/device requests.
-- Fixed final session duration handling.
-- Improved pause/resume behavior for teleprompter scrolling.
-- Improved failed presentation-load reset behavior.
-- Added safer rounded-corner canvas rendering.
-- Added modal close shortcut with Escape.
-- Improved preview and recording animation-loop coordination.
+- Added slide thumbnails, drag-and-drop, per-slide note editing, microphone playback test, stronger reliability, and GitHub packaging.
 
 ## V2
-
-- Replaced screen/window capture with internal clean-output composition.
-- Added rehearsal mode.
-- Added automatic PDF slide count.
-- Added clean-output preview.
-- Added recording review flow.
-- Added 720p/1080p output selection.
-- Added preference and note autosave.
+- Replaced screen/window capture workflow with internal canvas recording.
+- Added rehearsal, pacing, clean preview, pause/resume, and camera controls.
 
 ## V1
-
-- Added target-duration pacing.
-- Added auto-scroll and slide-sync teleprompter modes.
-- Added countdown and pause/resume.
-- Added camera placement and sizing controls.
-- Added live microphone-health feedback.
-
-## V0
-
-- Initial proof of concept.
-- Presentation upload.
-- Speaker-note upload.
-- Camera/microphone capture.
-- Private teleprompter concept.
+- Initial presentation + private teleprompter + camera/mic recording proof of concept.

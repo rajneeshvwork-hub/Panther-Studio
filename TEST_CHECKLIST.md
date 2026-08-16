@@ -1,102 +1,202 @@
-# Wakanda Studio V3 — Manual Test Checklist
+# Wakanda Studio V4 — Final QA Checklist
 
-Use this checklist after publishing to GitHub Pages and before relying on Wakanda Studio for an important recording.
+Use this before calling a deployment production-ready or using it for an important presentation.
 
-## A. App launch
+## 1. Launch
 
-- [ ] Open the live GitHub Pages URL in desktop Chrome or Edge.
-- [ ] Confirm the Wakanda Studio V3 interface loads without a blank screen.
-- [ ] Confirm the setup checklist starts at `Setup 0/3` on a fresh browser.
+- [ ] App loads without a blank screen.
+- [ ] Import workflow is selected by default.
+- [ ] No unexpected browser console errors appear.
+- [ ] Desktop/mobile warning behaves appropriately at narrow widths.
 
-## B. Presentation
+## 2. PDF import
 
-- [ ] Drag a PDF onto the Presentation drop zone.
-- [ ] Confirm the PDF loads and the slide count is detected.
-- [ ] Confirm the main stage shows Slide 1.
-- [ ] Confirm thumbnails appear in the slide navigator.
-- [ ] Click a thumbnail and confirm the correct slide opens.
-- [ ] Test the Previous/Next buttons and left/right arrow keys.
+- [ ] Drop a real PDF into the import area.
+- [ ] Correct slide count appears.
+- [ ] Slide 1 renders correctly.
+- [ ] Thumbnails render.
+- [ ] Clicking thumbnails changes slide.
+- [ ] Previous / Next works.
 
-## C. Speaker notes
+## 3. PowerPoint import
 
-- [ ] Drag `sample-notes.md` onto the speaker-note drop zone.
-- [ ] Confirm word count and estimated time update.
-- [ ] Confirm Slide 1 notes appear in the teleprompter.
-- [ ] Change slides and confirm slide-aware notes change.
-- [ ] Edit the current slide notes and save them.
-- [ ] Confirm the teleprompter updates.
-- [ ] Test Slide Sync and Continuous modes.
+Test at least one real `.pptx` used in your portfolio/course.
 
-## D. Teleprompter and timing
+- [ ] PPTX imports without crashing.
+- [ ] Correct slide count appears.
+- [ ] Fonts/text are reasonably faithful.
+- [ ] Images/charts render acceptably.
+- [ ] Thumbnails render.
+- [ ] Slide switching remains responsive.
+- [ ] Existing PowerPoint speaker notes import when present.
+- [ ] Recording preview matches the rendered slide closely.
 
-- [ ] Change WPM and confirm estimated time changes.
-- [ ] Set a 5-minute target and press **Fit pace to target**.
-- [ ] Start/pause auto-scroll with Space.
-- [ ] Manually scroll notes with the mouse wheel.
-- [ ] Change teleprompter position and text size.
-- [ ] Test Focus mode.
+If a complex deck renders incorrectly, export it to PDF and confirm PDF fallback works.
 
-## E. Camera and microphone
+## 4. Google Slides
 
-- [ ] Click **Enable camera & mic**.
-- [ ] Approve browser permissions.
-- [ ] Confirm the camera preview appears.
-- [ ] Speak normally and confirm the mic-health indicator responds.
-- [ ] Record the 5-second microphone test.
-- [ ] Play it back and confirm the voice is clear and at a reasonable level.
-- [ ] Test camera size, shape, and position.
+### OAuth path
+- [ ] Google OAuth Client ID is configured.
+- [ ] Connect Google opens authentication.
+- [ ] Private presentation imports.
+- [ ] Speaker notes import.
+- [ ] Slides render from exported PDF.
 
-## F. Clean-output privacy
+### Shared-link path
+- [ ] App is running through `npm start` / Node deployment.
+- [ ] Public/shareable presentation URL imports.
+- [ ] A non-shareable deck gives a helpful error instead of silently failing.
 
-- [ ] Click **Preview clean output**.
-- [ ] Confirm the preview contains only the slide and optional camera bubble.
-- [ ] Confirm the teleprompter is not visible.
-- [ ] Confirm timers, controls, thumbnails, and setup sidebar are not visible.
+## 5. Private Guidance
 
-## G. Rehearsal
+- [ ] Upload Markdown notes.
+- [ ] Paste notes manually.
+- [ ] `## Slide N` mapping works.
+- [ ] Per-slide editor updates current notes.
+- [ ] `[REMINDER]` appears as a reminder cue.
+- [ ] `[CUE]`, `[PAUSE]`, `[TRANSITION]`, `[SLOW]` render clearly.
+- [ ] Continuous mode works.
+- [ ] Slide-sync mode works.
 
-- [ ] Start a rehearsal.
-- [ ] Confirm countdown works.
-- [ ] Confirm timer starts after the countdown.
-- [ ] Pause and resume the rehearsal.
-- [ ] Confirm auto-scroll does not unexpectedly restart if it was manually stopped before pausing.
-- [ ] Stop the rehearsal and confirm a final rehearsal time is shown.
+## 6. Timing
 
-## H. Recording
+- [ ] 5-minute preset works.
+- [ ] 7-minute preset works.
+- [ ] 10-minute preset works.
+- [ ] 15 / 20-minute presets work.
+- [ ] Custom target works.
+- [ ] Estimated finish updates with notes.
+- [ ] Per-slide timing plan adds up sensibly.
+- [ ] Ahead / behind indicator changes during rehearsal.
 
-Start with a short 10–20 second test recording.
+## 7. Teleprompter
 
-- [ ] Click Record.
-- [ ] Confirm the countdown prevents accidental double-starts.
-- [ ] Advance at least two slides.
-- [ ] Pause and resume once.
-- [ ] Stop and review.
-- [ ] Confirm the review video plays.
-- [ ] Confirm microphone audio is present.
-- [ ] Confirm speaker notes and presenter controls are absent.
-- [ ] Download the test recording.
-- [ ] Open the downloaded file locally and play it once more.
+- [ ] Manual scroll works.
+- [ ] Auto pace works.
+- [ ] Mouse wheel cancels auto-scroll safely.
+- [ ] Font size control works.
+- [ ] Opacity control works.
+- [ ] Top/middle/bottom position works.
+- [ ] Reading lane/focus line remains legible.
+- [ ] Hide/show notes works.
 
-## I. Retake
+## 8. Camera + microphone
 
-- [ ] Click Retake.
-- [ ] Confirm the presentation returns to Slide 1.
-- [ ] Confirm notes restart correctly.
-- [ ] Confirm another recording can be started normally.
+Use the real device setup you expect to use.
 
-## J. Browser refresh / local save
+- [ ] Camera permission prompt succeeds.
+- [ ] Microphone permission prompt succeeds.
+- [ ] Device selectors populate after permission.
+- [ ] Selected camera works.
+- [ ] Selected microphone works.
+- [ ] Mic meter reacts to speech.
+- [ ] Too-quiet warning is reasonable.
+- [ ] Clipping warning appears when deliberately speaking too loudly.
+- [ ] 5-second audio test records.
+- [ ] Test playback has clear audio.
 
-- [ ] Refresh the app.
-- [ ] Confirm speaker notes/settings saved by the app are restored where expected.
-- [ ] Remember that presentation files and media permissions must be reselected/re-enabled after a browser refresh.
+## 9. Preflight
 
-## Pass criteria
+- [ ] Presentation status is accurate.
+- [ ] Guidance status is accurate.
+- [ ] Camera/mic status is accurate.
+- [ ] Audio status is accurate.
+- [ ] Timing status is accurate.
+- [ ] Recording quality status is accurate.
 
-Wakanda Studio is ready for an important assignment when:
+## 10. Rehearsal
 
-- a PDF loads correctly;
-- notes stay synchronized;
-- the microphone test sounds clear;
-- the clean-output preview contains no presenter-only UI;
-- a short recorded test plays with both video and audio;
-- the downloaded recording also plays correctly outside the browser.
+- [ ] Rehearsal countdown works.
+- [ ] App enters minimal performance mode.
+- [ ] Timer runs.
+- [ ] Private Guidance scrolls.
+- [ ] Slide navigation remains available.
+- [ ] Pause remains visible.
+- [ ] Stop remains visible.
+- [ ] Stop returns safely to normal UI.
+
+## 11. Clean recording privacy — critical
+
+Record a 15–30 second test.
+
+- [ ] Final video contains the slide.
+- [ ] Final video contains camera if enabled.
+- [ ] Final video contains microphone audio.
+- [ ] Private Guidance is **not** visible.
+- [ ] Sidebar is **not** visible.
+- [ ] Timer/pacing is **not** visible.
+- [ ] Buttons are **not** visible.
+- [ ] Slide thumbnails are **not** visible.
+
+Do not skip this test.
+
+## 12. Recording controls
+
+- [ ] Countdown works.
+- [ ] Double-clicking Record does not create two sessions.
+- [ ] Pause pauses the recording.
+- [ ] Resume resumes it.
+- [ ] Stop completes the recording.
+- [ ] Duration in Review is correct.
+- [ ] Download works.
+- [ ] Downloaded file plays in a local video player/browser.
+
+## 13. Live Present
+
+- [ ] Audience View opens.
+- [ ] Audience View contains no private guidance.
+- [ ] Next / previous updates Audience View.
+- [ ] Presenter keeps timing/guidance privately.
+- [ ] Pause / Stop remains reachable.
+- [ ] Closing Audience View does not crash Wakanda.
+
+## 14. Takes
+
+- [ ] New recording appears as a take.
+- [ ] Take can play.
+- [ ] Take can download.
+- [ ] Mark Best works.
+- [ ] Delete works.
+- [ ] Multiple takes do not break the Review layout.
+
+## 15. Recovery
+
+### Session
+- [ ] Import a deck and add notes.
+- [ ] Refresh page.
+- [ ] Restore-last-session option appears where supported.
+- [ ] Presentation can be restored.
+- [ ] Notes/settings are restored.
+
+### Recording protection
+- [ ] Start a short recording.
+- [ ] Confirm chunks are progressively persisted.
+- [ ] Simulate interrupted session only in a safe test.
+- [ ] Recovery prompt appears on next launch.
+- [ ] Recovered recording can be downloaded/playback tested.
+
+## 16. Device interruption
+
+- [ ] Disconnect/disable microphone during a test session if safe.
+- [ ] Wakanda warns the presenter.
+- [ ] Recording pauses rather than silently continuing with broken audio.
+
+## 17. GitHub Pages deployment
+
+- [ ] Live URL loads through HTTPS.
+- [ ] PDF import works.
+- [ ] PPTX import works.
+- [ ] Camera/mic works.
+- [ ] Recording works.
+- [ ] CDN libraries load without CSP/network errors.
+
+## Final release gate
+
+Before sharing Wakanda Studio publicly:
+
+- [ ] One real assignment/presentation completed end-to-end.
+- [ ] One PPTX tested.
+- [ ] One PDF tested.
+- [ ] One 1080p video downloaded and watched fully.
+- [ ] Private Guidance verified absent from final video.
+- [ ] README accurately reflects tested behavior.

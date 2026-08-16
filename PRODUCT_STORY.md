@@ -2,131 +2,183 @@
 
 ## The problem
 
-Short recorded presentations often involve several tools at once: presentation software, a camera, a microphone, speaker notes, a timer, and a screen recorder. The presenter must remember the script, manage slide changes, stay within a strict time limit, and maintain eye contact.
+The project began with a very specific frustration: recording a short presentation while trying to remember a script, manage slides, maintain eye contact, monitor time, and avoid inconsistent audio.
 
-A common workaround is to place notes somewhere on-screen while a screen recorder captures the presentation. This creates a new risk: the notes may be visible in the final recording.
+A conventional workflow often requires several separate tools or windows:
 
-Wakanda Studio was conceived around a simple product principle:
+- presentation software,
+- speaker notes,
+- camera and microphone,
+- screen recorder,
+- timer,
+- rehearsal,
+- final video review.
 
-> **The presenter should be able to see more than the audience sees.**
+The result is cognitive load exactly when the presenter should be focused on communicating.
 
-## Target user
+## Initial hypothesis
 
-The initial user is someone recording short, structured presentations such as:
+The first idea was simple:
 
-- course assignments;
-- product case studies;
-- portfolio walkthroughs;
-- sales/product demos;
-- interview presentations.
+> Put the presentation and a private teleprompter in one interface, but make sure the audience or recording never sees the notes.
 
-The first use case emphasizes a strict target duration, often around five minutes.
+That became the foundation of Wakanda Studio.
 
-## Core job to be done
+## V1 — Proof of concept
 
-**When I need to record a short presentation, help me read my notes, manage my slides, check my audio, and stay within time without exposing my presenter aids in the final video.**
+The first version tested the core interaction:
+
+- upload presentation,
+- add speaker notes,
+- connect camera/mic,
+- read a private teleprompter,
+- create a clean output.
+
+The key learning was that a private teleprompter was useful, but the workflow still felt too much like operating recording software.
+
+## V2 — Clean internal recording
+
+V2 removed the awkward screen-share selection step.
+
+Instead of recording the browser interface, Wakanda Studio began composing a dedicated internal output containing only:
+
+**presentation + camera + microphone**
+
+This made privacy a product architecture decision rather than a UI trick.
+
+## V3 — Usable presenter studio
+
+V3 focused on usability:
+
+- slide thumbnails,
+- drag-and-drop imports,
+- current-slide note editing,
+- microphone testing,
+- stronger session controls,
+- reliability improvements,
+- GitHub-ready packaging,
+- macOS-inspired visual polish.
+
+The product was usable, but it was still fundamentally framed as a recorder with a teleprompter.
+
+## V4 — Presentation performance studio
+
+The final reframing was more important than any individual feature:
+
+> **Loom helps you record a presentation. Wakanda helps you deliver one.**
+
+The user problem is not simply recording. The actual job is to:
+
+1. bring in the deck,
+2. prepare what to say,
+3. rehearse to time,
+4. present or record confidently,
+5. review and improve.
+
+V4 therefore reorganizes the product around:
+
+**Import → Prepare → Rehearse → Present → Review**
+
+## What V4 deliberately adds
+
+### Multi-source presentation import
+
+Users can work with:
+
+- PowerPoint,
+- Google Slides,
+- PDF,
+- slide images.
+
+Existing PowerPoint/Google speaker notes can become Private Guidance instead of forcing users to duplicate work manually.
+
+### Flexible timing
+
+Wakanda Studio is no longer a “5-minute video” tool.
+
+It supports common presets and custom presentation durations. The product translates timing into outcomes such as:
+
+- expected finish,
+- per-slide budget,
+- ahead / behind pace.
+
+### Private Guidance
+
+“Speaker notes” evolved into a richer model:
+
+- script,
+- reminder,
+- cue,
+- pause,
+- transition,
+- slow-down instruction.
+
+The audience never sees these elements.
+
+### Rehearsal intelligence
+
+Rehearsal is treated as a first-class stage rather than an optional Record button without saving.
+
+Wakanda creates a timing plan and helps the presenter understand where time is being spent.
+
+### Live Present
+
+Wakanda is not limited to recorded assignments.
+
+A clean Audience View can be shared on a second display, projector, Zoom, or Meet, while the presenter retains private notes and timing.
+
+### Takes
+
+Instead of treating each recording as disposable, V4 keeps recent takes so users can compare, mark the preferred version, and download the one they want.
+
+## What V4 deliberately does not add
+
+Good product design includes refusal.
+
+V4 does not attempt to become:
+
+- a full video editor,
+- a complete PowerPoint animation engine,
+- an AI scoring dashboard,
+- a webcam-effects product,
+- a giant analytics suite.
+
+Those capabilities would increase complexity without improving the core presentation job enough to justify it.
 
 ## Product principles
 
-### 1. Presenter view and audience view are different
+### 1. What the presenter sees is not what the audience sees
 
-The user can see teleprompter notes, timing, controls, thumbnails, and setup information. The output should include only the content intended for the audience.
+Presenter controls and guidance stay private by architecture.
 
-### 2. Timing should be built into the workflow
+### 2. Reveal complexity only when needed
 
-Rather than manually estimating script length, Wakanda Studio calculates estimated duration and target WPM.
+Configuration belongs in Prepare. Performance-critical information belongs in Present.
 
-### 3. Recording confidence starts before the record button
+### 3. Prevent failed recordings before they happen
 
-Camera setup, microphone health, mic playback test, rehearsal, and clean-output preview reduce the cost of failed takes.
+Audio preflight, camera/mic readiness, timing checks, and recording protection are more valuable than decorative features.
 
-### 4. Interaction should disappear while presenting
+### 4. Timing should be understandable
 
-Clicking/arrow keys move slides. The mouse wheel controls notes. Auto-scroll can reduce manual interaction further.
+“12 seconds behind” is more useful during a presentation than exposing WPM calculations as the primary metric.
 
-## Iteration history
+### 5. AI should be contextual, not ornamental
 
-### V0 — validate the concept
+Future AI should solve specific presentation tasks such as shortening an over-time slide or improving a transition. It should not generate meaningless confidence scores.
 
-The first prototype tested whether a presentation, private notes, camera, and microphone could coexist in one browser workflow.
+## Final positioning
 
-### V1 — make presenting easier
+### Wakanda Studio
 
-Added timing controls, countdown, auto-scroll, camera positioning, pause/resume, and clearer audio feedback.
+**Present better. Not harder.**
 
-### V2 — fix the architecture
+Import your presentation, prepare private guidance, rehearse to time, present live or record, and review your best take — without your audience ever seeing your notes.
 
-The major architectural decision was to stop relying on screen capture of the browser interface.
+## Portfolio value
 
-Instead, Wakanda Studio creates a dedicated recording canvas containing only the slide and camera feed. This makes privacy an architectural property rather than a visual trick.
+The product demonstrates an iterative PM / product-building process:
 
-### V2.1 — make it feel like a product
+**Observed problem → hypothesis → MVP → architectural improvement → UX iteration → scope reduction → final product framing.**
 
-The interface was redesigned with a macOS-inspired visual system and several state-management/reliability issues were fixed.
-
-### V3 — reduce operational friction
-
-V3 adds:
-
-- drag-and-drop file import;
-- slide thumbnails;
-- per-slide note editing;
-- five-second microphone playback testing;
-- improved product/repository packaging.
-
-These features reduce switching between tools and make the app more usable as a complete recording workspace.
-
-## Technical architecture
-
-```text
-Presentation file
-      ↓
-Slide renderer ───────────┐
-                         │
-Camera stream ────────────┤→ Clean recording canvas → MediaRecorder → Video file
-                         │
-Microphone audio ─────────┘
-
-Speaker notes → Teleprompter UI only
-Timer / controls → Presenter UI only
-Slide thumbnails → Presenter UI only
-```
-
-## Success metrics for future testing
-
-Potential product metrics:
-
-- first-attempt successful recording rate;
-- percentage of users completing setup without help;
-- average number of retakes per five-minute presentation;
-- time from opening the app to starting a successful recording;
-- percentage of recordings within ±15 seconds of target duration;
-- percentage of users who use mic test before recording;
-- teleprompter mode preference: slide-sync vs continuous.
-
-## Key risks / open questions
-
-- Does reading the teleprompter still create obvious eye movement?
-- Is auto-scroll predictable enough across different speaking styles?
-- Do users prefer slide-aware scripts or one continuous script?
-- Should camera be optional at setup rather than part of the readiness gate?
-- How should slide-level retakes work without making editing complicated?
-- Is direct PPTX support important enough to justify the rendering complexity?
-
-## Near-term roadmap
-
-### V3.x
-
-- improve drag-and-drop feedback and thumbnail performance;
-- allow reordering image slides;
-- add project reset/new-session action;
-- add a stronger preflight test before recording.
-
-### V4 candidates
-
-- slide-level retakes and stitching;
-- direct PPTX import;
-- local silence trimming;
-- AI script shortening/rewriting through a secure backend;
-- project save/load;
-- optional direct sharing/upload workflow.
+The strongest part of the story is not the number of features. It is the evolution of the product definition itself.

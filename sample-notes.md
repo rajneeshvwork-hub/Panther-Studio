@@ -1,19 +1,24 @@
-# Sample Wakanda Studio Script
-
 ## Slide 1 — Opening
-Hi everyone. In this presentation I’ll walk you through the problem I identified, the approach I used, and the final recommendation.
+Welcome. Today I will walk through the problem, what I learned, and the final recommendation.
+
+[REMINDER] Look at the camera for the first sentence.
 
 ## Slide 2 — Context
-Before jumping into the solution, it’s important to understand the user journey and where the main friction appears.
+The key context is that users are already motivated, but the journey introduces avoidable friction.
 
-## Slide 3 — Problem
-The biggest issue is not a lack of information. It is the amount of effort required to understand what to do next.
+[CUE] Point to the highlighted area on the slide.
 
-## Slide 4 — Analysis
-I evaluated the experience using usability principles, user-flow friction, and the clarity of the interface at each decision point.
+## Slide 3 — Insight
+The biggest insight is not simply that the flow is complex. It is that users have to make too many decisions before they receive enough confidence.
 
-## Slide 5 — Recommendation
-The redesign reduces unnecessary choices, improves hierarchy, and makes the primary action easier to understand.
+[PAUSE] Two seconds.
 
-## Slide 6 — Closing
-To conclude, the goal is not simply to make the interface look cleaner. It is to make the user’s next step feel obvious. Thank you.
+## Slide 4 — Recommendation
+The recommendation simplifies the decision sequence and makes the next action obvious.
+
+[TRANSITION] Now I will show how the redesigned journey changes the experience.
+
+## Slide 5 — Close
+The result is a simpler journey, clearer confidence signals, and a more natural path to completion.
+
+[REMINDER] Slow down for the final sentence.
