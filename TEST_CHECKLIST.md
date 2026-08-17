@@ -1,4 +1,4 @@
-# Wakanda Studio V4 — Final QA Checklist
+# Wakanda Studio V4.2 — Final QA Checklist
 
 Use this before calling a deployment production-ready or using it for an important presentation.
 
@@ -43,6 +43,7 @@ If a complex deck renders incorrectly, export it to PDF and confirm PDF fallback
 - [ ] Slides render from exported PDF.
 
 ### Shared-link path
+- [ ] On GitHub Pages/static hosting, Shared-link import is visibly disabled and explains that the server is required.
 - [ ] App is running through `npm start` / Node deployment.
 - [ ] Public/shareable presentation URL imports.
 - [ ] A non-shareable deck gives a helpful error instead of silently failing.
@@ -132,6 +133,8 @@ Do not skip this test.
 
 ## 12. Recording controls
 
+For a 10–20 minute target, also confirm storage preflight does not show a false error when sufficient browser storage exists.
+
 - [ ] Countdown works.
 - [ ] Double-clicking Record does not create two sessions.
 - [ ] Pause pauses the recording.
@@ -157,7 +160,10 @@ Do not skip this test.
 - [ ] Take can download.
 - [ ] Mark Best works.
 - [ ] Delete works.
+- [ ] Playing an older take updates the Review player and Download target to that same take.
+- [ ] Deleting the Best take promotes a remaining take.
 - [ ] Multiple takes do not break the Review layout.
+- [ ] Long recordings keep a bounded number of in-session Takes to protect memory.
 
 ## 15. Recovery
 
@@ -173,13 +179,15 @@ Do not skip this test.
 - [ ] Confirm chunks are progressively persisted.
 - [ ] Simulate interrupted session only in a safe test.
 - [ ] Recovery prompt appears on next launch.
+- [ ] Starting a new recording is blocked until protected interrupted chunks are recovered.
 - [ ] Recovered recording can be downloaded/playback tested.
 
 ## 16. Device interruption
 
 - [ ] Disconnect/disable microphone during a test session if safe.
 - [ ] Wakanda warns the presenter.
-- [ ] Recording pauses rather than silently continuing with broken audio.
+- [ ] Active recording ends safely and the interrupted take is saved for review/download.
+- [ ] Camera/mic readiness becomes unavailable until media is re-enabled.
 
 ## 17. GitHub Pages deployment
 

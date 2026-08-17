@@ -1,4 +1,4 @@
-# Wakanda Studio V4 — GitHub Upload Guide
+# Wakanda Studio V4.2 — GitHub Upload Guide
 
 This guide is intentionally written for someone who is new to GitHub.
 
@@ -6,12 +6,12 @@ This guide is intentionally written for someone who is new to GitHub.
 
 You do **not** need to create a new repository.
 
-Open your existing `wakanda-studio` repository and upload the V4 files into the repository root.
+Open your existing `wakanda-studio` repository and upload the V4.2 files into the repository root.
 
 When GitHub asks for a commit message, use something like:
 
 ```text
-Wakanda Studio V4 — final release
+Wakanda Studio V4.2 — final stable release
 ```
 
 Choose:
@@ -22,7 +22,7 @@ for this personal project unless you specifically want to practice branches and 
 
 ## Files to upload
 
-Upload the contents of the V4 GitHub-ready ZIP, not the containing folder itself.
+Upload the contents of the V4.2 GitHub-ready ZIP, not the containing folder itself.
 
 Your repository root should look approximately like this:
 
@@ -37,9 +37,11 @@ wakanda-studio/
 ├── GOOGLE_SLIDES_SETUP.md
 ├── GITHUB_UPLOAD_GUIDE.md
 ├── config.js
+├── config.example.js
 ├── server.js
 ├── package.json
 ├── sample-notes.md
+├── THIRD_PARTY_NOTICES.md
 └── .gitignore
 ```
 
@@ -82,7 +84,7 @@ The static GitHub Pages version supports the core product:
 
 It can also support **Connect Google** after you configure a Google OAuth Client ID correctly.
 
-## One V4 feature that GitHub Pages cannot host by itself
+## One V4.2 feature that GitHub Pages cannot host by itself
 
 The shared/public Google Slides URL bridge is implemented in:
 
@@ -134,7 +136,7 @@ javascript
 portfolio-project
 ```
 
-## After V4 is live
+## After V4.2 is live
 
 Do one real-world test before sharing the project widely:
 

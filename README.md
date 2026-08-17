@@ -1,10 +1,10 @@
-# Wakanda Studio V4
+# Wakanda Studio V4.2
 
 > **Present better. Not harder.**
 
 Wakanda Studio is a presentation performance workspace that helps you **prepare, rehearse, present, record, and improve** without exposing your private guidance to the audience.
 
-V4 moves beyond the original teleprompter-recorder concept. The product is organized around the complete presentation workflow:
+V4.2 is the final stability release for the V4 presentation-performance model. V4 moved beyond the original teleprompter-recorder concept. The product is organized around the complete presentation workflow:
 
 **Import → Prepare → Rehearse → Present → Review**
 
@@ -22,7 +22,7 @@ Wakanda Studio is designed for the moment when you already have a deck but still
 - present live without sharing your notes,
 - compare takes before choosing the final one.
 
-## V4 highlights
+## V4.2 highlights
 
 ### Import
 - **PowerPoint `.pptx`** import with browser-side slide rendering.
@@ -41,8 +41,11 @@ Wakanda Studio is designed for the moment when you already have a deck but still
 - Guidance cues such as `[REMINDER]`, `[CUE]`, `[PAUSE]`, `[TRANSITION]`, and `[SLOW]`.
 - Duration presets: **5, 7, 10, 15, 20 minutes** plus custom duration.
 - Automatic timing estimate and per-slide time budget.
-- Camera position / size / shape controls.
-- Private guidance position, opacity, font size, and reading-line controls.
+- **Floating camera bubble**: drag it anywhere inside the stage and resize it from the lower-right handle. Its exact stage-relative placement is mirrored into the recording.
+- Camera presets remain available, but dragging/resizing automatically switches to Custom layout.
+- **Floating Private Guidance**: drag its header to move it and resize the panel from its lower-right handle.
+- Private guidance opacity, font size, focus line, and reading controls remain available.
+- A **Reset layout** action restores sensible camera + guidance defaults.
 
 ### Rehearse
 - Rehearsal without recording.
@@ -82,6 +85,22 @@ Two performance modes:
 - Can recover protected chunks after an interrupted session.
 - Warns when camera or microphone access fails or disconnects.
 - Locks risky setup changes while a presentation session is active.
+
+## V4.2 final stability patch
+
+V4.2 incorporates the V4.1 floating-workspace fixes and closes the final reliability gaps found in release scanning:
+
+- camera and Private Guidance remain freely draggable/resizable and persist across sessions,
+- a camera or microphone disconnect now safely ends and saves an interrupted recording instead of promising an unreliable resume,
+- recording chunks are progressively persisted without permanently duplicating the whole take in RAM, with in-memory fallback if IndexedDB writes fail,
+- storage capacity is checked before long protected recordings where browser estimates are available,
+- recoverable interrupted chunks must be recovered before a new recording can overwrite them,
+- session Take retention is bounded to reduce memory pressure on long recordings,
+- opening an older Take now updates the Review player **and** its Download target correctly,
+- deleting the Best take automatically promotes a remaining take,
+- static hosting detects that the shared-link Google bridge is unavailable and disables that option instead of failing after the click,
+- timing no longer displays a misleading negative zero,
+- the Node server handles `HEAD` correctly and reports V4.2 health/version metadata.
 
 ## Privacy model
 
@@ -138,7 +157,7 @@ This only works when Google permits export without interactive authentication.
 
 ### Recommended
 
-Requires **Node.js 20+**.
+Requires **Node.js 18+**.
 
 ```bash
 npm start
@@ -222,7 +241,7 @@ Use `TEST_CHECKLIST.md`, especially for:
 
 ## Current boundaries
 
-Wakanda Studio V4 deliberately does **not** try to be:
+Wakanda Studio V4.2 deliberately does **not** try to be:
 
 - a full video editor,
 - a PowerPoint animation engine,
@@ -234,7 +253,7 @@ The final scope is focused on helping a presenter deliver better.
 
 ## Third-party libraries
 
-V4 currently loads the following browser libraries from jsDelivr:
+V4.2 currently loads the following browser libraries from jsDelivr:
 
 - Mozilla PDF.js
 - `@aiden0z/pptx-renderer`

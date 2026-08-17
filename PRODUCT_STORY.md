@@ -61,7 +61,7 @@ V3 focused on usability:
 
 The product was usable, but it was still fundamentally framed as a recorder with a teleprompter.
 
-## V4 — Presentation performance studio
+## V4 / V4.1 / V4.2 — Presentation performance studio
 
 The final reframing was more important than any individual feature:
 
@@ -182,3 +182,12 @@ The product demonstrates an iterative PM / product-building process:
 **Observed problem → hypothesis → MVP → architectural improvement → UX iteration → scope reduction → final product framing.**
 
 The strongest part of the story is not the number of features. It is the evolution of the product definition itself.
+
+## V4.1 usability refinement
+
+Post-V4 testing revealed that fixed camera and guidance placements still forced presenters to adapt to the software. V4.1 makes both presenter overlays spatially flexible: the camera can be dragged/resized with its geometry mirrored into the clean recording, while Private Guidance can be moved/resized independently and remains private. The iteration also corrected missing deployment files in the V4 package.
+
+
+## V4.2 — Final stability release
+
+V4.2 was driven by release scanning rather than feature expansion. The focus was making long-session recording safer, making hardware interruptions truthful and recoverable, bounding browser memory use, correcting Take review/download behavior, and making static-host limitations visible before a user clicks a feature that cannot work.

@@ -1,4 +1,4 @@
-# Wakanda Studio V4 — Google Slides Setup
+# Wakanda Studio V4.2 — Google Slides Setup
 
 Google Slides integration is optional. Wakanda Studio remains usable with PowerPoint, PDF, and image decks without configuring Google.
 
@@ -113,3 +113,8 @@ Confirm Drive API is enabled and the user/deck permissions allow export.
 ### Shared-link import returns 403
 
 The presentation is not exportable anonymously. Use Connect Google instead.
+
+
+## Static hosting behavior
+
+On GitHub Pages or another static-only host, Wakanda automatically checks for `/api/health`. If the Node bridge is not present, **Import shared link** is disabled instead of allowing a guaranteed failed request. Authenticated **Connect Google** can still work when `config.js` contains a valid browser OAuth Client ID and the hosting origin is authorized in Google Cloud.

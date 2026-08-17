@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="theme-color" content="#0b0f17" />
-<title>Wakanda Studio V4 — Presentation Performance Studio</title>
+<title>Wakanda Studio V4.2 — Presentation Performance Studio</title>
 <script src="./config.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
@@ -188,19 +188,27 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 .empty-slide{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#8593a9;padding:24px;pointer-events:none;z-index:2}
 .empty-slide b{color:#e5ebf5;font-size:20px;letter-spacing:-.03em}
 .stage-badge{position:absolute;top:14px;left:14px;z-index:7;background:rgba(7,11,19,.55);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:10px;color:#d8e1ef;backdrop-filter:blur(12px)}
-.camera-bubble{position:absolute;right:20px;bottom:20px;width:180px;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,.88);background:#111827;box-shadow:0 18px 48px rgba(0,0,0,.38);z-index:6}
-.camera-bubble.circle{aspect-ratio:1;border-radius:50%}
-.camera-bubble video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.camera-bubble{position:absolute;left:77%;top:72%;width:18%;height:20%;border-radius:18px;overflow:hidden;border:2px solid rgba(255,255,255,.88);background:#111827;box-shadow:0 18px 48px rgba(0,0,0,.38);z-index:8;cursor:grab;touch-action:none;user-select:none;min-width:90px;min-height:56px}
+.camera-bubble.dragging,.teleprompter.dragging{cursor:grabbing;transition:none!important}
+.camera-bubble.circle{border-radius:50%}
+.camera-bubble video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);pointer-events:none}
+.float-grip{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:34px;height:5px;border-radius:999px;background:rgba(255,255,255,.58);box-shadow:0 1px 4px rgba(0,0,0,.35);opacity:.35;z-index:12;pointer-events:none;transition:opacity .15s ease}
+.camera-bubble:hover .float-grip,.teleprompter:hover .float-grip{opacity:.9}
+.resize-handle{position:absolute;right:4px;bottom:4px;width:18px;height:18px;z-index:14;cursor:nwse-resize;touch-action:none;border-radius:6px;background:linear-gradient(135deg,transparent 0 44%,rgba(255,255,255,.82) 45% 54%,transparent 55% 67%,rgba(255,255,255,.5) 68% 77%,transparent 78%);opacity:.65}
+.resize-handle:hover{opacity:1}
 .teleprompter{
-  position:absolute;left:6%;right:6%;bottom:5%;height:38%;z-index:5;
+  position:absolute;left:6%;top:57%;width:88%;height:38%;z-index:7;
   border-radius:22px;border:1px solid rgba(255,255,255,.12);
   background:linear-gradient(180deg, rgba(5,9,16,.1), rgba(5,9,16,.9));
   backdrop-filter:blur(12px) saturate(130%);
   box-shadow:0 18px 60px rgba(0,0,0,.32);
-  overflow:hidden;transition:.18s ease;
+  overflow:hidden;transition:box-shadow .18s ease,border-color .18s ease,opacity .18s ease;
+  min-width:260px;min-height:140px;
 }
-.teleprompter.top{top:5%;bottom:auto}.teleprompter.middle{top:31%;bottom:auto}.teleprompter.hidden{display:none}
-.tele-head{position:absolute;top:0;left:0;right:0;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:10px;color:#b2bfd5;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(180deg, rgba(6,10,18,.9), transparent);z-index:3}
+.teleprompter:hover{border-color:rgba(124,192,255,.24);box-shadow:0 22px 70px rgba(0,0,0,.38)}
+.teleprompter.hidden{display:none}
+.tele-head{position:absolute;top:0;left:0;right:0;height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 42px 0 14px;font-size:10px;color:#b2bfd5;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(180deg, rgba(6,10,18,.92), transparent);z-index:5;cursor:grab;touch-action:none;user-select:none}
+.tele-head:active{cursor:grabbing}
 .notes-viewport{height:100%;overflow:auto;padding:48px 30px 90px;mask-image:linear-gradient(to bottom, transparent 0, #000 12%, #000 86%, transparent 100%);scroll-behavior:auto}
 .notes-text{white-space:pre-wrap;line-height:1.54;font-size:29px;font-weight:560;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.76);letter-spacing:-.01em}
 .focus-band{position:absolute;left:4%;right:4%;top:43%;height:56px;border-top:1px solid rgba(124,192,255,.34);border-bottom:1px solid rgba(124,192,255,.34);background:rgba(124,192,255,.05);pointer-events:none;z-index:2}
@@ -257,7 +265,7 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 .privacy-chip i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(121,226,175,.09)}
 @media(max-width:1060px){.thumb-dock{display:none}}
 
-/* V4 workflow + performance layer */
+/* V4.2 workflow + floating performance layer */
 .workflow-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 12px;padding:5px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.12);position:sticky;top:-18px;z-index:20;backdrop-filter:blur(18px)}
 .flow-btn{padding:8px 3px;border-radius:11px;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;box-shadow:none;color:var(--muted)}
 .flow-btn span{width:19px;height:19px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.055);font-size:9px}
@@ -283,7 +291,6 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
 #recordCanvas{display:none}
 @media (max-width:1180px){
   .app{grid-template-columns:330px minmax(0,1fr)}
-  .camera-bubble{width:150px}
   .hint{display:none}
 }
 .mobile-warning{display:none;position:fixed;inset:0;z-index:150;background:rgba(5,8,14,.92);backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:22px}
@@ -292,7 +299,6 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
   .mobile-warning{display:flex}
   .app{grid-template-columns:1fr}
   aside{display:none}
-  .camera-bubble{width:136px}
   .notes-text{font-size:22px}
 }
 @media (max-width:720px){
@@ -319,7 +325,7 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
         <div class="brand">
           <div class="logo">W</div>
           <div>
-            <div class="row" style="gap:6px"><h1>Wakanda Studio</h1><span class="badge">V4</span></div>
+            <div class="row" style="gap:6px"><h1>Wakanda Studio</h1><span class="badge">V4.2</span></div>
             <div class="small">Prepare · rehearse · present · improve</div>
           </div>
         </div>
@@ -405,7 +411,7 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
           <div><label>Countdown</label><select id="countdownSelect"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="0">Off</option></select></div>
         </div>
         <div class="two">
-          <div><label>Prompter position</label><select id="prompterPosition"><option value="top">Top · near camera</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option></select></div>
+          <div><label>Prompter position</label><select id="prompterPosition"><option value="top">Top · near camera</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option><option value="custom">Custom</option></select></div>
           <div><label>Focus line</label><select id="focusPosition"><option value="30">High</option><option value="43" selected>Center</option><option value="57">Low</option></select></div>
         </div>
         <div class="two">
@@ -426,8 +432,8 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
         <div class="mic-line"><span class="small">Mic health</span><b id="micHealth">Not tested</b></div>
         <div class="audio-test"><div class="row"><button id="audioTestBtn" class="grow">Record 5-sec mic test</button><span class="pill" id="audioTestState">Not tested</span></div><audio id="audioTestPlayer" controls></audio></div>
         <div class="two">
-          <div><label>Camera position</label><select id="camPosition"><option value="br">Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option></select></div>
-          <div><label>Camera size</label><select id="camSize"><option value="sm">Small</option><option value="md" selected>Medium</option><option value="lg">Large</option></select></div>
+          <div><label>Camera position</label><select id="camPosition"><option value="br">Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option><option value="custom">Custom</option></select></div>
+          <div><label>Camera size</label><select id="camSize"><option value="sm">Small</option><option value="md" selected>Medium</option><option value="lg">Large</option><option value="custom">Custom</option></select></div>
         </div>
         <div class="two"><button id="shapeBtn">Rounded camera</button><button id="cameraToggle">Hide camera</button></div>
         <div id="mediaStatus" class="status">Permissions not requested yet.</div>
@@ -486,11 +492,13 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
             <div id="pptxStage" class="pptx-stage" aria-label="PowerPoint preview"></div><canvas id="slideCanvas" width="1280" height="720" aria-label="Presentation preview"></canvas>
             <div class="empty-slide" id="emptySlide"><div><b>Drop in your presentation</b><br><br>PowerPoint, Google Slides, PDF, JPG and PNG are supported.<br>Camera + slide are recorded internally. Notes remain private.</div></div>
             <div class="stage-badge" id="stageBadge">PRIVATE PRESENTER VIEW</div>
-            <div class="camera-bubble" id="cameraBubble"><video id="cameraPreview" autoplay muted playsinline></video></div>
-            <div class="teleprompter" id="teleprompter">
-              <div class="tele-head"><span>Private guidance · excluded from audience output</span><span class="cue" id="nextCue">Next cue: —</span></div>
+            <div class="camera-bubble" id="cameraBubble" aria-label="Floating camera preview. Drag to move, use the lower-right handle to resize."><div class="float-grip"></div><video id="cameraPreview" autoplay muted playsinline></video><div class="resize-handle" data-resize="camera" title="Resize camera"></div></div>
+            <div class="teleprompter" id="teleprompter" aria-label="Floating private guidance. Drag the header to move and use the lower-right handle to resize.">
+              <div class="tele-head" id="teleDragHandle"><span>Private guidance · drag to move</span><span class="cue" id="nextCue">Next cue: —</span></div>
+              <div class="float-grip"></div>
               <div class="focus-band" id="focusBand"></div>
               <div class="notes-viewport" id="notesViewport"><div class="notes-text" id="notesText">Your speaker notes will appear here.</div></div>
+              <div class="resize-handle" data-resize="prompter" title="Resize private guidance"></div>
             </div>
             <div class="countdown" id="countdown"></div>
           </div>
@@ -508,7 +516,7 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
           <button id="restartNotesBtn">↺ Notes</button>
           <button id="nextBtn">Next →</button>
           <button id="scrollToggle">▶ Auto-scroll</button>
-          <button id="teleToggle">Hide notes</button><button id="performancePauseBtn" class="perf-action" disabled>Pause</button><button id="performanceStopBtn" class="perf-action danger" disabled>Stop</button>
+          <button id="teleToggle">Hide notes</button><button id="resetLayoutBtn" title="Reset floating camera and guidance positions">Reset layout</button><button id="performancePauseBtn" class="perf-action" disabled>Pause</button><button id="performanceStopBtn" class="perf-action danger" disabled>Stop</button>
           <div class="control-group"><label>Speed</label><input id="speedRange" type="range" min="70" max="220" value="130" /><span class="pill" id="speedLabel">130 WPM</span></div>
           <div class="control-group"><label>Text</label><input id="fontRange" type="range" min="18" max="44" value="29" /></div>
           <div class="hint">←/→ slides · Space scroll · R restart notes · P pause · F focus · H hide notes</div>
@@ -573,7 +581,7 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
       <div class="shortcut"><span>Hide notes</span><span class="key">H</span></div>
       <div class="shortcut"><span>Faster/slower</span><span class="key">↑ / ↓</span></div>
       <div class="shortcut"><span>Close modal</span><span class="key">Esc</span></div>
-      <div class="shortcut"><span>Mouse wheel</span><span class="key">Scroll notes</span></div>
+      <div class="shortcut"><span>Mouse wheel</span><span class="key">Scroll notes</span></div><div class="shortcut"><span>Move camera</span><span class="key">Drag bubble</span></div><div class="shortcut"><span>Move guidance</span><span class="key">Drag header</span></div>
     </div>
   </div>
 </div>
@@ -588,12 +596,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@
 const $ = id => document.getElementById(id);
 const E = {
   app:$('app'),mobileWarning:$('mobileWarning'),mobileDismiss:$('mobileDismiss'),sidebar:$('sidebar'),workflowNav:$('workflowNav'),presentationDrop:$('presentationDrop'),presentationInput:$('presentationInput'),presentationStatus:$('presentationStatus'),slideNumber:$('slideNumber'),totalSlides:$('totalSlides'),slideMini:$('slideMini'),slidePill:$('slidePill'),slideCanvas:$('slideCanvas'),pptxStage:$('pptxStage'),emptySlide:$('emptySlide'),slideProgress:$('slideProgress'),pptxSource:$('pptxSource'),googleSource:$('googleSource'),pdfSource:$('pdfSource'),imageSource:$('imageSource'),googleImportBtn:$('googleImportBtn'),
-  notesDrop:$('notesDrop'),notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),slideNotesCard:$('slideNotesCard'),slideNotesLabel:$('slideNotesLabel'),slideNotesEditor:$('slideNotesEditor'),saveSlideNotes:$('saveSlideNotes'),notesMode:$('notesMode'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),nextCue:$('nextCue'),wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),notesStatus:$('notesStatus'),
+  notesDrop:$('notesDrop'),notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),slideNotesCard:$('slideNotesCard'),slideNotesLabel:$('slideNotesLabel'),slideNotesEditor:$('slideNotesEditor'),saveSlideNotes:$('saveSlideNotes'),notesMode:$('notesMode'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),teleDragHandle:$('teleDragHandle'),nextCue:$('nextCue'),wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),notesStatus:$('notesStatus'),
   targetMin:$('targetMin'),durationPresets:$('durationPresets'),countdownSelect:$('countdownSelect'),prompterPosition:$('prompterPosition'),focusPosition:$('focusPosition'),focusBand:$('focusBand'),fitPace:$('fitPace'),autoAdvance:$('autoAdvance'),timingStatus:$('timingStatus'),readingMode:$('readingMode'),opacityRange:$('opacityRange'),paceVerdict:$('paceVerdict'),paceTarget:$('paceTarget'),paceEstimated:$('paceEstimated'),paceDelta:$('paceDelta'),paceList:$('paceList'),rehearseStartBtn:$('rehearseStartBtn'),
   enableMedia:$('enableMedia'),audioTestBtn:$('audioTestBtn'),audioTestState:$('audioTestState'),audioTestPlayer:$('audioTestPlayer'),cameraSelect:$('cameraSelect'),micSelect:$('micSelect'),audioLevel:$('audioLevel'),micHealth:$('micHealth'),mediaStatus:$('mediaStatus'),cameraPreview:$('cameraPreview'),cameraBubble:$('cameraBubble'),camPosition:$('camPosition'),camSize:$('camSize'),shapeBtn:$('shapeBtn'),cameraToggle:$('cameraToggle'),
   quality:$('quality'),recordingName:$('recordingName'),cleanPreviewBtn:$('cleanPreviewBtn'),audienceBtn:$('audienceBtn'),liveBtn:$('liveBtn'),preflight:$('preflight'),practiceBtn:$('practiceBtn'),recordBtn:$('recordBtn'),pauseBtn:$('pauseBtn'),stopBtn:$('stopBtn'),sessionStatus:$('sessionStatus'),takeCount:$('takeCount'),takeList:$('takeList'),
   recDot:$('recDot'),recText:$('recText'),modePill:$('modePill'),thumbToggle:$('thumbToggle'),thumbDock:$('thumbDock'),thumbTrack:$('thumbTrack'),thumbCount:$('thumbCount'),paceLive:$('paceLive'),remaining:$('remaining'),timer:$('timer'),focusBtn:$('focusBtn'),helpBtn:$('helpBtn'),stage:$('stage'),stageBadge:$('stageBadge'),countdown:$('countdown'),
-  prevBtn:$('prevBtn'),nextBtn:$('nextBtn'),restartNotesBtn:$('restartNotesBtn'),scrollToggle:$('scrollToggle'),teleToggle:$('teleToggle'),performancePauseBtn:$('performancePauseBtn'),performanceStopBtn:$('performanceStopBtn'),speedRange:$('speedRange'),speedLabel:$('speedLabel'),fontRange:$('fontRange'),timeProgress:$('timeProgress'),
+  prevBtn:$('prevBtn'),nextBtn:$('nextBtn'),restartNotesBtn:$('restartNotesBtn'),scrollToggle:$('scrollToggle'),teleToggle:$('teleToggle'),resetLayoutBtn:$('resetLayoutBtn'),performancePauseBtn:$('performancePauseBtn'),performanceStopBtn:$('performanceStopBtn'),speedRange:$('speedRange'),speedLabel:$('speedLabel'),fontRange:$('fontRange'),timeProgress:$('timeProgress'),
   recordCanvas:$('recordCanvas'),previewModal:$('previewModal'),previewCanvas:$('previewCanvas'),closePreview:$('closePreview'),reviewModal:$('reviewModal'),reviewVideo:$('reviewVideo'),reviewDuration:$('reviewDuration'),reviewSlides:$('reviewSlides'),reviewWords:$('reviewWords'),reviewTarget:$('reviewTarget'),reviewDelta:$('reviewDelta'),downloadLink:$('downloadLink'),retakeBtn:$('retakeBtn'),closeReview:$('closeReview'),googleModal:$('googleModal'),googleSlidesUrl:$('googleSlidesUrl'),googleConnectBtn:$('googleConnectBtn'),googlePublicBtn:$('googlePublicBtn'),googleStatus:$('googleStatus'),closeGoogle:$('closeGoogle'),
   helpModal:$('helpModal'),closeHelp:$('closeHelp'),toast:$('toast'),checkSlides:$('checkSlides'),checkNotes:$('checkNotes'),checkMedia:$('checkMedia'),checkReady:$('checkReady'),readyTitle:$('readyTitle'),readyText:$('readyText'),sessionRecovery:$('sessionRecovery'),restoreSessionBtn:$('restoreSessionBtn'),recordingRecovery:$('recordingRecovery'),recoverRecordingBtn:$('recoverRecordingBtn')
 };
@@ -602,10 +610,13 @@ let pdfDoc=null,pptxViewer=null,pptxBuffer=null,pptxThumbHandles=[],presentation
 let notesRaw='',notesBySlide=new Map(),continuousNotes='';
 let mediaStream=null,audioCtx=null,analyser=null,meterRAF=null,clipHold=0,mediaRequestToken=0,audioTestRecorder=null,audioTestChunks=[],audioTestUrl=null;
 let cameraHidden=false,cameraCircle=false;
+let cameraLayout={x:.77,y:.72,w:.18,h:.20};
+let prompterLayout={x:.06,y:.57,w:.88,h:.38};
+let floatingInteraction=null;
 let autoScrolling=false,scrollRAF=null,lastScrollTs=0,autoAdvanceArmed=false,scrollWasRunningBeforePause=false;
 let sessionMode='idle',sessionStartedAt=0,pausedAt=0,totalPausedMs=0,lastSessionMs=0,timerInterval=null;
-let recorder=null,recordingStream=null,chunks=[],composeRAF=null,previewRAF=null,lastRecordingUrl=null,maxSlideReached=1;
-let focusMode=false,currentFlow='import',pausedFromMode='practice',audienceWin=null,audienceCanvas=null,takes=[],googleAccessToken=null,protectedSeq=0,chunkWritePromises=[];
+let recorder=null,recordingStream=null,volatileChunks=[],composeRAF=null,previewRAF=null,lastRecordingUrl=null,maxSlideReached=1;
+let focusMode=false,currentFlow='import',pausedFromMode='practice',audienceWin=null,audienceCanvas=null,takes=[],nextTakeNumber=1,googleAccessToken=null,protectedSeq=0,chunkWritePromises=[],recordingProtectionAvailable=false,recordingProtectionFailed=false,recordingProtectionWarned=false,forcedStopReason='',sharedLinkBridgeAvailable=null;
 let plannedSlideSeconds=[];
 
 function setStatus(el,text,cls=''){el.className='status '+cls;el.innerHTML=text}
@@ -636,19 +647,22 @@ function openWakandaDb(){
   wakandaDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open('wakanda-studio-v4',1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('kv'))db.createObjectStore('kv',{keyPath:'key'});if(!db.objectStoreNames.contains('chunks'))db.createObjectStore('chunks',{keyPath:'seq'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}).catch(e=>{console.warn('IndexedDB unavailable',e);return null});
   return wakandaDbPromise;
 }
-async function dbPut(store,value){const db=await openWakandaDb();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)}).catch(e=>console.warn('DB write failed',e))}
+async function dbPut(store,value){const db=await openWakandaDb();if(!db)return false;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)}).catch(e=>{console.warn('DB write failed',e);return false})}
 async function dbGet(store,key){const db=await openWakandaDb();if(!db)return null;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)}).catch(()=>null)}
 async function dbGetAll(store){const db=await openWakandaDb();if(!db)return[];return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)}).catch(()=>[])}
-async function dbClear(store){const db=await openWakandaDb();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)}).catch(()=>{})}
+async function dbClear(store){const db=await openWakandaDb();if(!db)return false;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)}).catch(e=>{console.warn('DB clear failed',e);return false})}
 async function persistPresentation(files){try{await dbPut('kv',{key:'presentation',files:[...files],savedAt:Date.now()});E.sessionRecovery.hidden=false}catch{}}
 async function checkRecovery(){
   const deck=await dbGet('kv','presentation');E.sessionRecovery.hidden=!deck?.files?.length;
   const chunks=await dbGetAll('chunks');E.recordingRecovery.hidden=!chunks.length;
 }
 async function restoreLastPresentation(){const deck=await dbGet('kv','presentation');if(!deck?.files?.length)return toast('No previous deck found');await loadPresentation(deck.files,{persist:false});E.sessionRecovery.hidden=true;toast('Previous deck restored')}
-async function protectChunk(blob){if(!blob?.size)return;const seq=++protectedSeq;return dbPut('chunks',{seq,blob,savedAt:Date.now()})}
+async function protectChunk(seq,blob){if(!blob?.size)return false;return dbPut('chunks',{seq,blob,savedAt:Date.now()})}
 async function recoverProtectedRecording(){
-  const rows=(await dbGetAll('chunks')).sort((a,b)=>a.seq-b.seq);if(!rows.length)return toast('No protected recording found');const type=rows.find(x=>x.blob?.type)?.blob?.type||'video/webm',blob=new Blob(rows.map(x=>x.blob),{type}),url=URL.createObjectURL(blob),filename=`wakanda-recovered-${Date.now()}.webm`;takes.unshift({url,duration:0,delta:0,deltaLabel:'Recovered',filename,best:!takes.length});E.reviewVideo.src=url;E.downloadLink.href=url;E.downloadLink.download=filename;E.reviewDuration.textContent='Recovered';E.reviewSlides.textContent='—';E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(targetSeconds());E.reviewDelta.textContent='Recovered';E.reviewModal.classList.add('show');renderTakeList();await dbClear('chunks');E.recordingRecovery.hidden=true;setFlow('review',{force:true})
+  const rows=(await dbGetAll('chunks')).sort((a,b)=>a.seq-b.seq);if(!rows.length)return toast('No protected recording found');
+  const type=rows.find(x=>x.blob?.type)?.blob?.type||'video/webm',blob=new Blob(rows.map(x=>x.blob),{type}),url=URL.createObjectURL(blob),filename=`wakanda-recovered-${Date.now()}.webm`;
+  const take={url,duration:0,delta:0,deltaLabel:'Recovered',filename,best:!takes.length,number:nextTakeNumber++,slides:'—',words:countWords(notesRaw),target:targetSeconds(),interrupted:true};
+  takes.unshift(take);trimTakes();openTakeReview(take);renderTakeList();await dbClear('chunks');E.recordingRecovery.hidden=true;setFlow('review',{force:true});
 }
 function updateDurationPreset(){
   const v=parseFloat(E.targetMin.value)||0;
@@ -688,7 +702,7 @@ function renderPacePlan(){
   const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,target=targetSeconds(),estimated=words?wpm?words/wpm*60:0:0;
   E.paceTarget.textContent=fmt(target);E.paceEstimated.textContent=fmt(estimated);
   const delta=estimated-target;
-  E.paceDelta.textContent=!words?'—':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`;
+  E.paceDelta.textContent=!words?'—':Math.abs(delta)<.5?'00:00':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`;
   E.paceDelta.style.color=Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';
   E.paceVerdict.textContent=!words?'Add guidance':Math.abs(delta)<=10?'On target':delta>0?'Over target':'Under target';
   buildPlannedSlideSeconds();
@@ -698,7 +712,7 @@ function renderPacePlan(){
     const sw=countWords(noteForSlide(i)==='No notes for this slide.'?'':noteForSlide(i));
     const est=sw/wpm*60,plan=plannedSlideSeconds[i-1]||0,d=est-plan;
     const row=document.createElement('div');row.className='pace-row'+(d>15?' warn':'');
-    row.innerHTML=`<b>S${i}</b><div><div class="bar"><i style="width:${Math.min(100,Math.max(5,plan/Math.max(...plannedSlideSeconds,1)*100))}%"></i></div><span>${sw} words</span></div><span>${fmt(plan)}</span><span style="color:${Math.abs(d)<=8?'var(--good)':d>0?'var(--warn)':'var(--accent)'}">${d>=0?'+':'−'}${fmt(Math.abs(d))}</span>`;
+    row.innerHTML=`<b>S${i}</b><div><div class="bar"><i style="width:${Math.min(100,Math.max(5,plan/Math.max(...plannedSlideSeconds,1)*100))}%"></i></div><span>${sw} words</span></div><span>${fmt(plan)}</span><span style="color:${Math.abs(d)<=8?'var(--good)':d>0?'var(--warn)':'var(--accent)'}">${Math.abs(d)<.5?'00:00':`${d>0?'+':'−'}${fmt(Math.abs(d))}`}</span>`;
     row.addEventListener('click',()=>{currentSlide=i;renderSlide();setFlow('prepare')});
     E.paceList.appendChild(row);
   }
@@ -740,18 +754,67 @@ function openAudienceView(){
   audienceWin.document.close();audienceCanvas=audienceWin.document.getElementById('audienceCanvas');composeAudience();
 }
 function composeAudience(){if(!audienceWin||audienceWin.closed||!audienceCanvas)return;composeOnce(audienceCanvas,false)}
+function trimTakes(){
+  const maxTakes=takes.some(t=>t.duration>=720)?2:3;
+  let removed=0;
+  while(takes.length>maxTakes){
+    let idx=takes.length-1;
+    if(takes[idx]?.best){const alt=[...takes].map((t,i)=>({t,i})).reverse().find(x=>!x.t.best);if(alt)idx=alt.i}
+    const [old]=takes.splice(idx,1);if(old?.url){try{URL.revokeObjectURL(old.url)}catch{}}removed++;
+  }
+  if(removed)toast(`Released ${removed} older take${removed>1?'s':''} to protect browser memory`);
+}
+function openTakeReview(t){
+  if(!t)return;
+  E.reviewVideo.src=t.url;E.downloadLink.href=t.url;E.downloadLink.download=t.filename;
+  E.reviewDuration.textContent=t.duration?fmt(t.duration):'Recovered';
+  E.reviewSlides.textContent=t.slides||'—';E.reviewWords.textContent=t.words??countWords(notesRaw);E.reviewTarget.textContent=fmt(t.target??targetSeconds());
+  E.reviewDelta.textContent=t.deltaLabel||'—';E.reviewDelta.style.color=t.interrupted||t.deltaLabel==='Recovered'?'var(--danger)':Math.abs(t.delta||0)<=10?'var(--good)':Math.abs(t.delta||0)<=45?'var(--warn)':'var(--danger)';
+  E.reviewModal.classList.add('show');
+}
 function renderTakeList(){
   E.takeCount.textContent=`${takes.length} take${takes.length===1?'':'s'}`;
   if(!takes.length){E.takeList.innerHTML='<div class="status">Record a take and it will appear here for comparison.</div>';return}
   E.takeList.innerHTML='';takes.forEach((t,idx)=>{
     const item=document.createElement('div');item.className='take-item';
-    item.innerHTML=`<div class="take-top"><b>Take ${takes.length-idx}${t.best?' ★':''}</b><span>${fmt(t.duration)} · ${t.deltaLabel}</span></div><div class="take-actions"><button data-a="play">Play</button><button data-a="download">Download</button><button data-a="best">${t.best?'Best':'Mark best'}</button><button data-a="delete">Delete</button></div>`;
-    item.querySelector('[data-a="play"]').onclick=()=>{E.reviewVideo.src=t.url;E.reviewModal.classList.add('show')};
+    item.innerHTML=`<div class="take-top"><b>Take ${t.number||takes.length-idx}${t.best?' ★':''}</b><span>${t.duration?fmt(t.duration):'Recovered'} · ${t.deltaLabel}</span></div><div class="take-actions"><button data-a="play">Play</button><button data-a="download">Download</button><button data-a="best">${t.best?'Best':'Mark best'}</button><button data-a="delete">Delete</button></div>`;
+    item.querySelector('[data-a="play"]').onclick=()=>openTakeReview(t);
     item.querySelector('[data-a="download"]').onclick=()=>{const a=document.createElement('a');a.href=t.url;a.download=t.filename;a.click()};
     item.querySelector('[data-a="best"]').onclick=()=>{takes.forEach(x=>x.best=false);t.best=true;renderTakeList()};
-    item.querySelector('[data-a="delete"]').onclick=()=>{URL.revokeObjectURL(t.url);takes=takes.filter(x=>x!==t);renderTakeList()};
+    item.querySelector('[data-a="delete"]').onclick=()=>{try{URL.revokeObjectURL(t.url)}catch{}takes=takes.filter(x=>x!==t);if(takes.length&&!takes.some(x=>x.best))takes[0].best=true;renderTakeList()};
     E.takeList.appendChild(item);
   })
+}
+async function detectSharedLinkBridge(){
+  try{
+    const r=await fetch('/api/health',{cache:'no-store'});
+    if(!r.ok)throw new Error('No bridge');
+    const data=await r.json();
+    sharedLinkBridgeAvailable=!!data?.ok;
+  }catch{sharedLinkBridgeAvailable=false}
+  E.googlePublicBtn.disabled=!sharedLinkBridgeAvailable;
+  E.googlePublicBtn.textContent=sharedLinkBridgeAvailable?'Import shared link':'Shared link · server required';
+  E.googlePublicBtn.title=sharedLinkBridgeAvailable?'Import a publicly shared Google Slides deck':"This option needs Wakanda's included Node server. Connect Google still works on HTTPS/static hosting when OAuth is configured.";
+  return sharedLinkBridgeAvailable;
+}
+async function ensureRecordingCapacity(){
+  recordingProtectionAvailable=!!(await openWakandaDb());
+  if(!recordingProtectionAvailable)return true;
+  if(!navigator.storage?.estimate)return true;
+  try{
+    const {quota=0,usage=0}=await navigator.storage.estimate();
+    if(!quota)return true;
+    const bitrate=E.quality.value==='1080'?7200000:4400000;
+    const expectedBytes=bitrate/8*targetSeconds();
+    const free=Math.max(0,quota-usage);
+    if(free<expectedBytes*1.2){
+      const need=Math.ceil(expectedBytes*1.2/1024/1024),avail=Math.floor(free/1024/1024);
+      setStatus(E.sessionStatus,`Recording Protection may need about <b>${need} MB</b>, but only about <b>${avail} MB</b> is available. Free browser storage, shorten the target, or switch to 720p.`,'danger');
+      toast('Not enough browser storage for a protected take');
+      return false;
+    }
+  }catch(e){console.warn('Storage estimate unavailable',e)}
+  return true;
 }
 function slideIdFromGoogleUrl(url=''){const m=String(url).match(/\/presentation\/d\/([a-zA-Z0-9_-]+)/);return m?m[1]:null}
 async function extractGoogleSpeakerNotes(presentation){
@@ -786,6 +849,7 @@ async function importGoogleWithOAuth(){
   }catch(e){console.error(e);setStatus(E.googleStatus,`Google import failed: ${escapeHtml(e.message)}`,'danger')}
 }
 async function importGoogleShared(){
+  if(sharedLinkBridgeAvailable!==true){await detectSharedLinkBridge();if(!sharedLinkBridgeAvailable)return setStatus(E.googleStatus,"Shared-link import needs Wakanda's included Node server. On GitHub Pages, use Connect Google with OAuth or export the deck as PPTX/PDF.",'warn')}
   const url=E.googleSlidesUrl.value.trim();if(!slideIdFromGoogleUrl(url))return setStatus(E.googleStatus,'Paste a valid Google Slides link first.','warn');
   setStatus(E.googleStatus,'Importing the shared presentation…');
   try{const r=await fetch(`/api/google-slides?url=${encodeURIComponent(url)}`);if(!r.ok)throw new Error((await r.text())||`HTTP ${r.status}`);const blob=await r.blob();await loadPresentation([new File([blob],'google-slides.pdf',{type:'application/pdf'})]);setStatus(E.googleStatus,'Shared Google Slides deck imported. Add private guidance manually or connect Google to import speaker notes.','good');closeModal(E.googleModal);setFlow('prepare')}catch(e){setStatus(E.googleStatus,'Shared-link bridge unavailable here. Run Wakanda with its included server, or use Connect Google after configuring OAuth.','warn')}
@@ -813,16 +877,19 @@ async function rasterizePptxToSlideCanvas(){
 }
 
 function savePrefs(){
-  localStorage.setItem('wakandaStudioV4', JSON.stringify({
-    notes:notesRaw,target:E.targetMin.value,wpm:E.speedRange.value,font:E.fontRange.value,notesMode:E.notesMode.value,
-    prompter:E.prompterPosition.value,focus:E.focusPosition.value,autoAdvance:E.autoAdvance.checked,camPos:E.camPosition.value,
-    camSize:E.camSize.value,circle:cameraCircle,hidden:cameraHidden,quality:E.quality.value,name:E.recordingName.value,
-    countdown:E.countdownSelect.value,thumbsHidden:E.thumbDock.classList.contains('hidden'),readingMode:E.readingMode.value,opacity:E.opacityRange.value,flow:currentFlow
-  }));
+  try{
+    localStorage.setItem('wakandaStudioV42', JSON.stringify({
+      notes:notesRaw,target:E.targetMin.value,wpm:E.speedRange.value,font:E.fontRange.value,notesMode:E.notesMode.value,
+      prompter:E.prompterPosition.value,focus:E.focusPosition.value,autoAdvance:E.autoAdvance.checked,camPos:E.camPosition.value,
+      camSize:E.camSize.value,circle:cameraCircle,hidden:cameraHidden,quality:E.quality.value,name:E.recordingName.value,
+      countdown:E.countdownSelect.value,thumbsHidden:E.thumbDock.classList.contains('hidden'),readingMode:E.readingMode.value,opacity:E.opacityRange.value,flow:currentFlow,
+      cameraLayout,prompterLayout
+    }));
+  }catch(e){console.warn('Preferences could not be saved',e)}
 }
 function loadPrefs(){
   try{
-    const p=JSON.parse(localStorage.getItem('wakandaStudioV4')||localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
+    const p=JSON.parse(localStorage.getItem('wakandaStudioV42')||localStorage.getItem('wakandaStudioV41')||localStorage.getItem('wakandaStudioV4')||localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
     if(p.notes){notesRaw=p.notes;E.notesPaste.value=p.notes}
     if(p.target)E.targetMin.value=p.target;
     if(p.wpm)E.speedRange.value=p.wpm;
@@ -840,6 +907,8 @@ function loadPrefs(){
     if(p.readingMode)E.readingMode.value=p.readingMode;
     if(p.opacity)E.opacityRange.value=p.opacity;
     if(p.flow)currentFlow=p.flow;
+    if(p.cameraLayout){cameraLayout={...cameraLayout,...p.cameraLayout};E.camPosition.value='custom';E.camSize.value='custom';}
+    if(p.prompterLayout){prompterLayout={...prompterLayout,...p.prompterLayout};E.prompterPosition.value='custom';}
     cameraCircle=!!p.circle;
     cameraHidden=!!p.hidden;
   }catch{}
@@ -1014,8 +1083,23 @@ function updateStats(){
   const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,mins=words/wpm,target=Math.max(.5,parseFloat(E.targetMin.value)||5),fit=Math.round(words/target),delta=mins*60-target*60;E.wordCount.textContent=words;E.estTime.textContent=fmt(mins*60);E.paceFit.textContent=words?(Math.abs(delta)<=9?'On target':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`):'—';if(sessionMode==='idle')E.remaining.textContent=`Target ${fmt(target*60)}`;let cls='';if(words)cls=Math.abs(delta)<=15?'good':Math.abs(delta)<=60?'warn':'danger';setStatus(E.timingStatus,words?`Estimated <b>${fmt(mins*60)}</b> for a <b>${fmt(target*60)}</b> target. Advanced pace: ${wpm} WPM${fit!==wpm?` · target-fit ${fit} WPM`:''}.`:'Add guidance to calculate pacing.',cls);updateDurationPreset();renderPacePlan();renderPreflight();updateReadiness();
 }
 
+function clampLayout(layout,minW=.12,minH=.10){
+  layout.w=clamp(Number(layout.w)||minW,minW,1);layout.h=clamp(Number(layout.h)||minH,minH,1);
+  layout.x=clamp(Number(layout.x)||0,0,Math.max(0,1-layout.w));layout.y=clamp(Number(layout.y)||0,0,Math.max(0,1-layout.h));
+  return layout;
+}
+function applyFloatingLayout(el,layout){
+  clampLayout(layout);el.style.left=(layout.x*100)+'%';el.style.top=(layout.y*100)+'%';el.style.width=(layout.w*100)+'%';el.style.height=(layout.h*100)+'%';el.style.right='auto';el.style.bottom='auto';
+}
+function setPrompterPreset(value){
+  if(value==='top')prompterLayout={x:.06,y:.05,w:.88,h:.38};
+  else if(value==='middle')prompterLayout={x:.06,y:.31,w:.88,h:.38};
+  else if(value==='bottom')prompterLayout={x:.06,y:.57,w:.88,h:.38};
+}
 function applyPrompterStyle(){
-  E.teleprompter.classList.remove('top','middle');const p=E.prompterPosition.value;if(p==='top'||p==='middle')E.teleprompter.classList.add(p);E.focusBand.style.top=E.focusPosition.value+'%';E.notesText.style.fontSize=E.fontRange.value+'px';E.teleprompter.style.setProperty('--prompter-alpha',String((parseInt(E.opacityRange.value)||86)/100));updateReadingFocus();savePrefs();
+  const p=E.prompterPosition.value;if(p!=='custom')setPrompterPreset(p);
+  applyFloatingLayout(E.teleprompter,prompterLayout);
+  E.focusBand.style.top=E.focusPosition.value+'%';E.notesText.style.fontSize=E.fontRange.value+'px';E.teleprompter.style.setProperty('--prompter-alpha',String((parseInt(E.opacityRange.value)||86)/100));updateReadingFocus();savePrefs();
 }
 
 function currentScrollDuration(){
@@ -1080,11 +1164,18 @@ async function startMedia(){
     const activeStream=mediaStream;
     activeStream.getTracks().forEach(track=>track.addEventListener('ended',()=>{
       if(mediaStream!==activeStream)return;
+      const deviceName=track.kind==='audio'?'Microphone':'Camera';
       mediaStream=null; E.cameraPreview.srcObject=null; activeStream.getTracks().forEach(t=>{if(t.readyState==='live')t.stop()});
       analyser=null;cancelAnimationFrame(meterRAF);if(audioCtx)audioCtx.close().catch(()=>{});audioCtx=null;
       E.audioLevel.style.width='0%'; E.micHealth.textContent='Disconnected'; E.micHealth.style.color='var(--danger)';
-      if(sessionMode==='recording'){togglePause();setStatus(E.sessionStatus,'Recording paused automatically because a camera or microphone disconnected. Re-enable media, then resume.','danger')}
-      setStatus(E.mediaStatus,'Camera or microphone disconnected. Re-enable media before recording.','danger'); updateReadiness();
+      const recordingActive=sessionMode==='recording'||(sessionMode==='paused'&&pausedFromMode==='recording');
+      if(recordingActive){
+        forcedStopReason=`${deviceName} disconnected`;
+        setStatus(E.sessionStatus,`${deviceName} disconnected. Wakanda is safely ending and saving this take. Reconnect before recording again.`,'danger');
+        toast(`${deviceName} disconnected — saving take`);
+        stopSession();
+      }
+      setStatus(E.mediaStatus,`${deviceName} disconnected. Re-enable camera & mic before the next recording.`,'danger'); updateReadiness();
     }));
     E.cameraPreview.srcObject=mediaStream;
     await E.cameraPreview.play().catch(()=>{});
@@ -1161,13 +1252,10 @@ async function runAudioTest(){
 }
 
 function cameraGeometry(W,H){
-  const size=E.camSize.value, pos=E.camPosition.value;
-  const sizeMap={sm:.16,md:.205,lg:.265};
-  const w=(sizeMap[size]||sizeMap.md)*W, h=cameraCircle?w:w/1.6, margin=.025*W;
-  const x=pos.includes('r') ? W-margin-w : margin;
-  const y=pos.includes('b') ? H-margin-h : margin;
-  return {x,y,w,h};
+  const l=clampLayout(cameraLayout,.08,.08);
+  return {x:l.x*W,y:l.y*H,w:l.w*W,h:l.h*H};
 }
+
 function drawVideoCover(ctx,video,x,y,w,h,mirror){
   const sw=video.videoWidth, sh=video.videoHeight;
   if(!sw || !sh) return;
@@ -1270,8 +1358,12 @@ async function startRecording(){
     setStatus(E.sessionStatus,'Your browser does not support MediaRecorder. Try the latest Chrome or Edge.','danger');
     return;
   }
+  const protectedRows=await dbGetAll('chunks');
+  if(protectedRows.length){E.recordingRecovery.hidden=false;setStatus(E.sessionStatus,'A protected recording from an interrupted session is waiting. Recover it before starting a new take so it is not overwritten.','warn');return toast('Recover the protected recording first')}
+  if(!(await ensureRecordingCapacity()))return;
   sessionMode='countdown'; setSessionLock(true); E.practiceBtn.disabled=true; E.recordBtn.disabled=true;
   await runCountdown();
+  if(!mediaStream){sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'Camera or microphone became unavailable during countdown. Re-enable media and try again.','danger');return}
   try{
     setOutputResolution();
     composeOnce(E.recordCanvas);
@@ -1279,13 +1371,13 @@ async function startRecording(){
     const mic=mediaStream.getAudioTracks()[0];
     const micClone=mic?mic.clone():null;
     recordingStream=new MediaStream([...canvasStream.getVideoTracks(), ...(micClone?[micClone]:[])]);
-    chunks=[];protectedSeq=0;chunkWritePromises=[];await dbClear('chunks');
+    volatileChunks=[];protectedSeq=0;chunkWritePromises=[];forcedStopReason='';recordingProtectionFailed=false;recordingProtectionWarned=false;recordingProtectionAvailable=!!(await openWakandaDb());if(recordingProtectionAvailable&&!(await dbClear('chunks')))recordingProtectionAvailable=false;
     const mime=pickMime();
     recorder=new MediaRecorder(recordingStream, mime ? {mimeType:mime, videoBitsPerSecond:E.quality.value==='1080'?7000000:4200000, audioBitsPerSecond:128000} : {videoBitsPerSecond:6000000});
-    recorder.ondataavailable=e=>{if(e.data.size){chunks.push(e.data);chunkWritePromises.push(protectChunk(e.data))}};
+    recorder.ondataavailable=e=>{if(e.data.size){const seq=++protectedSeq,entry={seq,blob:e.data};volatileChunks.push(entry);if(recordingProtectionAvailable&&!recordingProtectionFailed){const write=protectChunk(seq,e.data).then(ok=>{if(ok)volatileChunks=volatileChunks.filter(x=>x!==entry);else{recordingProtectionFailed=true;if(!recordingProtectionWarned){recordingProtectionWarned=true;setStatus(E.sessionStatus,'Recording continues, but local Recording Protection ran out of storage. Stop and download this take when practical.','warn');toast('Recording Protection degraded — take still recording')}}return ok});chunkWritePromises.push(write)}}};
     recorder.onerror=e=>{ console.error(e); setStatus(E.sessionStatus,'Recording failed unexpectedly. Try again.','danger'); };
     recorder.onstop=finalizeRecording;
-    recorder.start(1000);
+    recorder.start(5000);
     sessionMode='recording';
     beginClock('recording');
     cancelAnimationFrame(composeRAF);
@@ -1294,7 +1386,7 @@ async function startRecording(){
     toast('Recording started');
   }catch(err){
     console.error(err);
-    sessionMode='idle'; recorder=null; chunks=[];
+    sessionMode='idle'; recorder=null; volatileChunks=[];
     if(recordingStream){recordingStream.getTracks().forEach(t=>t.stop());recordingStream=null}
     resetSessionChrome();
     setStatus(E.sessionStatus,`Recording could not start: ${escapeHtml(err.message)}`,'danger');
@@ -1323,23 +1415,84 @@ function finishPractice(ms){
 }
 function finishLive(ms){const d=Math.floor((ms||sessionElapsedMs())/1000);setStatus(E.sessionStatus,`Live presentation finished at <b>${fmt(d)}</b>. Audience View can remain open for your next run.`,'good');toast(`Live session ${fmt(d)}`);setFlow('review',{force:true})}
 async function finalizeRecording(){
-  const duration=Math.floor((lastSessionMs||sessionElapsedMs())/1000),type=recorder?.mimeType||'video/webm',blob=new Blob(chunks,{type});await Promise.allSettled(chunkWritePromises);await dbClear('chunks');E.recordingRecovery.hidden=true;if(recordingStream){recordingStream.getTracks().forEach(t=>t.stop());recordingStream=null}if(!blob.size){recorder=null;chunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'The browser returned an empty recording. Please try a short test recording again.','danger');return}
-  lastRecordingUrl=URL.createObjectURL(blob);E.reviewVideo.src=lastRecordingUrl;const ext=type.includes('mp4')?'mp4':'webm',clean=(E.recordingName.value||'wakanda-studio-recording').trim().replace(/[^a-z0-9_-]+/gi,'-')||'wakanda-studio-recording',filename=`${clean}-take-${takes.length+1}.${ext}`;E.downloadLink.href=lastRecordingUrl;E.downloadLink.download=filename;const target=targetSeconds(),delta=duration-target,deltaLabel=Math.abs(delta)<=4?'On target':`${Math.round(Math.abs(delta))}s ${delta>0?'over':'under'}`;E.reviewDuration.textContent=fmt(duration);E.reviewSlides.textContent=`${maxSlideReached}/${totalSlides}`;E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(target);E.reviewDelta.textContent=deltaLabel;E.reviewDelta.style.color=Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';takes.unshift({url:lastRecordingUrl,duration,delta,deltaLabel,filename,best:takes.length===0});while(takes.length>6){const old=takes.pop();URL.revokeObjectURL(old.url)}renderTakeList();E.reviewModal.classList.add('show');setStatus(E.sessionStatus,`Recording complete · ${fmt(duration)} · ${deltaLabel}.`,'good');recorder=null;chunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setFlow('review',{force:true});
+  const duration=Math.floor((lastSessionMs||sessionElapsedMs())/1000),type=recorder?.mimeType||'video/webm';
+  await Promise.allSettled(chunkWritePromises);
+  const persisted=recordingProtectionAvailable?(await dbGetAll('chunks')).map(x=>({seq:x.seq,blob:x.blob})):[];
+  const bySeq=new Map();for(const row of persisted)if(row?.blob?.size)bySeq.set(row.seq,row.blob);for(const row of volatileChunks)if(row?.blob?.size&&!bySeq.has(row.seq))bySeq.set(row.seq,row.blob);
+  const ordered=[...bySeq.entries()].sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  const blob=new Blob(ordered,{type});
+  await dbClear('chunks');E.recordingRecovery.hidden=true;
+  if(recordingStream){recordingStream.getTracks().forEach(t=>t.stop());recordingStream=null}
+  if(!blob.size){recorder=null;volatileChunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'The browser returned an empty recording. Please try a short test recording again.','danger');forcedStopReason='';return}
+  const takeNumber=nextTakeNumber++;
+  lastRecordingUrl=URL.createObjectURL(blob);E.reviewVideo.src=lastRecordingUrl;
+  const ext=type.includes('mp4')?'mp4':'webm',clean=(E.recordingName.value||'wakanda-studio-recording').trim().replace(/[^a-z0-9_-]+/gi,'-')||'wakanda-studio-recording',filename=`${clean}-take-${takeNumber}.${ext}`;
+  E.downloadLink.href=lastRecordingUrl;E.downloadLink.download=filename;
+  const target=targetSeconds(),delta=duration-target,interrupted=!!forcedStopReason,deltaLabel=interrupted?'Interrupted':Math.abs(delta)<=4?'On target':`${Math.round(Math.abs(delta))}s ${delta>0?'over':'under'}`;
+  E.reviewDuration.textContent=fmt(duration);E.reviewSlides.textContent=`${maxSlideReached}/${totalSlides}`;E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(target);E.reviewDelta.textContent=deltaLabel;E.reviewDelta.style.color=interrupted?'var(--danger)':Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';
+  const take={url:lastRecordingUrl,duration,delta,deltaLabel,filename,best:takes.length===0,number:takeNumber,interrupted,slides:`${maxSlideReached}/${totalSlides}`,words:countWords(notesRaw),target};takes.unshift(take);trimTakes();renderTakeList();openTakeReview(take);
+  if(interrupted)setStatus(E.sessionStatus,`Take ${takeNumber} saved early because ${escapeHtml(forcedStopReason.toLowerCase())}. Reconnect camera & mic before recording again.`,'danger');
+  else setStatus(E.sessionStatus,`Recording complete · ${fmt(duration)} · ${deltaLabel}.`,'good');
+  recorder=null;volatileChunks=[];sessionMode='idle';forcedStopReason='';resetSessionChrome();updateReadiness();setFlow('review',{force:true});
 }
 
+function cameraAspect(){return cameraCircle?1:(16/10)}
+function cameraHeightForWidth(wNorm){
+  const stageRatio=16/9;return wNorm*stageRatio/cameraAspect();
+}
+function setCameraPreset(pos,size){
+  const widths={sm:.14,md:.18,lg:.235};const w=widths[size]||cameraLayout.w||.18,h=cameraHeightForWidth(w),margin=.025;
+  cameraLayout.w=w;cameraLayout.h=h;
+  if(pos&&pos!=='custom'){cameraLayout.x=pos.includes('r')?1-margin-w:margin;cameraLayout.y=pos.includes('b')?1-margin-h:margin;}
+  clampLayout(cameraLayout,.08,.08);
+}
 function applyCameraLocal(){
-  const pos=E.camPosition.value, size=E.camSize.value;
+  const pos=E.camPosition.value,size=E.camSize.value;
+  if(pos!=='custom'||size!=='custom')setCameraPreset(pos,size);
   E.cameraBubble.classList.toggle('circle',cameraCircle);
-  E.cameraBubble.style.width=({sm:'140px',md:'180px',lg:'235px'}[size] || '180px');
-  E.cameraBubble.style.right='auto'; E.cameraBubble.style.left='auto'; E.cameraBubble.style.top='auto'; E.cameraBubble.style.bottom='auto';
-  if(pos.includes('r')) E.cameraBubble.style.right='20px'; else E.cameraBubble.style.left='20px';
-  if(pos.includes('b')) E.cameraBubble.style.bottom='20px'; else E.cameraBubble.style.top='20px';
+  applyFloatingLayout(E.cameraBubble,cameraLayout);
   E.cameraBubble.style.display=cameraHidden?'none':'block';
   E.shapeBtn.textContent=cameraCircle?'Circle camera':'Rounded camera';
   E.cameraToggle.textContent=cameraHidden?'Show camera':'Hide camera';
-  composeOnce(E.previewCanvas);
-  savePrefs();
+  composeOnce(E.previewCanvas);savePrefs();
 }
+function stagePoint(e){const r=E.stage.getBoundingClientRect();return {x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height,rect:r}}
+function startFloatingInteraction(e,type,mode){
+  if(e.button!==undefined&&e.button!==0)return;if(sessionMode==='countdown')return;
+  e.preventDefault();e.stopPropagation();
+  const el=type==='camera'?E.cameraBubble:E.teleprompter,layout=type==='camera'?cameraLayout:prompterLayout;
+  const p=stagePoint(e);floatingInteraction={type,mode,el,layout,startX:p.x,startY:p.y,start:{...layout},pointerId:e.pointerId};
+  el.classList.add('dragging');try{e.currentTarget.setPointerCapture?.(e.pointerId)}catch{}
+}
+function moveFloatingInteraction(e){
+  const f=floatingInteraction;if(!f)return;const p=stagePoint(e),dx=p.x-f.startX,dy=p.y-f.startY;
+  if(f.mode==='move'){f.layout.x=f.start.x+dx;f.layout.y=f.start.y+dy;}
+  else{
+    let w=clamp(f.start.w+dx,f.type==='camera'?.08:.28,1-f.start.x),h=clamp(f.start.h+dy,f.type==='camera'?.08:.16,1-f.start.y);
+    if(f.type==='camera'){
+      const stageRatio=p.rect.width/p.rect.height,aspect=cameraAspect(),maxW=1-f.start.x,maxH=1-f.start.y;
+      if(Math.abs(dx)>=Math.abs(dy)){
+        w=clamp(f.start.w+dx,.08,maxW);h=w*stageRatio/aspect;
+        if(h>maxH){h=maxH;w=h*aspect/stageRatio}
+      }else{
+        h=clamp(f.start.h+dy,.08,maxH);w=h*aspect/stageRatio;
+        if(w>maxW){w=maxW;h=w*stageRatio/aspect}
+      }
+      w=Math.max(.08,w);h=Math.max(.08,h);
+    }
+    f.layout.w=w;f.layout.h=h;
+  }
+  clampLayout(f.layout,f.type==='camera'?.08:.28,f.type==='camera'?.08:.16);applyFloatingLayout(f.el,f.layout);
+  if(f.type==='camera'){E.camPosition.value='custom';E.camSize.value='custom';composeOnce(E.previewCanvas)}else E.prompterPosition.value='custom';
+}
+function endFloatingInteraction(){
+  const f=floatingInteraction;if(!f)return;f.el.classList.remove('dragging');floatingInteraction=null;savePrefs();
+}
+function resetFloatingLayout(){
+  cameraLayout={x:.77,y:.72,w:.18,h:cameraHeightForWidth(.18)};prompterLayout={x:.06,y:.57,w:.88,h:.38};
+  E.camPosition.value='br';E.camSize.value='md';E.prompterPosition.value='bottom';applyCameraLocal();applyPrompterStyle();toast('Floating layout reset');
+}
+
 function toggleFocus(){ focusMode=!focusMode; E.app.classList.toggle('focus',focusMode); E.focusBtn.textContent=focusMode?'Exit focus':'Focus'; toast(focusMode?'Focus mode on':'Focus mode off'); }
 function wireDropZone(zone,input,handler){
   const open=()=>{if(input.disabled)return toast('Finish the current session first');input.click()};
@@ -1389,8 +1542,15 @@ E.cameraSelect.addEventListener('change',startMedia);
 E.micSelect.addEventListener('change',startMedia);
 E.camPosition.addEventListener('change',applyCameraLocal);
 E.camSize.addEventListener('change',applyCameraLocal);
-E.shapeBtn.addEventListener('click',()=>{ cameraCircle=!cameraCircle; applyCameraLocal(); });
+E.shapeBtn.addEventListener('click',()=>{const cx=cameraLayout.x+cameraLayout.w/2,cy=cameraLayout.y+cameraLayout.h/2;cameraCircle=!cameraCircle;cameraLayout.h=cameraHeightForWidth(cameraLayout.w);cameraLayout.x=cx-cameraLayout.w/2;cameraLayout.y=cy-cameraLayout.h/2;E.camPosition.value='custom';E.camSize.value='custom';applyCameraLocal();});
 E.cameraToggle.addEventListener('click',()=>{ cameraHidden=!cameraHidden; applyCameraLocal(); });
+E.cameraBubble.addEventListener('pointerdown',e=>{if(e.target.closest('.resize-handle'))return;startFloatingInteraction(e,'camera','move')});
+E.cameraBubble.querySelector('[data-resize="camera"]').addEventListener('pointerdown',e=>startFloatingInteraction(e,'camera','resize'));
+E.teleDragHandle.addEventListener('pointerdown',e=>startFloatingInteraction(e,'prompter','move'));
+E.teleprompter.querySelector('[data-resize="prompter"]').addEventListener('pointerdown',e=>startFloatingInteraction(e,'prompter','resize'));
+window.addEventListener('pointermove',moveFloatingInteraction,{passive:false});
+window.addEventListener('pointerup',endFloatingInteraction);window.addEventListener('pointercancel',endFloatingInteraction);
+E.resetLayoutBtn.addEventListener('click',resetFloatingLayout);
 
 E.cleanPreviewBtn.addEventListener('click',startPreview);
 E.closePreview.addEventListener('click',stopPreview);
@@ -1422,7 +1582,7 @@ const choosePresentation=(accept,multiple=false)=>{E.presentationInput.accept=ac
 E.pptxSource.addEventListener('click',()=>choosePresentation('.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',false));
 E.pdfSource.addEventListener('click',()=>choosePresentation('.pdf,application/pdf',false));
 E.imageSource.addEventListener('click',()=>choosePresentation('image/png,image/jpeg,.png,.jpg,.jpeg',true));
-const showGoogle=()=>E.googleModal.classList.add('show');E.googleSource.addEventListener('click',showGoogle);E.googleImportBtn.addEventListener('click',showGoogle);
+const showGoogle=()=>{E.googleModal.classList.add('show');detectSharedLinkBridge();};E.googleSource.addEventListener('click',showGoogle);E.googleImportBtn.addEventListener('click',showGoogle);
 E.closeGoogle.addEventListener('click',()=>closeModal(E.googleModal));E.googleModal.addEventListener('click',e=>{if(e.target===E.googleModal)closeModal(E.googleModal)});E.googleConnectBtn.addEventListener('click',importGoogleWithOAuth);E.googlePublicBtn.addEventListener('click',importGoogleShared);
 E.thumbToggle.addEventListener('click',()=>{E.thumbDock.classList.toggle('hidden');E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slides':'Slides';savePrefs()});
 E.focusBtn.addEventListener('click',toggleFocus);
@@ -1433,6 +1593,7 @@ E.closeReview.addEventListener('click',closeReviewModal);
 E.reviewModal.addEventListener('click',e=>{if(e.target===E.reviewModal)closeReviewModal()});
 E.retakeBtn.addEventListener('click',()=>{ closeReviewModal(); currentSlide=1; renderSlide(); restartNotes(); toast('Ready for retake'); });
 E.mobileDismiss.addEventListener('click',()=>E.mobileWarning.classList.add('dismissed'));
+window.addEventListener('resize',()=>{clampLayout(cameraLayout,.08,.08);clampLayout(prompterLayout,.28,.16);applyFloatingLayout(E.cameraBubble,cameraLayout);applyFloatingLayout(E.teleprompter,prompterLayout)});
 
 document.addEventListener('keydown',e=>{
   if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
@@ -1467,7 +1628,7 @@ applyCameraLocal();
 setOutputResolution();
 clearSlideCanvas();
 if(notesRaw) parseNotes(notesRaw); else {updateStats();syncSlideNotesEditor();}
-updateReadiness();checkRecovery();
+updateReadiness();checkRecovery();detectSharedLinkBridge();
 </script>
 </body>
 </html>

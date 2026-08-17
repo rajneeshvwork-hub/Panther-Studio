@@ -1,13 +1,13 @@
 {
   "name": "wakanda-studio",
-  "version": "4.0.0",
+  "version": "4.2.0",
   "private": true,
-  "type": "module",
-  "description": "Presentation performance studio with private guidance, rehearsal pacing, live audience view, and clean recording.",
+  "description": "Presentation performance studio with private guidance, rehearsal, live presenting and clean recording.",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   }
 }

@@ -1,4 +1,4 @@
-# Wakanda Studio V4 — Architecture
+# Wakanda Studio V4.2 — Architecture
 
 ## Product layers
 
@@ -169,3 +169,18 @@ npm start
 ```
 
 This serves the static application and enables the shareable Google Slides export bridge.
+
+## Floating presenter workspace
+
+V4.2 stores camera and Private Guidance geometry as stage-relative normalized coordinates (`x`, `y`, `w`, `h`). This means the widgets keep their relative position when the stage changes size or Focus / Performance mode changes the available workspace.
+
+The camera geometry is reused by the clean-output compositor, so dragging or resizing the camera changes both the presenter's preview and the final recorded camera placement. Private Guidance geometry is presenter-only and is never sent to the recording canvas or Audience View.
+
+
+## V4.2 recording protection strategy
+
+During an active recording, MediaRecorder emits chunks every few seconds. Wakanda attempts to persist each chunk to IndexedDB. A chunk remains in a small volatile fallback queue until the IndexedDB write succeeds. This avoids retaining a permanent second copy of the full recording in JavaScript memory.
+
+If IndexedDB fails mid-recording, affected/new chunks remain in memory and Wakanda warns the presenter that Recording Protection has degraded; the take itself continues. Before long recordings, Wakanda uses `navigator.storage.estimate()` when available to identify obvious storage-capacity problems before countdown.
+
+On a clean stop, protected + fallback chunks are merged in sequence, the final Blob is created, and temporary protected chunks are cleared.

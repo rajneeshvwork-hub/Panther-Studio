@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Wakanda Studio V4 loads several open-source browser libraries from jsDelivr at runtime.
+Wakanda Studio V4.2 loads several open-source browser libraries from jsDelivr at runtime.
 
 - **Mozilla PDF.js** — PDF rendering.
 - **@aiden0z/pptx-renderer 1.2.4** — browser-native PowerPoint rendering. Project is distributed under Apache License 2.0.
