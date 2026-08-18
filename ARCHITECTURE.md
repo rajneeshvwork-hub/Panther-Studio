@@ -1,4 +1,4 @@
-# Wakanda Studio V4.2 — Architecture
+# QuietCue 1.1 — Architecture
 
 ## Product layers
 
@@ -78,7 +78,7 @@ JPG / PNG files are decoded in the browser and drawn into the slide canvas.
 
 `@aiden0z/pptx-renderer` renders `.pptx` slides into HTML/SVG DOM in the browser.
 
-For recording, html2canvas rasterizes the active PPTX slide into Wakanda's internal slide canvas. JSZip also inspects the OOXML package to locate associated notes-slide XML and extract speaker-note text where available.
+For recording, html2canvas rasterizes the active PPTX slide into QuietCue's internal slide canvas. JSZip also inspects the OOXML package to locate associated notes-slide XML and extract speaker-note text where available.
 
 ### Google Slides — OAuth
 
@@ -91,7 +91,7 @@ Google Drive export
         ↓ PDF
 PDF.js
         ↓
-Wakanda slide canvas
+QuietCue slide canvas
 ```
 
 ### Google Slides — shareable link
@@ -110,7 +110,7 @@ This bridge is only for presentations that Google allows to be exported without 
 
 ## Session persistence
 
-Wakanda uses browser storage for two different jobs.
+QuietCue uses browser storage for two different jobs.
 
 ### localStorage
 
@@ -138,7 +138,7 @@ During a recording, `MediaRecorder` emits chunks incrementally. V4 protects thos
 
 On a clean successful stop, the chunks are assembled into the take and the protection store is cleared.
 
-If the previous session ends unexpectedly, Wakanda can detect protected chunks on the next launch and offer recovery.
+If the previous session ends unexpectedly, QuietCue can detect protected chunks on the next launch and offer recovery.
 
 This is recovery-oriented protection rather than a guarantee against every browser/OS failure.
 
@@ -172,15 +172,15 @@ This serves the static application and enables the shareable Google Slides expor
 
 ## Floating presenter workspace
 
-V4.2 stores camera and Private Guidance geometry as stage-relative normalized coordinates (`x`, `y`, `w`, `h`). This means the widgets keep their relative position when the stage changes size or Focus / Performance mode changes the available workspace.
+QuietCue stores camera and Private Guidance geometry as stage-relative normalized coordinates (`x`, `y`, `w`, `h`). This means the widgets keep their relative position when the stage changes size or Focus / Performance mode changes the available workspace.
 
 The camera geometry is reused by the clean-output compositor, so dragging or resizing the camera changes both the presenter's preview and the final recorded camera placement. Private Guidance geometry is presenter-only and is never sent to the recording canvas or Audience View.
 
 
-## V4.2 recording protection strategy
+## 1.0 recording protection strategy
 
-During an active recording, MediaRecorder emits chunks every few seconds. Wakanda attempts to persist each chunk to IndexedDB. A chunk remains in a small volatile fallback queue until the IndexedDB write succeeds. This avoids retaining a permanent second copy of the full recording in JavaScript memory.
+During an active recording, MediaRecorder emits chunks every few seconds. QuietCue attempts to persist each chunk to IndexedDB. A chunk remains in a small volatile fallback queue until the IndexedDB write succeeds. This avoids retaining a permanent second copy of the full recording in JavaScript memory.
 
-If IndexedDB fails mid-recording, affected/new chunks remain in memory and Wakanda warns the presenter that Recording Protection has degraded; the take itself continues. Before long recordings, Wakanda uses `navigator.storage.estimate()` when available to identify obvious storage-capacity problems before countdown.
+If IndexedDB fails mid-recording, affected/new chunks remain in memory and QuietCue warns the presenter that Recording Protection has degraded; the take itself continues. Before long recordings, QuietCue uses `navigator.storage.estimate()` when available to identify obvious storage-capacity problems before countdown.
 
 On a clean stop, protected + fallback chunks are merged in sequence, the final Blob is created, and temporary protected chunks are cleared.

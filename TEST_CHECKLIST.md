@@ -1,11 +1,27 @@
-# Wakanda Studio V4.2 — Final QA Checklist
+# QuietCue 1.1 — Release Checklist
+
+## Privacy blocker tests
+- [ ] Open QuietCue after using an older version: the Private Guidance textarea starts empty.
+- [ ] Refresh the page after entering guidance: guidance text is not restored from browser preferences.
+- [ ] Click **Clear**: paste area, per-slide editor, presenter guidance, and word/timing state clear.
+- [ ] Search the public repository for personal/project-specific notes before publishing.
+- [ ] Record a short take and verify the exported video contains slide + optional camera only.
+
+## Simplified-UI tests
+- [ ] Prepare shows three accordions and only Private Guidance is open by default.
+- [ ] Advanced teleprompter settings are hidden until opened.
+- [ ] Camera/device/layout settings are hidden until opened.
+- [ ] Present shows Record + Present Live as the primary choices.
+- [ ] Output quality/name/preview are inside Output options.
+- [ ] Presenter bottom bar keeps advanced prompter tuning collapsed.
+
 
 Use this before calling a deployment production-ready or using it for an important presentation.
 
 ## 1. Launch
 
 - [ ] App loads without a blank screen.
-- [ ] Import workflow is selected by default.
+- [ ] Setup is selected by default.
 - [ ] No unexpected browser console errors appear.
 - [ ] Desktop/mobile warning behaves appropriately at narrow widths.
 
@@ -151,7 +167,7 @@ For a 10–20 minute target, also confirm storage preflight does not show a fals
 - [ ] Next / previous updates Audience View.
 - [ ] Presenter keeps timing/guidance privately.
 - [ ] Pause / Stop remains reachable.
-- [ ] Closing Audience View does not crash Wakanda.
+- [ ] Closing Audience View does not crash QuietCue.
 
 ## 14. Takes
 
@@ -185,7 +201,7 @@ For a 10–20 minute target, also confirm storage preflight does not show a fals
 ## 16. Device interruption
 
 - [ ] Disconnect/disable microphone during a test session if safe.
-- [ ] Wakanda warns the presenter.
+- [ ] QuietCue warns the presenter.
 - [ ] Active recording ends safely and the interrupted take is saved for review/download.
 - [ ] Camera/mic readiness becomes unavailable until media is re-enabled.
 
@@ -200,7 +216,7 @@ For a 10–20 minute target, also confirm storage preflight does not show a fals
 
 ## Final release gate
 
-Before sharing Wakanda Studio publicly:
+Before sharing QuietCue publicly:
 
 - [ ] One real assignment/presentation completed end-to-end.
 - [ ] One PPTX tested.
@@ -208,3 +224,24 @@ Before sharing Wakanda Studio publicly:
 - [ ] One 1080p video downloaded and watched fully.
 - [ ] Private Guidance verified absent from final video.
 - [ ] README accurately reflects tested behavior.
+## 1.1 Simplified-flow UX checks
+
+- [ ] Top navigation shows only Setup and Present before a recording exists.
+- [ ] Setup contains deck import, Private Guidance, timing, and camera/microphone controls.
+- [ ] Present shows Rehearse, Record, and Live as the three session choices.
+- [ ] Timing plan is optional/collapsed rather than a separate workflow stage.
+- [ ] Review appears only after a recording take exists.
+- [ ] Ending a Live session returns to Present; it does not open Review.
+- [ ] Older saved Import / Prepare / Rehearse flow values map safely to Setup / Present.
+
+
+- [ ] Fresh launch shows no camera bubble, teleprompter, slide dock, guidance metrics, or review tab.
+- [ ] Notes textarea is completely empty and uses only a neutral placeholder.
+- [ ] Import screen has one obvious primary action and compact format choices.
+- [ ] Review appears in the workflow only after a recording take exists.
+- [ ] Target/Teleprompter and Camera/Mic sections are collapsed by default.
+- [ ] Guidance metrics/options appear only after guidance is added.
+- [ ] Present shows Record and Present Live as the two primary actions; output settings remain collapsed.
+- [ ] Bottom presenter controls appear only after a presentation is loaded.
+- [ ] Camera appears only after camera/mic access succeeds.
+- [ ] Private Guidance appears only when guidance exists and remains excluded from the clean recording.

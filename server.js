@@ -89,11 +89,11 @@ function serveStatic(req, res, pathname) {
 const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
   if (!['GET', 'HEAD'].includes(req.method || 'GET')) return send(req, res, 405, 'Method not allowed');
-  if (requestUrl.pathname === '/api/health') return send(req, res, 200, JSON.stringify({ ok: true, app: 'Wakanda Studio', version: '4.2.0' }), 'application/json; charset=utf-8');
+  if (requestUrl.pathname === '/api/health') return send(req, res, 200, JSON.stringify({ ok: true, app: 'QuietCue', version: '1.1.0' }), 'application/json; charset=utf-8');
   if (requestUrl.pathname === '/api/google-slides') return googleSlidesBridge(req, res, requestUrl);
   serveStatic(req, res, requestUrl.pathname);
 });
 
 server.listen(PORT, () => {
-  console.log(`Wakanda Studio V4.2 running at http://localhost:${PORT}`);
+  console.log(`QuietCue 1.1 running at http://localhost:${PORT}`);
 });

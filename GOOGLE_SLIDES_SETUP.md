@@ -1,6 +1,6 @@
-# Wakanda Studio V4.2 — Google Slides Setup
+# QuietCue 1.1 — Google Slides Setup
 
-Google Slides integration is optional. Wakanda Studio remains usable with PowerPoint, PDF, and image decks without configuring Google.
+Google Slides integration is optional. QuietCue remains usable with PowerPoint, PDF, and image decks without configuring Google.
 
 ## What Connect Google does
 
@@ -9,7 +9,7 @@ The authenticated Google path is designed to:
 1. request read-only access from the user,
 2. read presentation structure and speaker notes through the Google Slides API,
 3. export the presentation through Google Drive as PDF for reliable display,
-4. keep the notes inside Wakanda as Private Guidance.
+4. keep the notes inside QuietCue as Private Guidance.
 
 ## What you need
 
@@ -18,7 +18,7 @@ A Google Cloud project with:
 - Google Slides API enabled,
 - Google Drive API enabled,
 - an OAuth 2.0 Web Client ID,
-- the domain/origin where Wakanda Studio runs added as an authorized JavaScript origin.
+- the domain/origin where QuietCue runs added as an authorized JavaScript origin.
 
 For local development, your origin will normally be:
 
@@ -34,7 +34,7 @@ For GitHub Pages, authorize the live origin, for example:
 https://YOUR-USERNAME.github.io
 ```
 
-## Configure Wakanda
+## Configure QuietCue
 
 Open:
 
@@ -45,7 +45,7 @@ config.js
 Change:
 
 ```js
-window.WAKANDA_CONFIG = {
+window.QUIETCUE_CONFIG = {
   googleClientId: ''
 };
 ```
@@ -53,22 +53,22 @@ window.WAKANDA_CONFIG = {
 to:
 
 ```js
-window.WAKANDA_CONFIG = {
+window.QUIETCUE_CONFIG = {
   googleClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com'
 };
 ```
 
 Do not put a Google OAuth **client secret** in this browser file.
 
-## Scopes requested by Wakanda
+## Scopes requested by QuietCue
 
-V4 is built around read-only access for presentations and Drive export.
+QuietCue uses read-only access for presentations and Drive export.
 
 The app should never ask for edit/delete permission just to import a deck.
 
 ## Test the integration
 
-1. Run Wakanda Studio on an authorized origin.
+1. Run QuietCue on an authorized origin.
 2. Open **Google Slides** in Import.
 3. Choose **Connect Google**.
 4. Complete Google's consent flow.
@@ -80,7 +80,7 @@ The app should never ask for edit/delete permission just to import a deck.
 
 ## Shared/public link alternative
 
-If a presentation is shareable/public and Wakanda Studio is running through its Node server, V4 can use:
+If a presentation is shareable/public and QuietCue is running through its Node server, V4 can use:
 
 ```text
 /api/google-slides
@@ -117,4 +117,4 @@ The presentation is not exportable anonymously. Use Connect Google instead.
 
 ## Static hosting behavior
 
-On GitHub Pages or another static-only host, Wakanda automatically checks for `/api/health`. If the Node bridge is not present, **Import shared link** is disabled instead of allowing a guaranteed failed request. Authenticated **Connect Google** can still work when `config.js` contains a valid browser OAuth Client ID and the hosting origin is authorized in Google Cloud.
+On GitHub Pages or another static-only host, QuietCue automatically checks for `/api/health`. If the Node bridge is not present, **Import shared link** is disabled instead of allowing a guaranteed failed request. Authenticated **Connect Google** can still work when `config.js` contains a valid browser OAuth Client ID and the hosting origin is authorized in Google Cloud.

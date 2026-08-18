@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#0b0f17" />
-<title>Wakanda Studio V4.2 — Presentation Performance Studio</title>
+<meta name="theme-color" content="#f3f0e9" />
+<title>QuietCue — Present naturally. Stay on track.</title>
 <script src="./config.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
@@ -265,14 +265,14 @@ main{min-width:0;display:flex;flex-direction:column;background:linear-gradient(1
 .privacy-chip i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgba(121,226,175,.09)}
 @media(max-width:1060px){.thumb-dock{display:none}}
 
-/* V4.2 workflow + floating performance layer */
-.workflow-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 12px;padding:5px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.12);position:sticky;top:-18px;z-index:20;backdrop-filter:blur(18px)}
+/* Legacy workflow + floating performance layer */
+.workflow-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:0 0 12px;padding:5px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.12);position:sticky;top:-18px;z-index:20;backdrop-filter:blur(18px)}
 .flow-btn{padding:8px 3px;border-radius:11px;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;box-shadow:none;color:var(--muted)}
 .flow-btn span{width:19px;height:19px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.055);font-size:9px}
 .flow-btn.active{color:#f3f7ff;background:rgba(124,192,255,.1);border-color:rgba(124,192,255,.25)}
 .flow-btn.active span{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#071019}
 .workflow-panel{display:none}.workflow-always{display:block}
-aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="prepare"] .workflow-panel[data-flow~="prepare"],aside[data-flow="rehearse"] .workflow-panel[data-flow~="rehearse"],aside[data-flow="present"] .workflow-panel[data-flow~="present"],aside[data-flow="review"] .workflow-panel[data-flow~="review"]{display:block}
+aside[data-flow="setup"] .workflow-panel[data-flow~="setup"],aside[data-flow="present"] .workflow-panel[data-flow~="present"],aside[data-flow="review"] .workflow-panel[data-flow~="review"]{display:block}
 .recovery-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;margin:8px 0;border-radius:15px;background:rgba(121,226,175,.06);border:1px solid rgba(121,226,175,.18)}.recovery-card[hidden]{display:none}.recovery-card.warn{background:rgba(255,201,111,.06);border-color:rgba(255,201,111,.2)}.recovery-card b{display:block;font-size:10px}.recovery-card span{display:block;font-size:9px;color:var(--muted);margin-top:2px}.recovery-card button{padding:7px 9px;font-size:9px}
 .source-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.source-card{text-align:left;padding:13px;min-height:68px}.source-card b{display:block;font-size:12px;margin-bottom:4px}.source-card span{font-size:9px;color:var(--muted);line-height:1.3}.source-card.primary-source{border-color:rgba(124,192,255,.32);background:linear-gradient(145deg,rgba(124,192,255,.11),rgba(141,136,255,.05))}
 .duration-presets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.duration-presets button{padding:8px 3px;font-size:10px}.duration-presets button.active{background:linear-gradient(135deg,rgba(124,192,255,.22),rgba(141,136,255,.18));border-color:rgba(124,192,255,.45)}
@@ -286,7 +286,30 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
 .app.performance{grid-template-columns:0 minmax(0,1fr)}.app.performance aside{transform:translateX(-110%);opacity:0;pointer-events:none}.app.performance .thumb-dock{display:none}.app.performance .topbar{height:54px}.app.performance .window-bar{opacity:.5}.app.performance .hint{display:none}.app.performance .bottom{padding-top:8px}.perf-action{display:none}.app.performance .perf-action{display:inline-flex}.app.performance .control-group{display:none}
 .review-meta{grid-template-columns:repeat(5,1fr)}
 .google-note{padding:9px 10px;border-radius:12px;background:rgba(124,192,255,.06);border:1px solid rgba(124,192,255,.12);font-size:10px;color:#cbdaf0;margin-top:8px}
-@media(max-width:600px){.workflow-nav{grid-template-columns:repeat(5,1fr)}.flow-btn{font-size:0}.flow-btn span{font-size:9px}.review-meta{grid-template-columns:1fr 1fr}.source-grid{grid-template-columns:1fr}.duration-presets{grid-template-columns:repeat(3,1fr)}}
+
+/* Privacy-first progressive disclosure */
+.inline-advanced,.advanced-section{margin-top:10px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025);overflow:hidden}
+.inline-advanced>summary,.advanced-section>summary,.prompter-menu>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;font-size:11px;font-weight:700;color:#d5deed;user-select:none}
+.inline-advanced>summary::-webkit-details-marker,.advanced-section>summary::-webkit-details-marker,.prompter-menu>summary::-webkit-details-marker{display:none}
+.inline-advanced>summary:after,.advanced-section>summary:after,.prompter-menu>summary:after{content:'›';font-size:17px;color:var(--muted);transform:rotate(90deg);transition:.15s ease}
+.inline-advanced[open]>summary:after,.advanced-section[open]>summary:after,.prompter-menu[open]>summary:after{transform:rotate(270deg)}
+.inline-advanced .advanced-body,.advanced-section .advanced-body{padding:0 12px 12px}
+.privacy-note{display:flex;align-items:flex-start;gap:8px;margin-top:9px;padding:9px 10px;border-radius:12px;background:rgba(121,226,175,.055);border:1px solid rgba(121,226,175,.15);font-size:10px;line-height:1.45;color:#ccebdd}
+.privacy-note b{color:#eafff3}
+.essential-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.prompter-menu{position:relative}
+.prompter-menu>summary{padding:9px 12px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035)}
+.prompter-popover{position:absolute;left:0;bottom:46px;width:310px;z-index:40;padding:12px;border:1px solid var(--line-strong);border-radius:18px;background:rgba(15,22,36,.96);box-shadow:var(--shadow-soft);backdrop-filter:blur(18px)}
+.prompter-popover .control-group{margin-bottom:8px;width:100%;justify-content:space-between}.prompter-popover .control-group input[type=range]{width:120px}
+.prompter-popover .two{margin-top:8px}
+.minor-control{display:none!important}
+.section.compact-section{padding:12px}
+.section.compact-section h2{margin-bottom:8px}
+.notes-actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
+.clear-btn{color:#ffced6;border-color:rgba(255,127,150,.18);background:rgba(255,127,150,.06)}
+@media(max-width:1060px){.prompter-popover{left:auto;right:0}}
+
+@media(max-width:600px){.workflow-nav{grid-template-columns:repeat(3,1fr)}.flow-btn{font-size:0}.flow-btn span{font-size:9px}.review-meta{grid-template-columns:1fr 1fr}.source-grid{grid-template-columns:1fr}.duration-presets{grid-template-columns:repeat(3,1fr)}}
 
 #recordCanvas{display:none}
 @media (max-width:1180px){
@@ -307,197 +330,443 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
   .control-group{padding:6px 8px}
   .notes-text{font-size:20px}
 }
+
+/* Premium minimal interface */
+
+[hidden]{display:none!important}
+button.primary{background:#0a84ff;color:#fff;border-color:transparent;box-shadow:none;font-weight:600}
+button.primary:hover{background:#168cff;transform:none;box-shadow:none}
+.notes-file-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 10px;padding:10px 11px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:#0d0f12;cursor:pointer}.notes-file-row:hover{background:#12151a;border-color:rgba(255,255,255,.09)}.notes-file-row input{position:absolute;inset:0;opacity:0;cursor:pointer}.notes-file-row>span:first-child{display:flex;flex-direction:column;gap:2px}.notes-file-row b{font-size:10px;font-weight:600;color:#d8dae0}.notes-file-row small{font-size:8.5px;color:#646871}.notes-file-action{font-size:9.5px;color:#7fb8ff}
+.app:not(.has-deck) .bottom{display:none}.app:not(.has-deck) .topbar .remaining,.app:not(.has-deck) .topbar .timer,.app:not(.has-deck) .topbar .utility-menu{display:none}.app:not(.has-deck) .stage-wrap{padding-bottom:16px}.app:not(.has-deck) #recDot,.app:not(.has-deck) #recText,.app:not(.has-deck) #slideMini{display:none}.app:not(.has-deck) .topbar{height:44px}
+
+:root{
+  --bg-0:#08090b;--bg-1:#0d0f12;--bg-2:#14171b;
+  --panel:rgba(20,22,26,.86);--panel-strong:#15181d;--panel-soft:rgba(255,255,255,.035);
+  --line:rgba(255,255,255,.075);--line-strong:rgba(255,255,255,.12);
+  --text:#f5f5f7;--muted:#9a9aa1;--muted-2:#6f7077;
+  --accent:#0a84ff;--accent-2:#5e5ce6;--accent-3:#30d158;
+  --good:#32d583;--warn:#ffcc66;--danger:#ff6b81;
+  --shadow:0 24px 70px rgba(0,0,0,.34);--shadow-soft:0 14px 38px rgba(0,0,0,.25);
+}
+body{background:#08090b}
+.shell{padding:10px}
+.app{grid-template-columns:338px minmax(0,1fr);border-radius:25px;background:#0b0d10;border-color:rgba(255,255,255,.065);box-shadow:0 18px 60px rgba(0,0,0,.38);backdrop-filter:none}
+aside{padding:20px 18px;background:#101216;border-right-color:rgba(255,255,255,.06)}
+main{background:#090b0e}
+.brand-row{margin-bottom:9px}.brand{gap:11px}.logo{width:38px;height:38px;border-radius:11px;background:#f5f5f7;color:#090a0c;box-shadow:none;font-size:16px}.brand h1{font-size:17px;font-weight:650}.badge{border:0;background:rgba(255,255,255,.055);font-size:9px;color:#9fa1aa;padding:3px 6px}.sub{margin:5px 0 17px;font-size:11px;line-height:1.5;color:#777b84}
+.workflow-nav{position:static;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:14px;padding:3px;border-radius:12px;border-color:rgba(255,255,255,.055);background:#0b0d10;backdrop-filter:none}
+.flow-btn{height:32px;padding:0 5px;border:0;border-radius:9px;font-size:9.5px;display:flex;justify-content:center;box-shadow:none;color:#71747d}.flow-btn span{display:none}.flow-btn:hover{transform:none;background:rgba(255,255,255,.035)}.flow-btn.active{background:#1b1e24;color:#f5f5f7;border:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.045)}.workflow-nav .flow-btn[data-flow="review"]{display:none}.workflow-nav.has-review{grid-template-columns:repeat(3,1fr)}.workflow-nav.has-review .flow-btn[data-flow="review"]{display:flex}
+.ready-card{padding:3px 2px 9px;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}.ready-head{margin:0}.ready-head b{font-size:10px;font-weight:600;color:#b0b2b9}.ready-head span{font-size:9px;color:#666a73}.check-grid{display:none}
+.recovery-card{margin:7px 0;padding:9px 10px;background:#15181d;border-color:rgba(255,255,255,.06);border-radius:12px}
+.section{margin-top:17px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}.section h2{font-size:12px;letter-spacing:-.01em;text-transform:none;font-weight:650;color:#f0f1f3}.section-title{margin-bottom:10px}
+.source-pills{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.source-pills button{padding:7px 9px;border-radius:9px;background:#15181d;border-color:rgba(255,255,255,.06);box-shadow:none;font-size:9.5px;color:#acafb7}.source-pills button:hover{transform:none;background:#1b1e24;color:#fff;border-color:rgba(255,255,255,.09)}
+.drop-zone{min-height:118px;border-radius:15px;background:#0c0e11;border:1px dashed rgba(255,255,255,.12);box-shadow:none}.drop-zone:hover,.drop-zone.dragover{border-color:rgba(10,132,255,.55);background:rgba(10,132,255,.035);transform:none}.drop-zone b{font-size:12px;font-weight:600}.drop-zone span{font-size:9.5px;color:#6f737c}.text-action{display:block;width:auto;margin:8px auto 0!important;padding:5px 8px!important;border:0!important;background:transparent!important;box-shadow:none!important;color:#6dafff!important;font-size:10px!important}.text-action:hover{transform:none!important;color:#9bc8ff!important;background:transparent!important}
+input[type=file],select,input[type=number],input[type=text],textarea{background:#0b0d10;border-color:rgba(255,255,255,.075);border-radius:11px;padding:9px 10px;box-shadow:none}textarea{min-height:150px}.notes-actions{grid-template-columns:1fr auto}.notes-actions .primary{border-radius:11px}.clear-btn{background:transparent;border-color:transparent;color:#8e9098;box-shadow:none}.clear-btn:hover{background:rgba(255,255,255,.035);color:#fff}
+.privacy-note{padding:7px 2px;margin-top:8px;border:0;background:transparent;color:#70747c;font-size:9.5px}.privacy-note>span:first-child{color:var(--good)}
+.metrics{grid-template-columns:1fr 1fr;gap:0;margin-top:12px;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}.metric{padding:10px 6px;border:0;border-radius:0;background:transparent;text-align:left}.metric+ .metric{border-left:1px solid rgba(255,255,255,.05)}.metric:nth-child(3){display:none}.metric b{font-size:13px;font-weight:600}.metric span{font-size:8px;letter-spacing:.08em;color:#666a72}
+.inline-advanced,.advanced-section{border-radius:11px;border-color:rgba(255,255,255,.055);background:#0d0f12}.inline-advanced>summary,.advanced-section>summary,.prompter-menu>summary{padding:9px 10px;font-size:10px;font-weight:550;color:#8f929a}.inline-advanced .advanced-body,.advanced-section .advanced-body{padding:0 10px 10px}
+.setup-accordion{margin-top:8px;padding:0!important;border:1px solid rgba(255,255,255,.055)!important;border-radius:13px!important;background:#0d0f12!important}.setup-accordion>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:12px;cursor:pointer}.setup-accordion>summary::-webkit-details-marker{display:none}.setup-accordion>summary span{display:flex;flex-direction:column;gap:3px}.setup-accordion>summary b{font-size:11px;font-weight:600;color:#d7d9de}.setup-accordion>summary small{font-size:9px;color:#666a73}.setup-accordion>summary:after{content:'+';font-size:17px;font-weight:300;color:#686b73}.setup-accordion[open]>summary:after{content:'−'}.accordion-body{padding:0 12px 12px}.visually-muted{display:none}
+.duration-presets{gap:4px}.duration-presets button{border-radius:9px;background:#14171b;border-color:rgba(255,255,255,.055);box-shadow:none}.duration-presets button.active{background:#252a32;border-color:rgba(255,255,255,.08);color:#fff}
+.toggle-line{background:#0b0d10;border-color:rgba(255,255,255,.055);border-radius:10px}
+.audio-test{background:transparent;border:0;padding:8px 0}
+.pace-hero{gap:0;border-top:1px solid rgba(255,255,255,.055);border-bottom:1px solid rgba(255,255,255,.055)}.pace-hero>div{padding:12px 5px;border:0;border-radius:0;background:transparent}.pace-hero>div+div{border-left:1px solid rgba(255,255,255,.055)}.pace-hero b{font-size:14px}.pace-list{gap:4px}.pace-row{background:#0d0f12;border-color:rgba(255,255,255,.05);border-radius:10px;padding:8px}
+.performance-card{padding-top:2px}.minimal-preflight{grid-template-columns:1fr;margin-top:4px;gap:0;border-top:1px solid rgba(255,255,255,.055);border-bottom:1px solid rgba(255,255,255,.055)}.minimal-preflight .preflight-item{display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border:0;border-radius:0;background:transparent;font-size:9.5px}.minimal-preflight .preflight-item+.preflight-item{border-top:1px solid rgba(255,255,255,.04)}.minimal-preflight .preflight-item b{margin:0;font-size:9.5px;font-weight:550}.minimal-preflight .preflight-item.ok{color:#8f949d}.minimal-preflight .preflight-item.warn{color:var(--warn)}
+.session-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}.session-primary,.session-secondary{min-height:44px;border-radius:12px;font-weight:650}.session-primary{background:#f5f5f7!important;color:#111318!important}.session-secondary{background:#171a1f;border-color:rgba(255,255,255,.065);color:#f5f5f7}.session-running-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.session-running-actions button:disabled{display:none}.output-options{margin-top:8px}.centered-status{text-align:center;color:#686c74;font-size:9.5px}
+.topbar{height:56px;padding:0 16px;background:#0d0f12;border-bottom-color:rgba(255,255,255,.055);backdrop-filter:none}.top-left,.top-right{gap:9px}.dot{width:7px;height:7px;box-shadow:none}.slide-label{font-size:10px;color:#767a83}.remaining{font-size:9.5px;color:#6f737b}.timer{font-size:14px;font-weight:650}.pace-live{padding:4px 7px;border:0;background:transparent;color:#8e929a;font-size:9.5px}.pace-live.behind,.pace-live.ahead{background:transparent;border:0}
+.utility-menu{position:relative}.utility-menu>summary{list-style:none;cursor:pointer;font-size:14px;letter-spacing:2px;color:#7b7f88;padding:6px 4px}.utility-menu>summary::-webkit-details-marker{display:none}.utility-popover{position:absolute;right:0;top:34px;width:160px;padding:6px;border-radius:12px;background:#1a1d22;border:1px solid rgba(255,255,255,.075);box-shadow:var(--shadow-soft);z-index:60}.utility-popover button{display:block;width:100%;text-align:left;padding:8px;border:0;background:transparent;box-shadow:none;font-size:10px;color:#c0c3ca}.utility-popover button:hover{transform:none;background:rgba(255,255,255,.05)}
+.stage-wrap{padding:14px 16px 10px;background:#090b0e}.stage-window{width:min(100%,1320px)}.window-bar{padding:0 4px 8px;font-size:9px;color:#5f636b}.window-bar span:last-child{opacity:.75}.stage{border-radius:18px;border-color:rgba(255,255,255,.065);box-shadow:0 22px 60px rgba(0,0,0,.42)}.stage::before{display:none}.stage-badge{display:none!important}
+.empty-slide{background:#0a0c0f;color:#737780}.empty-content{display:flex;flex-direction:column;align-items:center;gap:9px}.empty-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#15181d;color:#b4b7be;font-size:20px}.empty-slide b{font-size:17px;font-weight:600}.empty-slide span{font-size:10px;color:#666a72}.empty-slide button{margin-top:4px;background:#f5f5f7!important;color:#111318!important;min-width:130px}
+.camera-bubble{border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 16px 42px rgba(0,0,0,.35)}.float-grip{width:28px;height:3px;background:rgba(255,255,255,.45)}
+.teleprompter{border-radius:16px;border-color:rgba(255,255,255,.09);box-shadow:0 16px 46px rgba(0,0,0,.30);backdrop-filter:blur(18px) saturate(110%)}.teleprompter:hover{border-color:rgba(255,255,255,.15);box-shadow:0 18px 50px rgba(0,0,0,.34)}.tele-head{height:34px;padding:0 38px 0 12px;font-size:8.5px;color:#8a8e97;background:linear-gradient(180deg,rgba(8,10,13,.92),transparent)}.notes-viewport{padding:43px 28px 78px}.notes-text{font-weight:500;line-height:1.48;text-shadow:0 1px 5px rgba(0,0,0,.8)}.focus-band{background:rgba(10,132,255,.025);border-color:rgba(10,132,255,.22)}
+.thumb-dock{background:#0d0f12;border-top-color:rgba(255,255,255,.05)}.thumb{background:#0b0d10;border-color:rgba(255,255,255,.05)}
+.bottom{padding:9px 12px 11px;background:#0d0f12;border-top-color:rgba(255,255,255,.055);backdrop-filter:none}.controls{justify-content:center;gap:7px}.nav-button{width:36px;height:36px;padding:0;border-radius:50%;font-size:15px;background:#16191e;border-color:rgba(255,255,255,.055);box-shadow:none}.scroll-control{min-width:132px;height:36px;padding:0 13px;border-radius:18px;background:#f5f5f7;color:#111318;border:0;font-weight:600;box-shadow:none}.scroll-control:hover{background:#fff;transform:none}.prompter-menu>summary{height:36px;padding:0 12px;border-radius:18px;background:#16191e;border-color:rgba(255,255,255,.055);font-size:9.5px}.prompter-popover{bottom:44px;width:290px;background:#1a1d22;border-color:rgba(255,255,255,.075)}.progress{height:3px;margin-top:8px;border:0;background:rgba(255,255,255,.04)}.progress i{background:#0a84ff}.slide-progress{display:none!important}
+.toast{background:#202329;border-color:rgba(255,255,255,.08);border-radius:12px;font-size:10px;box-shadow:var(--shadow-soft);backdrop-filter:blur(18px)}
+.modal{background:rgba(0,0,0,.62);backdrop-filter:blur(12px)}.modal-card{border-radius:20px;background:#15181d;border-color:rgba(255,255,255,.08);box-shadow:0 28px 80px rgba(0,0,0,.45)}
+@media(max-width:1180px){.app{grid-template-columns:310px minmax(0,1fr)}}
+
+
+/* QuietCue 1.0 — Porcelain / Ink / Iris */
+:root{
+  --qc-canvas:#eeeae2;
+  --qc-surface:#fbfaf7;
+  --qc-surface-2:#f5f2ec;
+  --qc-surface-3:#ebe7df;
+  --qc-ink:#1a191d;
+  --qc-ink-2:#55525b;
+  --qc-muted:#8b8790;
+  --qc-line:#ded9d0;
+  --qc-line-strong:#cec8bd;
+  --qc-iris:#6857f5;
+  --qc-iris-hover:#5b49ed;
+  --qc-iris-soft:#eeeafd;
+  --qc-good:#18835b;
+  --qc-warn:#a86a16;
+  --qc-danger:#c94b5d;
+  --qc-theatre:#101115;
+  --qc-theatre-2:#17181e;
+  --text:var(--qc-ink);
+  --muted:var(--qc-ink-2);
+  --muted-2:var(--qc-muted);
+  --accent:var(--qc-iris);
+  --accent-2:#8d7cff;
+  --good:var(--qc-good);
+  --warn:var(--qc-warn);
+  --danger:var(--qc-danger);
+  --line:var(--qc-line);
+  --line-strong:var(--qc-line-strong);
+  --shadow:0 30px 80px rgba(42,37,31,.13);
+  --shadow-soft:0 12px 34px rgba(42,37,31,.10);
+}
+html{background:var(--qc-canvas)}
+body{
+  color:var(--qc-ink);
+  background:
+    radial-gradient(circle at 18% 8%,rgba(104,87,245,.055),transparent 28%),
+    linear-gradient(135deg,#f2efe8 0%,#ece8e0 100%);
+}
+.shell{padding:0}
+.app{
+  grid-template-columns:324px minmax(0,1fr);
+  border:0;border-radius:0;box-shadow:none;background:var(--qc-canvas);
+}
+aside{
+  padding:26px 22px 22px;
+  background:rgba(251,250,247,.95);
+  border-right:1px solid var(--qc-line);
+  box-shadow:6px 0 28px rgba(56,50,43,.035);
+}
+main{background:var(--qc-canvas)}
+.brand-row{margin-bottom:8px}.brand{gap:12px}
+.logo{
+  position:relative;width:40px;height:40px;border-radius:13px;
+  color:#fff;background:var(--qc-ink);font-size:17px;font-weight:720;letter-spacing:-.05em;
+  box-shadow:0 8px 22px rgba(28,25,31,.16);overflow:visible;
+}
+.logo::after{content:"";position:absolute;right:-2px;bottom:-2px;width:9px;height:9px;border-radius:50%;background:var(--qc-iris);border:3px solid var(--qc-surface)}
+.brand h1{font-size:18px;font-weight:680;color:var(--qc-ink);letter-spacing:-.035em}
+.badge{display:none!important}
+.brand .small{font-size:10px;color:var(--qc-muted);letter-spacing:.01em}
+.sub{margin:7px 0 20px;font-size:11px;line-height:1.55;color:#716d76;max-width:260px}
+.workflow-nav{
+  padding:3px;margin-bottom:18px;gap:2px;border:0;border-radius:12px;background:var(--qc-surface-2);
+}
+.flow-btn{height:33px;color:#8d8991;background:transparent;border:0;border-radius:9px;font-size:9.5px;font-weight:570}
+.flow-btn:hover{background:rgba(255,255,255,.72);color:var(--qc-ink);transform:none}
+.flow-btn.active{background:#fff;color:var(--qc-ink);box-shadow:0 2px 8px rgba(49,44,38,.075),inset 0 0 0 1px rgba(55,50,44,.04)}
+.ready-card{background:transparent}.ready-head b{color:#69656d}.ready-head span{color:#aaa5ac}
+.recovery-card{background:#fff;border:1px solid var(--qc-line);box-shadow:0 5px 18px rgba(46,41,35,.05)}
+.section{color:var(--qc-ink)}.section h2{color:var(--qc-ink);font-weight:650}.section-title{color:var(--qc-ink)}
+.source-pills{gap:5px}.source-pills button{
+  background:#fff;border:1px solid var(--qc-line);color:#6e6972;border-radius:10px;box-shadow:0 1px 2px rgba(45,40,35,.03)
+}
+.source-pills button:hover{background:var(--qc-iris-soft);color:var(--qc-iris);border-color:#d9d1fd;transform:none}
+.drop-zone{
+  min-height:126px;background:rgba(255,255,255,.56);border:1.5px dashed #cbc5bb;border-radius:17px;color:var(--qc-ink);
+}
+.drop-zone:hover,.drop-zone.dragover{background:#fff;border-color:var(--qc-iris);box-shadow:0 0 0 4px rgba(104,87,245,.055);transform:none}
+.drop-zone b{color:var(--qc-ink);font-size:12px}.drop-zone span{color:#97929a}
+.text-action{color:var(--qc-iris)!important}.text-action:hover{color:var(--qc-iris-hover)!important}
+button{color:var(--qc-ink);background:#fff;border-color:var(--qc-line);box-shadow:0 1px 2px rgba(44,39,33,.04)}
+button:hover{border-color:#cbc5bc;background:#fdfcf9;box-shadow:0 5px 16px rgba(45,39,32,.065);transform:translateY(-1px)}
+button.primary{background:var(--qc-iris)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 7px 20px rgba(104,87,245,.20)!important}
+button.primary:hover{background:var(--qc-iris-hover)!important;box-shadow:0 9px 24px rgba(104,87,245,.24)!important;transform:translateY(-1px)!important}
+button.good{background:#edf8f3;border-color:#d6eee4;color:#176c50}
+button.danger{background:#fff1f3;border-color:#f4dadd;color:#b33d50}
+button.ghost{background:transparent;border-color:transparent;box-shadow:none}
+button.ghost:hover{background:var(--qc-surface-2);box-shadow:none;transform:none}
+input[type=file],select,input[type=number],input[type=text],textarea{
+  background:#fff;color:var(--qc-ink);border:1px solid var(--qc-line);border-radius:11px;box-shadow:0 1px 2px rgba(43,38,32,.025)
+}
+textarea::placeholder,input::placeholder{color:#b0abb2}
+select{color-scheme:light}
+label,.small,.status{color:#7b767f}.status.good{color:var(--qc-good)}.status.warn{color:var(--qc-warn)}.status.danger{color:var(--qc-danger)}
+.notes-file-row{background:#fff;border-color:var(--qc-line);box-shadow:none}.notes-file-row:hover{background:var(--qc-surface-2);border-color:var(--qc-line-strong)}.notes-file-row b{color:#4e4a52}.notes-file-row small{color:#a09aa3}.notes-file-action{color:var(--qc-iris)}
+.clear-btn{color:#918c95}.clear-btn:hover{background:var(--qc-surface-2);color:var(--qc-ink)}
+.privacy-note{color:#908b93}.privacy-note>span:first-child{color:var(--qc-good)}
+.metrics{border-color:var(--qc-line)}.metric+.metric{border-left-color:var(--qc-line)}.metric b{color:var(--qc-ink)}.metric span{color:#a09ba3}
+.inline-advanced,.advanced-section,.setup-accordion{background:var(--qc-surface-2)!important;border-color:transparent!important}
+.inline-advanced>summary,.advanced-section>summary,.prompter-menu>summary{color:#77727b}
+.setup-accordion>summary b{color:#4e4a52}.setup-accordion>summary small{color:#9a959d}.setup-accordion>summary:after{color:#96919a}
+.duration-presets button{background:#fff;border-color:var(--qc-line);color:#77727b}.duration-presets button.active{background:var(--qc-ink);border-color:var(--qc-ink);color:#fff}
+.toggle-line{background:#fff;border-color:var(--qc-line);color:#68636c}
+.meter{background:#e7e3dc;border-color:#ded9d0}.mic-line{color:#7c7780}
+.audio-test audio{filter:none}
+.pace-hero,.minimal-preflight{border-color:var(--qc-line)}.pace-hero>div+div{border-left-color:var(--qc-line)}.pace-row{background:#fff;border-color:var(--qc-line);color:var(--qc-ink)}
+.minimal-preflight .preflight-item+.preflight-item{border-top-color:#ebe7df}.minimal-preflight .preflight-item.ok{color:#77727b}
+.session-primary{background:var(--qc-ink)!important;color:#fff!important;box-shadow:0 8px 22px rgba(24,22,27,.14)!important}
+.session-primary:hover{background:#26242a!important}
+.session-secondary{background:#fff;color:var(--qc-ink);border-color:var(--qc-line)}
+.centered-status{color:#9a959d}
+.topbar{height:54px;padding:0 18px;background:rgba(251,250,247,.92);border-bottom-color:var(--qc-line);backdrop-filter:blur(16px)}
+.dot{background:#b1acb3}.dot.live{background:var(--qc-danger)}.dot.practice{background:var(--qc-iris)}.dot.paused{background:#d69328}
+.slide-label{color:#77727b}.remaining{color:#948f97}.timer{color:var(--qc-ink)}.pace-live{color:#747078}
+.utility-menu>summary{color:#8d8891}.utility-popover{background:#fff;border-color:var(--qc-line);box-shadow:0 18px 42px rgba(48,43,37,.12)}.utility-popover button{color:#5e5962}.utility-popover button:hover{background:var(--qc-surface-2)}
+.stage-wrap{
+  padding:20px 22px 13px;
+  background:
+    radial-gradient(circle at 70% 8%,rgba(104,87,245,.035),transparent 28%),
+    var(--qc-canvas);
+}
+.window-bar{padding:0 6px 9px;color:#928d94;font-size:9px}.window-bar span:first-child{color:#68636b;font-weight:600}
+.stage{
+  background:var(--qc-theatre);border:1px solid rgba(20,19,23,.08);border-radius:20px;
+  box-shadow:0 26px 58px rgba(38,33,28,.17),0 2px 7px rgba(35,31,27,.08)
+}
+.empty-slide{background:linear-gradient(145deg,#121318,#0c0d10);color:#9898a2}.empty-icon{background:#202128;color:#d8d6df;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}.empty-slide b{color:#f7f5fa}.empty-slide span{color:#85838c}.empty-slide button{background:#fff!important;color:#18171b!important;box-shadow:none!important}
+.camera-bubble{border:2px solid rgba(255,255,255,.88);box-shadow:0 18px 48px rgba(0,0,0,.35)}
+.teleprompter{
+  background:linear-gradient(180deg,rgba(18,17,24,.56),rgba(11,11,15,.94));
+  border-color:rgba(215,207,255,.14);box-shadow:0 18px 54px rgba(0,0,0,.32);backdrop-filter:blur(20px) saturate(115%)
+}
+.teleprompter:hover{border-color:rgba(180,169,255,.28);box-shadow:0 22px 66px rgba(0,0,0,.36)}
+.tele-head{color:#aaa4bb;background:linear-gradient(180deg,rgba(16,15,21,.92),transparent)}
+.notes-text{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.72)}
+.focus-band{background:rgba(104,87,245,.055);border-color:rgba(156,143,255,.28)}
+.cue{color:#b8b1c7}
+.thumb-dock{background:rgba(251,250,247,.96);border-top-color:var(--qc-line)}.thumb{background:#fff;border-color:var(--qc-line)}
+.bottom{padding:9px 14px 13px;background:transparent;border-top:0}
+.controls{
+  width:max-content;max-width:100%;margin:0 auto;padding:6px;
+  background:rgba(251,250,247,.88);border:1px solid rgba(215,210,201,.86);border-radius:999px;
+  box-shadow:0 10px 28px rgba(50,44,37,.10);backdrop-filter:blur(18px);justify-content:center
+}
+.nav-button{background:transparent;border-color:transparent;color:#6d6870;box-shadow:none}.nav-button:hover{background:var(--qc-surface-2);box-shadow:none;transform:none}
+.scroll-control{background:var(--qc-ink);color:#fff;border:0;box-shadow:none}.scroll-control:hover{background:#2a282e;transform:none}
+.prompter-menu>summary{background:transparent;border-color:transparent;color:#76717a}.prompter-menu>summary:hover{background:var(--qc-surface-2)}
+.prompter-popover{background:#fff;border-color:var(--qc-line);box-shadow:0 20px 50px rgba(45,40,35,.14)}
+.control-group{background:var(--qc-surface-2);border-color:transparent;color:#5f5a63}
+.progress{background:rgba(85,79,72,.08);border:0}.progress i{background:var(--qc-iris)}
+.toast{background:var(--qc-ink);color:#fff;border-color:transparent;box-shadow:0 16px 38px rgba(26,24,28,.18)}
+.modal{background:rgba(40,35,30,.28);backdrop-filter:blur(15px)}
+.modal-card{background:var(--qc-surface);color:var(--qc-ink);border-color:rgba(255,255,255,.7);box-shadow:0 34px 90px rgba(49,43,36,.19)}
+.modal-card .small{color:#8f8992}.review-meta div{background:var(--qc-surface-2);border-color:transparent}.review-meta span{color:#969099}
+.key{background:var(--qc-surface-2);border-color:var(--qc-line);color:#4d4950}
+.mobile-warning{background:rgba(238,234,226,.92)}.mobile-warning-card{background:var(--qc-surface);border-color:var(--qc-line);box-shadow:var(--shadow);color:var(--qc-ink)}.mobile-warning-card p{color:#746f78}
+@media(max-width:1180px){.app{grid-template-columns:300px minmax(0,1fr)}aside{padding:22px 18px}}
+
+/* QuietCue 1.1 — simplified Setup → Present → Review flow */
+.workflow-nav{grid-template-columns:repeat(2,1fr)}
+.workflow-nav.has-review{grid-template-columns:repeat(3,1fr)}
+.workflow-nav .flow-btn[data-flow="review"]{display:none}
+.workflow-nav.has-review .flow-btn[data-flow="review"]{display:flex}
+.session-actions{grid-template-columns:repeat(3,1fr)}
+.timing-plan{margin-top:17px}
+.timing-plan>summary{min-height:38px}
+@media(max-width:1180px){.session-actions{grid-template-columns:1fr}.session-actions button{min-height:40px}}
+
 </style>
 </head>
 <body>
 <div class="mobile-warning" id="mobileWarning">
   <div class="mobile-warning-card">
-    <div class="logo">W</div>
-    <h2>Wakanda Studio works best on desktop</h2>
-    <p>Presenting, camera controls, slide navigation, and private guidance need a wider workspace. Open Wakanda Studio on a laptop or desktop for the intended experience.</p>
+    <div class="logo">Q</div>
+    <h2>QuietCue works best on desktop</h2>
+    <p>Presenting, camera controls, slide navigation, and private guidance need a wider workspace. Open QuietCue on a laptop or desktop for the intended experience.</p>
     <button id="mobileDismiss">Continue anyway</button>
   </div>
 </div>
 <div class="shell">
   <div class="app" id="app">
-    <aside id="sidebar" data-flow="import">
+    <aside id="sidebar" data-flow="setup">
       <div class="brand-row">
         <div class="brand">
-          <div class="logo">W</div>
+          <div class="logo">Q</div>
           <div>
-            <div class="row" style="gap:6px"><h1>Wakanda Studio</h1><span class="badge">V4.2</span></div>
-            <div class="small">Prepare · rehearse · present · improve</div>
+            <div class="row" style="gap:6px"><h1>QuietCue</h1><span class="badge">1.0</span></div>
+            <div class="small">Private presentation copilot</div>
           </div>
         </div>
-        <div class="traffic" aria-hidden="true"><i class="red"></i><i class="yellow"></i><i class="green"></i></div>
       </div>
-      <div class="sub">Import your deck, prepare private guidance, rehearse to time, present live or record, then improve the next take. Your audience never sees your notes.</div>
+      <div class="sub">Present naturally. Stay on track. Keep your guidance private.</div>
 
-      <div class="workflow-nav" id="workflowNav" aria-label="Workflow">
-        <button class="flow-btn active" data-flow="import"><span>1</span>Import</button>
-        <button class="flow-btn" data-flow="prepare"><span>2</span>Prepare</button>
-        <button class="flow-btn" data-flow="rehearse"><span>3</span>Rehearse</button>
-        <button class="flow-btn" data-flow="present"><span>4</span>Present</button>
-        <button class="flow-btn" data-flow="review"><span>5</span>Review</button>
+      <div class="workflow-nav" id="workflowNav" aria-label="QuietCue flow">
+        <button class="flow-btn active" data-flow="setup">Setup</button>
+        <button class="flow-btn" data-flow="present">Present</button>
+        <button class="flow-btn" data-flow="review">Review</button>
       </div>
 
       <div class="ready-card workflow-always">
-        <div class="ready-head"><b id="readyTitle">Setup 0/3</b><span id="readyText">Add your presentation first</span></div>
+        <div class="ready-head"><b id="readyTitle">Setup 0/3</b><span id="readyText">Add your presentation</span></div>
         <div class="check-grid">
           <div class="check" id="checkSlides"><i></i>Presentation</div>
-          <div class="check" id="checkNotes"><i></i>Speaker notes</div>
+          <div class="check" id="checkNotes"><i></i>Guidance</div>
           <div class="check" id="checkMedia"><i></i>Camera + mic</div>
-          <div class="check" id="checkReady"><i></i>Ready to record</div>
+          <div class="check" id="checkReady"><i></i>Ready</div>
         </div>
       </div>
 
       <div class="recovery-card" id="sessionRecovery" hidden><div><b>Previous deck available</b><span>Restore the last presentation you were working on.</span></div><button id="restoreSessionBtn">Restore</button></div>
-      <div class="recovery-card warn" id="recordingRecovery" hidden><div><b>Protected recording found</b><span>Wakanda saved recording chunks before the previous session ended.</span></div><button id="recoverRecordingBtn">Recover</button></div>
+      <div class="recovery-card warn" id="recordingRecovery" hidden><div><b>Protected recording found</b><span>QuietCue saved recording chunks before the previous session ended.</span></div><button id="recoverRecordingBtn">Recover</button></div>
 
-      <div class="section workflow-panel" data-flow="import">
-        <div class="section-title"><h2>Presentation source</h2><span class="pill" id="slideMini">—</span></div>
-        <div class="source-grid">
-          <button class="source-card primary-source" id="pptxSource"><b>PowerPoint</b><span>.pptx · browser rendered</span></button>
-          <button class="source-card" id="googleSource"><b>Google Slides</b><span>Link or Google account</span></button>
-          <button class="source-card" id="pdfSource"><b>PDF</b><span>Reliable universal import</span></button>
-          <button class="source-card" id="imageSource"><b>Images</b><span>JPG / PNG slides</span></button>
+      <div class="section workflow-panel" data-flow="setup">
+        <div class="section-title"><h2>Start with your deck</h2><span class="pill" id="slideMini">—</span></div>
+        <div class="source-pills" aria-label="Start with your deck">
+          <button id="pptxSource">PowerPoint</button>
+          <button id="pdfSource">PDF</button>
+          <button id="imageSource">Images</button>
+          <button id="googleSource">Google Slides</button>
         </div>
         <div class="drop-zone" id="presentationDrop" tabindex="0" role="button" aria-label="Upload or drop presentation">
-          <b>Drop your presentation here</b><span>PowerPoint / PDF / JPG / PNG</span>
+          <b>Drop your deck here</b><span>PowerPoint / PDF / JPG / PNG</span>
           <input id="presentationInput" type="file" accept="application/vnd.openxmlformats-officedocument.presentationml.presentation,.pptx,application/pdf,.pdf,image/png,image/jpeg,.png,.jpg,.jpeg" multiple />
         </div>
-        <button id="googleImportBtn" style="width:100%;margin-top:8px">Import from Google Slides</button>
-        <div class="two">
-          <div><label>Current slide</label><input id="slideNumber" type="number" min="1" value="1" /></div>
-          <div><label>Total slides</label><input id="totalSlides" type="number" min="1" value="1" readonly /></div>
-        </div>
+        <button id="googleImportBtn" class="text-action">Connect Google Slides</button>
+        <div class="minor-control"><input id="slideNumber" type="number" min="1" value="1" /><input id="totalSlides" type="number" min="1" value="1" readonly /></div>
         <div id="presentationStatus" class="status">No presentation loaded.</div>
       </div>
 
-      <div class="section workflow-panel" data-flow="prepare">
+      <div class="section workflow-panel" data-flow="setup">
         <h2>Private guidance</h2>
-        <label>Guidance file</label>
-        <div class="drop-zone" id="notesDrop" tabindex="0" role="button" aria-label="Upload or drop speaker notes">
-          <b>Drop private guidance here</b><span>or click to browse · .md / .txt</span>
+        <div class="notes-file-row" id="notesDrop" tabindex="0" role="button" aria-label="Upload or drop speaker notes">
+          <span><b>Import notes file</b><small>.md or .txt</small></span><span class="notes-file-action">Choose ›</span>
           <input id="notesInput" type="file" accept="text/plain,text/markdown,.md,.txt" />
         </div>
         <label>Or paste script / cues</label>
-        <textarea id="notesPaste" placeholder="## Slide 1 — Opening&#10;Your opening...&#10;&#10;## Slide 2 — Problem&#10;Your next section..."></textarea>
-        <div class="two" style="margin-top:8px">
-          <button id="applyNotes">Apply notes</button>
-          <select id="notesMode"><option value="slide">Slide sync</option><option value="continuous">Continuous credits</option></select>
+        <textarea id="notesPaste" placeholder="Paste your speaker notes or script here…"></textarea>
+        <div class="notes-actions">
+          <button id="applyNotes" class="primary">Use this guidance</button>
+          <button id="clearNotesBtn" class="clear-btn">Clear</button>
         </div>
-        <div class="metrics">
+        <div class="privacy-note"><span>◉</span><span><b>Session-private by default.</b> Guidance is not saved to browser preferences and is cleared when you start a fresh session.</span></div>
+        <details class="inline-advanced" id="guidanceOptions" hidden>
+          <summary>Guidance options</summary>
+          <div class="advanced-body">
+            <label>Reading behavior</label><select id="notesMode"><option value="slide">Slide sync</option><option value="continuous">Continuous credits</option></select>
+          </div>
+        </details>
+        <div class="metrics" id="guidanceMetrics" hidden>
           <div class="metric"><b id="wordCount">0</b><span>Words</span></div>
           <div class="metric"><b id="estTime">00:00</b><span>Est. Time</span></div>
           <div class="metric"><b id="paceFit">—</b><span>Target WPM</span></div>
         </div>
-        <div id="notesStatus" class="status">Use <b>## Slide 3</b> headings. Optional cues: <b>[REMINDER]</b>, <b>[CUE]</b>, <b>[PAUSE]</b>, <b>[TRANSITION]</b>.</div>
-        <div class="editor-card" id="slideNotesCard">
-          <div class="editor-head"><b>Current slide guidance</b><span id="slideNotesLabel">Slide —</span></div>
-          <textarea id="slideNotesEditor" placeholder="Write the script, cues or reminders for this slide..."></textarea>
-          <button id="saveSlideNotes" style="width:100%;margin-top:7px">Save current slide guidance</button>
-        </div>
+        <div id="notesStatus" class="status">Use <b>## Slide 3</b> headings to keep guidance in sync with your deck.</div>
+        <details class="inline-advanced" id="slideNotesCard">
+          <summary>Edit guidance slide-by-slide <span id="slideNotesLabel" class="pill">Slide —</span></summary>
+          <div class="advanced-body">
+            <textarea id="slideNotesEditor" placeholder="Write the script, cues or reminders for this slide..."></textarea>
+            <button id="saveSlideNotes" style="width:100%;margin-top:7px">Update current slide</button>
+          </div>
+        </details>
       </div>
 
-      <div class="section workflow-panel" data-flow="prepare">
-        <h2>Timing & teleprompter</h2>
-        <label>Target duration</label>
+      <details class="section workflow-panel setup-accordion" data-flow="setup">
+        <summary><span><b>Target & teleprompter</b><small>Timing and reading</small></span></summary>
+        <div class="accordion-body">
+        <h2 class="visually-muted">Target duration</h2>
+        <label>Choose how long you want to present</label>
         <div class="duration-presets" id="durationPresets">
           <button data-min="5" class="active">5 min</button><button data-min="7">7 min</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button>
         </div>
-        <div class="two">
-          <div><label>Custom minutes</label><input id="targetMin" type="number" min="0.5" max="180" step="0.5" value="5" /></div>
-          <div><label>Countdown</label><select id="countdownSelect"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="0">Off</option></select></div>
+        <div><label>Custom minutes</label><input id="targetMin" type="number" min="0.5" max="180" step="0.5" value="5" /></div>
+        <div id="timingStatus" class="status">Add guidance to calculate pacing.</div>
+        <details class="inline-advanced">
+          <summary>Advanced teleprompter settings</summary>
+          <div class="advanced-body">
+            <div class="two">
+              <div><label>Countdown</label><select id="countdownSelect"><option value="3">3 seconds</option><option value="5">5 seconds</option><option value="0">Off</option></select></div>
+              <div><label>Reading mode</label><select id="readingMode"><option value="manual">Manual</option><option value="auto" selected>Auto pace</option></select></div>
+            </div>
+            <div class="two">
+              <div><label>Prompter position</label><select id="prompterPosition"><option value="top">Top · near camera</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option><option value="custom">Custom</option></select></div>
+              <div><label>Focus line</label><select id="focusPosition"><option value="30">High</option><option value="43" selected>Center</option><option value="57">Low</option></select></div>
+            </div>
+            <label>Prompter opacity</label><input id="opacityRange" type="range" min="30" max="100" value="86" />
+            <button id="fitPace" style="width:100%;margin-top:10px">Fit pace to target</button>
+            <div class="toggle-line"><span>Auto-advance after slide guidance</span><input id="autoAdvance" type="checkbox" /></div>
+          </div>
+        </details>
         </div>
-        <div class="two">
-          <div><label>Prompter position</label><select id="prompterPosition"><option value="top">Top · near camera</option><option value="middle">Middle</option><option value="bottom" selected>Bottom</option><option value="custom">Custom</option></select></div>
-          <div><label>Focus line</label><select id="focusPosition"><option value="30">High</option><option value="43" selected>Center</option><option value="57">Low</option></select></div>
-        </div>
-        <div class="two">
-          <div><label>Reading mode</label><select id="readingMode"><option value="manual">Manual</option><option value="auto" selected>Auto pace</option></select></div>
-          <div><label>Prompter opacity</label><input id="opacityRange" type="range" min="30" max="100" value="86" /></div>
-        </div>
-        <button id="fitPace" style="width:100%;margin-top:10px">Fit pace to target</button>
-        <div class="toggle-line"><span>Auto-advance when current slide notes finish</span><input id="autoAdvance" type="checkbox" /></div>
-        <div id="timingStatus" class="status">Add notes to calculate pacing.</div>
-      </div>
+      </details>
 
-      <div class="section workflow-panel" data-flow="prepare">
-        <h2>Camera & microphone</h2>
+      <details class="section workflow-panel setup-accordion" data-flow="setup">
+        <summary><span><b>Camera & microphone</b><small>Devices and framing</small></span></summary>
+        <div class="accordion-body">
+        <h2 class="visually-muted">Camera & microphone</h2>
         <button id="enableMedia" class="primary" style="width:100%">Enable camera & mic</button>
-        <label>Camera</label><select id="cameraSelect"><option value="">Default camera</option></select>
-        <label>Microphone</label><select id="micSelect"><option value="">Default microphone</option></select>
         <div class="meter"><i id="audioLevel"></i></div>
         <div class="mic-line"><span class="small">Mic health</span><b id="micHealth">Not tested</b></div>
         <div class="audio-test"><div class="row"><button id="audioTestBtn" class="grow">Record 5-sec mic test</button><span class="pill" id="audioTestState">Not tested</span></div><audio id="audioTestPlayer" controls></audio></div>
-        <div class="two">
-          <div><label>Camera position</label><select id="camPosition"><option value="br">Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option><option value="custom">Custom</option></select></div>
-          <div><label>Camera size</label><select id="camSize"><option value="sm">Small</option><option value="md" selected>Medium</option><option value="lg">Large</option><option value="custom">Custom</option></select></div>
-        </div>
-        <div class="two"><button id="shapeBtn">Rounded camera</button><button id="cameraToggle">Hide camera</button></div>
         <div id="mediaStatus" class="status">Permissions not requested yet.</div>
-      </div>
-
-      <div class="section workflow-panel" data-flow="rehearse">
-        <div class="section-title"><h2>Rehearsal plan</h2><span class="pill" id="paceVerdict">Add notes</span></div>
-        <div class="pace-hero"><div><span>Target</span><b id="paceTarget">05:00</b></div><div><span>Estimated</span><b id="paceEstimated">00:00</b></div><div><span>Difference</span><b id="paceDelta">—</b></div></div>
-        <div class="pace-list" id="paceList"><div class="status">Add slide-aware guidance to build a per-slide timing plan.</div></div>
-        <button id="rehearseStartBtn" class="good" style="width:100%;margin-top:10px">Start rehearsal</button>
-      </div>
+        <details class="inline-advanced">
+          <summary>Camera & microphone options</summary>
+          <div class="advanced-body">
+            <label>Camera</label><select id="cameraSelect"><option value="">Default camera</option></select>
+            <label>Microphone</label><select id="micSelect"><option value="">Default microphone</option></select>
+            <div class="two">
+              <div><label>Camera position</label><select id="camPosition"><option value="br">Bottom right</option><option value="bl">Bottom left</option><option value="tr">Top right</option><option value="tl">Top left</option><option value="custom">Custom</option></select></div>
+              <div><label>Camera size</label><select id="camSize"><option value="sm">Small</option><option value="md" selected>Medium</option><option value="lg">Large</option><option value="custom">Custom</option></select></div>
+            </div>
+            <div class="two"><button id="shapeBtn">Rounded camera</button><button id="cameraToggle">Hide camera</button></div>
+          </div>
+        </details>
+        </div>
+      </details>
 
       <div class="section workflow-panel" data-flow="review">
         <div class="section-title"><h2>Review & takes</h2><span class="pill" id="takeCount">0 takes</span></div>
         <div class="take-list" id="takeList"><div class="status">Record a take and it will appear here for comparison.</div></div>
       </div>
 
-      <div class="section workflow-panel" data-flow="present">
-        <h2>Performance session</h2>
-        <div class="two">
-          <div><label>Output quality</label><select id="quality"><option value="720">720p</option><option value="1080" selected>1080p</option></select></div>
-          <div><label>Recording name</label><input id="recordingName" type="text" value="wakanda-studio-recording" /></div>
+      <div class="section workflow-panel performance-card" data-flow="present">
+        <div class="section-title"><h2>Choose how you want to present</h2><span class="privacy-chip"><i></i>Guidance stays private</span></div>
+        <div class="preflight minimal-preflight" id="preflight"></div>
+        <div class="session-actions">
+          <button id="practiceBtn" class="session-secondary">Rehearse</button>
+          <button id="recordBtn" class="primary session-primary" disabled>● Record</button>
+          <button id="liveBtn" class="session-secondary">Live</button>
         </div>
-        <div class="preflight" id="preflight"></div>
-        <button id="cleanPreviewBtn" style="width:100%;margin-top:10px">Preview audience output</button>
-        <div class="two" style="margin-top:8px"><button id="audienceBtn">Open Audience View</button><button id="liveBtn" class="good">Present Live</button></div>
-        <div class="two" style="margin-top:8px"><button id="practiceBtn" class="good">▶ Rehearse</button><button id="recordBtn" class="primary" disabled>● Record</button></div>
-        <div class="two" style="margin-top:8px"><button id="pauseBtn" disabled>Pause</button><button id="stopBtn" class="danger" disabled>Stop & review</button></div>
-        <div id="sessionStatus" class="status">The final video is composed internally. No screen-sharing window is required.</div>
+        <details class="inline-advanced output-options">
+          <summary>Output options</summary>
+          <div class="advanced-body">
+            <div class="two">
+              <div><label>Quality</label><select id="quality"><option value="720">720p</option><option value="1080" selected>1080p</option></select></div>
+              <div><label>File name</label><input id="recordingName" type="text" value="quietcue-recording" /></div>
+            </div>
+            <button id="cleanPreviewBtn" style="width:100%;margin-top:10px">Preview audience output</button>
+            <button id="audienceBtn" style="width:100%;margin-top:8px">Open audience-only window</button>
+          </div>
+        </details>
+        <div class="session-running-actions"><button id="pauseBtn" disabled>Pause</button><button id="stopBtn" class="danger" disabled>Stop & review</button></div>
+        <div id="sessionStatus" class="status centered-status">Your private guidance stays with you — never in the recording.</div>
       </div>
+      <details class="section workflow-panel setup-accordion timing-plan" data-flow="present">
+        <summary><span><b>Timing plan</b><small>Optional pacing detail</small></span><span class="pill" id="paceVerdict">Add notes</span></summary>
+        <div class="accordion-body">
+          <div class="pace-hero"><div><span>Target</span><b id="paceTarget">05:00</b></div><div><span>Estimated</span><b id="paceEstimated">00:00</b></div><div><span>Difference</span><b id="paceDelta">—</b></div></div>
+          <div class="pace-list" id="paceList"><div class="status">Add slide-aware guidance to build a per-slide timing plan.</div></div>
+        </div>
+      </details>
+
     </aside>
 
     <main>
       <div class="topbar">
         <div class="top-left">
-          <div class="traffic" aria-hidden="true"><i class="red"></i><i class="yellow"></i><i class="green"></i></div>
-          <span id="recDot" class="dot"></span>
-          <span class="small" id="recText">Setup</span>
-          <span class="pill" id="modePill">SLIDE SYNC</span>
-          <span class="pill" id="slidePill">Slide —</span>
-          <span class="privacy-chip"><i></i>Notes private</span>
+            <span id="recDot" class="dot"></span>
+          <span class="small" id="recText">Ready</span>
+          <span class="pill minor-control" id="modePill">SLIDE SYNC</span>
+          <span class="slide-label" id="slidePill">No presentation</span>
         </div>
         <div class="top-right">
-          <span class="pace-live" id="paceLive">On pace</span><span class="remaining" id="remaining">Target 05:00</span>
+          <span class="pace-live" id="paceLive" hidden>On pace</span><span class="remaining" id="remaining">Target 05:00</span>
           <span class="timer" id="timer">00:00</span>
-          <button id="thumbToggle" class="ghost">Slides</button>
-          <button id="focusBtn" class="ghost">Focus</button>
-          <button id="helpBtn" class="ghost">Shortcuts</button>
+          <details class="utility-menu"><summary>•••</summary><div class="utility-popover"><button id="thumbToggle" class="ghost">Slide navigator</button><button id="focusBtn" class="ghost">Focus mode</button><button id="helpBtn" class="ghost">Shortcuts</button></div></details>
         </div>
       </div>
 
       <div class="stage-wrap">
         <div class="stage-window">
-          <div class="window-bar"><span>Presenter Preview</span><span>Slides + camera are recorded · notes stay private</span></div>
+          <div class="window-bar"><span>QuietCue view</span><span>Only you can see your guidance</span></div>
           <div class="stage" id="stage" title="Click the slide area to advance">
             <div id="pptxStage" class="pptx-stage" aria-label="PowerPoint preview"></div><canvas id="slideCanvas" width="1280" height="720" aria-label="Presentation preview"></canvas>
-            <div class="empty-slide" id="emptySlide"><div><b>Drop in your presentation</b><br><br>PowerPoint, Google Slides, PDF, JPG and PNG are supported.<br>Camera + slide are recorded internally. Notes remain private.</div></div>
-            <div class="stage-badge" id="stageBadge">PRIVATE PRESENTER VIEW</div>
+            <div class="empty-slide" id="emptySlide"><div class="empty-content"><div class="empty-icon">↥</div><b>Import a presentation</b><span>PowerPoint, PDF, Google Slides or images</span><button id="stageImportBtn" class="primary">Choose a file</button></div></div>
+            <div class="stage-badge" id="stageBadge">QuietCue view</div>
             <div class="camera-bubble" id="cameraBubble" aria-label="Floating camera preview. Drag to move, use the lower-right handle to resize."><div class="float-grip"></div><video id="cameraPreview" autoplay muted playsinline></video><div class="resize-handle" data-resize="camera" title="Resize camera"></div></div>
             <div class="teleprompter" id="teleprompter" aria-label="Floating private guidance. Drag the header to move and use the lower-right handle to resize.">
-              <div class="tele-head" id="teleDragHandle"><span>Private guidance · drag to move</span><span class="cue" id="nextCue">Next cue: —</span></div>
+              <div class="tele-head" id="teleDragHandle"><span>Private guidance · drag anywhere</span><span class="cue" id="nextCue">Next cue: —</span></div>
               <div class="float-grip"></div>
               <div class="focus-band" id="focusBand"></div>
-              <div class="notes-viewport" id="notesViewport"><div class="notes-text" id="notesText">Your speaker notes will appear here.</div></div>
+              <div class="notes-viewport" id="notesViewport"><div class="notes-text" id="notesText">Your private guidance appears here.</div></div>
               <div class="resize-handle" data-resize="prompter" title="Resize private guidance"></div>
             </div>
             <div class="countdown" id="countdown"></div>
@@ -512,14 +781,21 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
 
       <div class="bottom">
         <div class="controls">
-          <button id="prevBtn">← Prev</button>
-          <button id="restartNotesBtn">↺ Notes</button>
-          <button id="nextBtn">Next →</button>
-          <button id="scrollToggle">▶ Auto-scroll</button>
-          <button id="teleToggle">Hide notes</button><button id="resetLayoutBtn" title="Reset floating camera and guidance positions">Reset layout</button><button id="performancePauseBtn" class="perf-action" disabled>Pause</button><button id="performanceStopBtn" class="perf-action danger" disabled>Stop</button>
-          <div class="control-group"><label>Speed</label><input id="speedRange" type="range" min="70" max="220" value="130" /><span class="pill" id="speedLabel">130 WPM</span></div>
-          <div class="control-group"><label>Text</label><input id="fontRange" type="range" min="18" max="44" value="29" /></div>
-          <div class="hint">←/→ slides · Space scroll · R restart notes · P pause · F focus · H hide notes</div>
+          <button id="prevBtn" class="nav-button" aria-label="Previous slide">←</button>
+          <button id="nextBtn" class="nav-button" aria-label="Next slide">→</button>
+          <button id="scrollToggle" class="scroll-control">▶ Start guidance</button>
+          <button id="performancePauseBtn" class="perf-action" disabled>Pause</button>
+          <button id="performanceStopBtn" class="perf-action danger" disabled>Stop</button>
+          <details class="prompter-menu">
+            <summary>Options</summary>
+            <div class="prompter-popover">
+              <div class="control-group"><label>Speed</label><input id="speedRange" type="range" min="70" max="220" value="130" /><span class="pill" id="speedLabel">130 WPM</span></div>
+              <div class="control-group"><label>Text size</label><input id="fontRange" type="range" min="18" max="44" value="29" /></div>
+              <div class="two"><button id="restartNotesBtn">↺ Restart notes</button><button id="teleToggle">Hide notes</button></div>
+              <button id="resetLayoutBtn" style="width:100%;margin-top:8px" title="Reset floating camera and guidance positions">Reset floating layout</button>
+            </div>
+          </details>
+          
         </div>
         <div class="progress"><i id="timeProgress"></i></div>
         <div class="slide-progress" id="slideProgress"></div>
@@ -564,7 +840,7 @@ aside[data-flow="import"] .workflow-panel[data-flow~="import"],aside[data-flow="
     <div class="row" style="justify-content:space-between"><div><h3>Import Google Slides</h3><div class="small">Paste a Slides link. Connect Google for private decks + speaker notes, or use the shared-link bridge for public decks.</div></div><button id="closeGoogle">Close</button></div>
     <label>Google Slides link</label><input id="googleSlidesUrl" type="text" placeholder="https://docs.google.com/presentation/d/.../edit" />
     <div class="two" style="margin-top:10px"><button id="googleConnectBtn" class="primary">Connect Google</button><button id="googlePublicBtn">Import shared link</button></div>
-    <div id="googleStatus" class="status">Google account import requires a Google OAuth Client ID in <code>config.js</code>. Shared-link import works when Wakanda Studio is run with its included server.</div>
+    <div id="googleStatus" class="status">Google account import requires a Google OAuth Client ID in <code>config.js</code>. Shared-link import works when QuietCue is run with its included server.</div>
   </div>
 </div>
 
@@ -596,8 +872,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@
 const $ = id => document.getElementById(id);
 const E = {
   app:$('app'),mobileWarning:$('mobileWarning'),mobileDismiss:$('mobileDismiss'),sidebar:$('sidebar'),workflowNav:$('workflowNav'),presentationDrop:$('presentationDrop'),presentationInput:$('presentationInput'),presentationStatus:$('presentationStatus'),slideNumber:$('slideNumber'),totalSlides:$('totalSlides'),slideMini:$('slideMini'),slidePill:$('slidePill'),slideCanvas:$('slideCanvas'),pptxStage:$('pptxStage'),emptySlide:$('emptySlide'),slideProgress:$('slideProgress'),pptxSource:$('pptxSource'),googleSource:$('googleSource'),pdfSource:$('pdfSource'),imageSource:$('imageSource'),googleImportBtn:$('googleImportBtn'),
-  notesDrop:$('notesDrop'),notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),slideNotesCard:$('slideNotesCard'),slideNotesLabel:$('slideNotesLabel'),slideNotesEditor:$('slideNotesEditor'),saveSlideNotes:$('saveSlideNotes'),notesMode:$('notesMode'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),teleDragHandle:$('teleDragHandle'),nextCue:$('nextCue'),wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),notesStatus:$('notesStatus'),
-  targetMin:$('targetMin'),durationPresets:$('durationPresets'),countdownSelect:$('countdownSelect'),prompterPosition:$('prompterPosition'),focusPosition:$('focusPosition'),focusBand:$('focusBand'),fitPace:$('fitPace'),autoAdvance:$('autoAdvance'),timingStatus:$('timingStatus'),readingMode:$('readingMode'),opacityRange:$('opacityRange'),paceVerdict:$('paceVerdict'),paceTarget:$('paceTarget'),paceEstimated:$('paceEstimated'),paceDelta:$('paceDelta'),paceList:$('paceList'),rehearseStartBtn:$('rehearseStartBtn'),
+  notesDrop:$('notesDrop'),notesInput:$('notesInput'),notesPaste:$('notesPaste'),applyNotes:$('applyNotes'),clearNotesBtn:$('clearNotesBtn'),slideNotesCard:$('slideNotesCard'),slideNotesLabel:$('slideNotesLabel'),slideNotesEditor:$('slideNotesEditor'),saveSlideNotes:$('saveSlideNotes'),notesMode:$('notesMode'),guidanceOptions:$('guidanceOptions'),notesViewport:$('notesViewport'),notesText:$('notesText'),teleprompter:$('teleprompter'),teleDragHandle:$('teleDragHandle'),nextCue:$('nextCue'),guidanceMetrics:$('guidanceMetrics'),wordCount:$('wordCount'),estTime:$('estTime'),paceFit:$('paceFit'),notesStatus:$('notesStatus'),
+  targetMin:$('targetMin'),durationPresets:$('durationPresets'),countdownSelect:$('countdownSelect'),prompterPosition:$('prompterPosition'),focusPosition:$('focusPosition'),focusBand:$('focusBand'),fitPace:$('fitPace'),autoAdvance:$('autoAdvance'),timingStatus:$('timingStatus'),readingMode:$('readingMode'),opacityRange:$('opacityRange'),paceVerdict:$('paceVerdict'),paceTarget:$('paceTarget'),paceEstimated:$('paceEstimated'),paceDelta:$('paceDelta'),paceList:$('paceList'),
   enableMedia:$('enableMedia'),audioTestBtn:$('audioTestBtn'),audioTestState:$('audioTestState'),audioTestPlayer:$('audioTestPlayer'),cameraSelect:$('cameraSelect'),micSelect:$('micSelect'),audioLevel:$('audioLevel'),micHealth:$('micHealth'),mediaStatus:$('mediaStatus'),cameraPreview:$('cameraPreview'),cameraBubble:$('cameraBubble'),camPosition:$('camPosition'),camSize:$('camSize'),shapeBtn:$('shapeBtn'),cameraToggle:$('cameraToggle'),
   quality:$('quality'),recordingName:$('recordingName'),cleanPreviewBtn:$('cleanPreviewBtn'),audienceBtn:$('audienceBtn'),liveBtn:$('liveBtn'),preflight:$('preflight'),practiceBtn:$('practiceBtn'),recordBtn:$('recordBtn'),pauseBtn:$('pauseBtn'),stopBtn:$('stopBtn'),sessionStatus:$('sessionStatus'),takeCount:$('takeCount'),takeList:$('takeList'),
   recDot:$('recDot'),recText:$('recText'),modePill:$('modePill'),thumbToggle:$('thumbToggle'),thumbDock:$('thumbDock'),thumbTrack:$('thumbTrack'),thumbCount:$('thumbCount'),paceLive:$('paceLive'),remaining:$('remaining'),timer:$('timer'),focusBtn:$('focusBtn'),helpBtn:$('helpBtn'),stage:$('stage'),stageBadge:$('stageBadge'),countdown:$('countdown'),
@@ -609,14 +885,14 @@ const E = {
 let pdfDoc=null,pptxViewer=null,pptxBuffer=null,pptxThumbHandles=[],presentationType=null,imageSlides=[],currentSlide=1,totalSlides=0,renderToken=0,presentationLoadToken=0,thumbToken=0;
 let notesRaw='',notesBySlide=new Map(),continuousNotes='';
 let mediaStream=null,audioCtx=null,analyser=null,meterRAF=null,clipHold=0,mediaRequestToken=0,audioTestRecorder=null,audioTestChunks=[],audioTestUrl=null;
-let cameraHidden=false,cameraCircle=false;
+let cameraHidden=false,cameraCircle=false,prompterUserHidden=false;
 let cameraLayout={x:.77,y:.72,w:.18,h:.20};
 let prompterLayout={x:.06,y:.57,w:.88,h:.38};
 let floatingInteraction=null;
 let autoScrolling=false,scrollRAF=null,lastScrollTs=0,autoAdvanceArmed=false,scrollWasRunningBeforePause=false;
 let sessionMode='idle',sessionStartedAt=0,pausedAt=0,totalPausedMs=0,lastSessionMs=0,timerInterval=null;
 let recorder=null,recordingStream=null,volatileChunks=[],composeRAF=null,previewRAF=null,lastRecordingUrl=null,maxSlideReached=1;
-let focusMode=false,currentFlow='import',pausedFromMode='practice',audienceWin=null,audienceCanvas=null,takes=[],nextTakeNumber=1,googleAccessToken=null,protectedSeq=0,chunkWritePromises=[],recordingProtectionAvailable=false,recordingProtectionFailed=false,recordingProtectionWarned=false,forcedStopReason='',sharedLinkBridgeAvailable=null;
+let focusMode=false,currentFlow='setup',pausedFromMode='practice',audienceWin=null,audienceCanvas=null,takes=[],nextTakeNumber=1,googleAccessToken=null,protectedSeq=0,chunkWritePromises=[],recordingProtectionAvailable=false,forcedStopReason='',sharedLinkBridgeAvailable=null;
 let plannedSlideSeconds=[];
 
 function setStatus(el,text,cls=''){el.className='status '+cls;el.innerHTML=text}
@@ -629,28 +905,34 @@ function closeModal(el){el.classList.remove('show')}
 function closeReviewModal(){E.reviewVideo.pause();closeModal(E.reviewModal)}
 function drawRoundedPath(ctx,x,y,w,h,r){const rr=Math.max(0,Math.min(r,Math.min(w,h)/2));ctx.beginPath();if(typeof ctx.roundRect==='function'){ctx.roundRect(x,y,w,h,rr);return}ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath()}
 
+function normalizeFlow(flow){
+  if(['import','prepare','setup'].includes(flow))return 'setup';
+  if(flow==='rehearse')return 'present';
+  if(flow==='review'&&!takes.length)return 'present';
+  return ['setup','present','review'].includes(flow)?flow:'setup';
+}
 function setFlow(flow,{force=false}={}){
+  flow=normalizeFlow(flow);
   if(!force && sessionMode!=='idle' && flow!=='present') return toast('Finish the current session first');
   currentFlow=flow;
   E.sidebar.dataset.flow=flow;
   E.workflowNav.querySelectorAll('.flow-btn').forEach(b=>b.classList.toggle('active',b.dataset.flow===flow));
-  if(flow==='rehearse') renderPacePlan();
-  if(flow==='present') renderPreflight();
-  if(flow==='review') renderTakeList();
+  if(flow==='present'){renderPacePlan();renderPreflight();}
+  if(flow==='review')renderTakeList();
   savePrefs();
 }
 
-let wakandaDbPromise=null;
-function openWakandaDb(){
+let quietCueDbPromise=null;
+function openQuietCueDb(){
   if(!('indexedDB' in window))return Promise.resolve(null);
-  if(wakandaDbPromise)return wakandaDbPromise;
-  wakandaDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open('wakanda-studio-v4',1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('kv'))db.createObjectStore('kv',{keyPath:'key'});if(!db.objectStoreNames.contains('chunks'))db.createObjectStore('chunks',{keyPath:'seq'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}).catch(e=>{console.warn('IndexedDB unavailable',e);return null});
-  return wakandaDbPromise;
+  if(quietCueDbPromise)return quietCueDbPromise;
+  quietCueDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open('quietcue-v1',1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('kv'))db.createObjectStore('kv',{keyPath:'key'});if(!db.objectStoreNames.contains('chunks'))db.createObjectStore('chunks',{keyPath:'seq'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}).catch(e=>{console.warn('IndexedDB unavailable',e);return null});
+  return quietCueDbPromise;
 }
-async function dbPut(store,value){const db=await openWakandaDb();if(!db)return false;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)}).catch(e=>{console.warn('DB write failed',e);return false})}
-async function dbGet(store,key){const db=await openWakandaDb();if(!db)return null;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)}).catch(()=>null)}
-async function dbGetAll(store){const db=await openWakandaDb();if(!db)return[];return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)}).catch(()=>[])}
-async function dbClear(store){const db=await openWakandaDb();if(!db)return false;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)}).catch(e=>{console.warn('DB clear failed',e);return false})}
+async function dbPut(store,value){const db=await openQuietCueDb();if(!db)return false;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).put(value);tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error)}).catch(e=>{console.warn('DB write failed',e);return false})}
+async function dbGet(store,key){const db=await openQuietCueDb();if(!db)return null;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).get(key);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)}).catch(()=>null)}
+async function dbGetAll(store){const db=await openQuietCueDb();if(!db)return[];return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readonly'),req=tx.objectStore(store).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)}).catch(()=>[])}
+async function dbClear(store){const db=await openQuietCueDb();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)}).catch(()=>{})}
 async function persistPresentation(files){try{await dbPut('kv',{key:'presentation',files:[...files],savedAt:Date.now()});E.sessionRecovery.hidden=false}catch{}}
 async function checkRecovery(){
   const deck=await dbGet('kv','presentation');E.sessionRecovery.hidden=!deck?.files?.length;
@@ -660,7 +942,7 @@ async function restoreLastPresentation(){const deck=await dbGet('kv','presentati
 async function protectChunk(seq,blob){if(!blob?.size)return false;return dbPut('chunks',{seq,blob,savedAt:Date.now()})}
 async function recoverProtectedRecording(){
   const rows=(await dbGetAll('chunks')).sort((a,b)=>a.seq-b.seq);if(!rows.length)return toast('No protected recording found');
-  const type=rows.find(x=>x.blob?.type)?.blob?.type||'video/webm',blob=new Blob(rows.map(x=>x.blob),{type}),url=URL.createObjectURL(blob),filename=`wakanda-recovered-${Date.now()}.webm`;
+  const type=rows.find(x=>x.blob?.type)?.blob?.type||'video/webm',blob=new Blob(rows.map(x=>x.blob),{type}),url=URL.createObjectURL(blob),filename=`quietcue-recovered-${Date.now()}.webm`;
   const take={url,duration:0,delta:0,deltaLabel:'Recovered',filename,best:!takes.length,number:nextTakeNumber++,slides:'—',words:countWords(notesRaw),target:targetSeconds(),interrupted:true};
   takes.unshift(take);trimTakes();openTakeReview(take);renderTakeList();await dbClear('chunks');E.recordingRecovery.hidden=true;setFlow('review',{force:true});
 }
@@ -713,7 +995,7 @@ function renderPacePlan(){
     const est=sw/wpm*60,plan=plannedSlideSeconds[i-1]||0,d=est-plan;
     const row=document.createElement('div');row.className='pace-row'+(d>15?' warn':'');
     row.innerHTML=`<b>S${i}</b><div><div class="bar"><i style="width:${Math.min(100,Math.max(5,plan/Math.max(...plannedSlideSeconds,1)*100))}%"></i></div><span>${sw} words</span></div><span>${fmt(plan)}</span><span style="color:${Math.abs(d)<=8?'var(--good)':d>0?'var(--warn)':'var(--accent)'}">${Math.abs(d)<.5?'00:00':`${d>0?'+':'−'}${fmt(Math.abs(d))}`}</span>`;
-    row.addEventListener('click',()=>{currentSlide=i;renderSlide();setFlow('prepare')});
+    row.addEventListener('click',()=>{currentSlide=i;renderSlide();setFlow('setup')});
     E.paceList.appendChild(row);
   }
 }
@@ -725,7 +1007,8 @@ function livePaceDeltaSeconds(){
   return sessionElapsedMs()/1000-expected;
 }
 function renderLivePace(){
-  if(sessionMode==='idle'||sessionMode==='countdown'||!plannedSlideSeconds.length){E.paceLive.textContent='On pace';E.paceLive.className='pace-live';return}
+  if(sessionMode==='idle'||sessionMode==='countdown'||!plannedSlideSeconds.length){E.paceLive.hidden=true;E.paceLive.textContent='On pace';E.paceLive.className='pace-live';return}
+  E.paceLive.hidden=false;
   const d=livePaceDeltaSeconds();
   if(Math.abs(d)<5){E.paceLive.textContent='On pace';E.paceLive.className='pace-live'}
   else if(d>0){E.paceLive.textContent=`${Math.round(d)}s behind`;E.paceLive.className='pace-live behind'}
@@ -733,13 +1016,13 @@ function renderLivePace(){
 }
 function renderPreflight(){
   const target=targetSeconds(),words=countWords(notesRaw),estimated=words/(parseInt(E.speedRange.value)||130)*60;
+  const delta=estimated-target;
+  const timingText=!words?'Not calculated':Math.abs(delta)<=15?'On target':delta>0?`${fmt(Math.abs(delta))} over target`:`${fmt(Math.abs(delta))} under target`;
   const items=[
-    ['Presentation',totalSlides?`${totalSlides} slides loaded`:'Missing',!!totalSlides],
-    ['Private guidance',words?`${words} words`:'Missing',!!words],
-    ['Camera + mic',mediaStream?'Connected':'Not connected',!!mediaStream],
-    ['Audio',E.audioTestState.textContent==='Ready'?'Test played back':E.micHealth.textContent,E.micHealth.textContent==='Good'||E.audioTestState.textContent==='Ready'],
-    ['Timing',words?`${fmt(estimated)} vs ${fmt(target)}`:'Not calculated',words&&Math.abs(estimated-target)<=45],
-    ['Output',`${E.quality.value}p · private notes`,true]
+    ['Presentation',totalSlides?`${totalSlides} slides`:'Missing',!!totalSlides],
+    ['Guidance',words?`${words} words`:'Missing',!!words],
+    ['Camera + mic',mediaStream?'Ready':'Not connected',!!mediaStream],
+    ['Timing',timingText,words&&Math.abs(delta)<=45]
   ];
   E.preflight.innerHTML=items.map(([a,b,ok])=>`<div class="preflight-item ${ok?'ok':'warn'}"><b>${escapeHtml(a)}</b>${escapeHtml(String(b))}</div>`).join('');
 }
@@ -748,9 +1031,9 @@ function exitPerformanceMode(){E.app.classList.remove('performance')}
 function openAudienceView(){
   if(!totalSlides)return toast('Import a presentation first');
   if(audienceWin&&!audienceWin.closed){audienceWin.focus();composeAudience();return}
-  audienceWin=window.open('','wakanda-audience','popup,width=1280,height=720');
+  audienceWin=window.open('','quietcue-audience','popup,width=1280,height=720');
   if(!audienceWin)return toast('Allow pop-ups to open Audience View');
-  audienceWin.document.write(`<!doctype html><html><head><title>Wakanda Audience View</title><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}canvas{width:100%;height:100%;object-fit:contain;background:#000}</style></head><body><canvas id="audienceCanvas" width="1920" height="1080"></canvas></body></html>`);
+  audienceWin.document.write(`<!doctype html><html><head><title>QuietCue Audience View</title><style>html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}canvas{width:100%;height:100%;object-fit:contain;background:#000}</style></head><body><canvas id="audienceCanvas" width="1920" height="1080"></canvas></body></html>`);
   audienceWin.document.close();audienceCanvas=audienceWin.document.getElementById('audienceCanvas');composeAudience();
 }
 function composeAudience(){if(!audienceWin||audienceWin.closed||!audienceCanvas)return;composeOnce(audienceCanvas,false)}
@@ -773,6 +1056,7 @@ function openTakeReview(t){
   E.reviewModal.classList.add('show');
 }
 function renderTakeList(){
+  E.workflowNav.classList.toggle('has-review',takes.length>0);
   E.takeCount.textContent=`${takes.length} take${takes.length===1?'':'s'}`;
   if(!takes.length){E.takeList.innerHTML='<div class="status">Record a take and it will appear here for comparison.</div>';return}
   E.takeList.innerHTML='';takes.forEach((t,idx)=>{
@@ -794,11 +1078,11 @@ async function detectSharedLinkBridge(){
   }catch{sharedLinkBridgeAvailable=false}
   E.googlePublicBtn.disabled=!sharedLinkBridgeAvailable;
   E.googlePublicBtn.textContent=sharedLinkBridgeAvailable?'Import shared link':'Shared link · server required';
-  E.googlePublicBtn.title=sharedLinkBridgeAvailable?'Import a publicly shared Google Slides deck':"This option needs Wakanda's included Node server. Connect Google still works on HTTPS/static hosting when OAuth is configured.";
+  E.googlePublicBtn.title=sharedLinkBridgeAvailable?'Import a publicly shared Google Slides deck':"This option needs QuietCue's included Node server. Connect Google still works on HTTPS/static hosting when OAuth is configured.";
   return sharedLinkBridgeAvailable;
 }
 async function ensureRecordingCapacity(){
-  recordingProtectionAvailable=!!(await openWakandaDb());
+  recordingProtectionAvailable=!!(await openQuietCueDb());
   if(!recordingProtectionAvailable)return true;
   if(!navigator.storage?.estimate)return true;
   try{
@@ -830,7 +1114,7 @@ function applyImportedNotes(map,label='Imported notes'){
 }
 async function importGoogleWithOAuth(){
   const id=slideIdFromGoogleUrl(E.googleSlidesUrl.value);if(!id)return setStatus(E.googleStatus,'Paste a valid Google Slides link first.','warn');
-  const clientId=window.WAKANDA_CONFIG?.googleClientId;
+  const clientId=window.QUIETCUE_CONFIG?.googleClientId;
   if(!clientId)return setStatus(E.googleStatus,'Google OAuth is not configured yet. Add your Google OAuth Client ID to config.js, or use the shared-link import.','warn');
   if(!window.google?.accounts?.oauth2)return setStatus(E.googleStatus,'Google sign-in is still loading. Try again in a moment.','warn');
   setStatus(E.googleStatus,'Waiting for Google permission…');
@@ -845,14 +1129,14 @@ async function importGoogleWithOAuth(){
     if(!presRes.ok)throw new Error(`Slides API ${presRes.status}`);if(!pdfRes.ok)throw new Error(`Drive export ${pdfRes.status}`);
     const presentation=await presRes.json(),notes=await extractGoogleSpeakerNotes(presentation),blob=await pdfRes.blob();
     await loadPresentation([new File([blob],`${presentation.title||'google-slides'}.pdf`,{type:'application/pdf'})]);applyImportedNotes(notes,'Google speaker notes');
-    setStatus(E.googleStatus,`Imported <b>${escapeHtml(presentation.title||'Google Slides')}</b> with ${notes.size} speaker-note sections.`,'good');closeModal(E.googleModal);setFlow('prepare');
+    setStatus(E.googleStatus,`Imported <b>${escapeHtml(presentation.title||'Google Slides')}</b> with ${notes.size} speaker-note sections.`,'good');closeModal(E.googleModal);setFlow('setup');
   }catch(e){console.error(e);setStatus(E.googleStatus,`Google import failed: ${escapeHtml(e.message)}`,'danger')}
 }
 async function importGoogleShared(){
-  if(sharedLinkBridgeAvailable!==true){await detectSharedLinkBridge();if(!sharedLinkBridgeAvailable)return setStatus(E.googleStatus,"Shared-link import needs Wakanda's included Node server. On GitHub Pages, use Connect Google with OAuth or export the deck as PPTX/PDF.",'warn')}
+  if(sharedLinkBridgeAvailable!==true){await detectSharedLinkBridge();if(!sharedLinkBridgeAvailable)return setStatus(E.googleStatus,"Shared-link import needs QuietCue's included Node server. On GitHub Pages, use Connect Google with OAuth or export the deck as PPTX/PDF.",'warn')}
   const url=E.googleSlidesUrl.value.trim();if(!slideIdFromGoogleUrl(url))return setStatus(E.googleStatus,'Paste a valid Google Slides link first.','warn');
   setStatus(E.googleStatus,'Importing the shared presentation…');
-  try{const r=await fetch(`/api/google-slides?url=${encodeURIComponent(url)}`);if(!r.ok)throw new Error((await r.text())||`HTTP ${r.status}`);const blob=await r.blob();await loadPresentation([new File([blob],'google-slides.pdf',{type:'application/pdf'})]);setStatus(E.googleStatus,'Shared Google Slides deck imported. Add private guidance manually or connect Google to import speaker notes.','good');closeModal(E.googleModal);setFlow('prepare')}catch(e){setStatus(E.googleStatus,'Shared-link bridge unavailable here. Run Wakanda with its included server, or use Connect Google after configuring OAuth.','warn')}
+  try{const r=await fetch(`/api/google-slides?url=${encodeURIComponent(url)}`);if(!r.ok)throw new Error((await r.text())||`HTTP ${r.status}`);const blob=await r.blob();await loadPresentation([new File([blob],'google-slides.pdf',{type:'application/pdf'})]);setStatus(E.googleStatus,'Shared Google Slides deck imported. Add private guidance manually or connect Google to import speaker notes.','good');closeModal(E.googleModal);setFlow('setup')}catch(e){setStatus(E.googleStatus,'Shared-link bridge unavailable here. Run QuietCue with its included server, or use Connect Google after configuring OAuth.','warn')}
 }
 function normalizeZipPath(base,target){const parts=(base+'/'+target).split('/'),out=[];for(const part of parts){if(!part||part==='.')continue;if(part==='..')out.pop();else out.push(part)}return out.join('/')}
 async function extractPptxNotes(buffer){
@@ -878,8 +1162,8 @@ async function rasterizePptxToSlideCanvas(){
 
 function savePrefs(){
   try{
-    localStorage.setItem('wakandaStudioV42', JSON.stringify({
-      notes:notesRaw,target:E.targetMin.value,wpm:E.speedRange.value,font:E.fontRange.value,notesMode:E.notesMode.value,
+    localStorage.setItem('quietCueV1', JSON.stringify({
+      target:E.targetMin.value,wpm:E.speedRange.value,font:E.fontRange.value,notesMode:E.notesMode.value,
       prompter:E.prompterPosition.value,focus:E.focusPosition.value,autoAdvance:E.autoAdvance.checked,camPos:E.camPosition.value,
       camSize:E.camSize.value,circle:cameraCircle,hidden:cameraHidden,quality:E.quality.value,name:E.recordingName.value,
       countdown:E.countdownSelect.value,thumbsHidden:E.thumbDock.classList.contains('hidden'),readingMode:E.readingMode.value,opacity:E.opacityRange.value,flow:currentFlow,
@@ -887,10 +1171,20 @@ function savePrefs(){
     }));
   }catch(e){console.warn('Preferences could not be saved',e)}
 }
+function purgeLegacyGuidanceCache(){
+  const keys=['quietCueV1','wakandaStudioV44','wakandaStudioV43','wakandaStudioV42','wakandaStudioV41','wakandaStudioV4','wakandaStudioV3','presenterStudioV3','presenterStudioV21'];
+  for(const key of keys){
+    try{
+      const raw=localStorage.getItem(key); if(!raw) continue;
+      const data=JSON.parse(raw);
+      if(data && Object.prototype.hasOwnProperty.call(data,'notes')){delete data.notes;localStorage.setItem(key,JSON.stringify(data));}
+    }catch{}
+  }
+}
+
 function loadPrefs(){
   try{
-    const p=JSON.parse(localStorage.getItem('wakandaStudioV42')||localStorage.getItem('wakandaStudioV41')||localStorage.getItem('wakandaStudioV4')||localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
-    if(p.notes){notesRaw=p.notes;E.notesPaste.value=p.notes}
+    const p=JSON.parse(localStorage.getItem('quietCueV1')||localStorage.getItem('wakandaStudioV44')||localStorage.getItem('wakandaStudioV43')||localStorage.getItem('wakandaStudioV42')||localStorage.getItem('wakandaStudioV41')||localStorage.getItem('wakandaStudioV4')||localStorage.getItem('wakandaStudioV3')||localStorage.getItem('presenterStudioV3')||localStorage.getItem('presenterStudioV21')||'{}');
     if(p.target)E.targetMin.value=p.target;
     if(p.wpm)E.speedRange.value=p.wpm;
     if(p.font)E.fontRange.value=p.font;
@@ -906,7 +1200,7 @@ function loadPrefs(){
     if(p.thumbsHidden)E.thumbDock.classList.add('hidden');
     if(p.readingMode)E.readingMode.value=p.readingMode;
     if(p.opacity)E.opacityRange.value=p.opacity;
-    if(p.flow)currentFlow=p.flow;
+    if(p.flow)currentFlow=normalizeFlow(p.flow);
     if(p.cameraLayout){cameraLayout={...cameraLayout,...p.cameraLayout};E.camPosition.value='custom';E.camSize.value='custom';}
     if(p.prompterLayout){prompterLayout={...prompterLayout,...p.prompterLayout};E.prompterPosition.value='custom';}
     cameraCircle=!!p.circle;
@@ -916,10 +1210,13 @@ function loadPrefs(){
 
 function updateReadiness(){
   const hasSlides=totalSlides>0,hasNotes=countWords(notesRaw)>0,hasMedia=!!mediaStream;
+  E.app.classList.toggle('has-deck',hasSlides);
+  E.prevBtn.hidden=!hasSlides;E.nextBtn.hidden=!hasSlides;E.scrollToggle.hidden=!hasNotes;
+  const prompterMenu=document.querySelector('.prompter-menu');if(prompterMenu)prompterMenu.hidden=!hasNotes;
   E.checkSlides.classList.toggle('ok',hasSlides);E.checkNotes.classList.toggle('ok',hasNotes);E.checkMedia.classList.toggle('ok',hasMedia);
   const count=[hasSlides,hasNotes,hasMedia].filter(Boolean).length,ready=hasSlides&&hasNotes&&hasMedia;
   E.checkReady.classList.toggle('ok',ready);E.readyTitle.textContent=ready?'Ready to perform':`Setup ${count}/3`;
-  E.readyText.textContent=!hasSlides?'Import your presentation':!hasNotes?'Add private guidance':!hasMedia?'Check camera + microphone':'Ready for rehearsal, live presentation or recording';
+  E.readyText.textContent=!hasSlides?'Import your presentation':!hasNotes?'Add private guidance':!hasMedia?'Check camera + microphone':'Ready to rehearse, record or present live';
   E.recordBtn.disabled=!ready||sessionMode!=='idle';E.liveBtn.disabled=!hasSlides||!hasNotes||sessionMode!=='idle';
   if(sessionMode==='idle')E.recText.textContent=ready?'Ready':'Setup';renderPreflight();renderPacePlan();
 }
@@ -937,9 +1234,9 @@ async function loadPresentation(files,{persist=true}={}){
     }else{
       const imgFiles=[...files].filter(f=>f.type.startsWith('image/'));if(!imgFiles.length)throw new Error('Unsupported presentation format');const imgs=[];for(const f of imgFiles){imgs.push(await fileToImage(f));if(loadToken!==presentationLoadToken)return}presentationType='images';imageSlides=imgs;totalSlides=imgs.length;E.slideCanvas.style.visibility='visible';setStatus(E.presentationStatus,`Loaded <b>${totalSlides}</b> slide image${totalSlides===1?'':'s'}.`,'good');
     }
-    if(loadToken!==presentationLoadToken||!totalSlides)return;currentSlide=1;E.totalSlides.value=totalSlides;maxSlideReached=1;buildSlideProgress();await renderSlide();if(loadToken!==presentationLoadToken)return;buildThumbnails();updateReadiness();savePrefs();if(persist)persistPresentation(files);setFlow('prepare');
+    if(loadToken!==presentationLoadToken||!totalSlides)return;currentSlide=1;E.totalSlides.value=totalSlides;maxSlideReached=1;buildSlideProgress();await renderSlide();if(loadToken!==presentationLoadToken)return;buildThumbnails();updateReadiness();savePrefs();if(persist)persistPresentation(files);setFlow('setup');
   }catch(err){
-    if(loadToken!==presentationLoadToken)return;console.error(err);presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;E.pptxStage.classList.remove('active');E.pptxStage.innerHTML='';E.slideCanvas.style.visibility='visible';clearSlideCanvas();E.emptySlide.style.display='grid';E.totalSlides.value=1;E.slideNumber.value=1;E.slideMini.textContent='—';E.slidePill.textContent='Slide —';E.slideProgress.innerHTML='';E.thumbTrack.innerHTML='';E.thumbCount.textContent='No slides loaded';setStatus(E.presentationStatus,`Could not load presentation: ${escapeHtml(err.message)}`,'danger');updateReadiness();
+    if(loadToken!==presentationLoadToken)return;console.error(err);presentationType=null;pdfDoc=null;imageSlides=[];totalSlides=0;E.pptxStage.classList.remove('active');E.pptxStage.innerHTML='';E.slideCanvas.style.visibility='visible';clearSlideCanvas();E.emptySlide.style.display='grid';E.totalSlides.value=1;E.slideNumber.value=1;E.slideMini.textContent='—';E.slidePill.textContent='No presentation';E.slideProgress.innerHTML='';E.thumbTrack.innerHTML='';E.thumbCount.textContent='No slides loaded';setStatus(E.presentationStatus,`Could not load presentation: ${escapeHtml(err.message)}`,'danger');updateReadiness();
   }
 }
 
@@ -1036,6 +1333,16 @@ function parseNotes(raw){
   updateReadiness();
   savePrefs();
 }
+function clearGuidance(){
+  notesRaw=''; continuousNotes=''; notesBySlide=new Map();
+  E.notesPaste.value=''; E.slideNotesEditor.value='';
+  E.notesText.textContent='Your private guidance appears here.';
+  E.nextCue.textContent='Next cue: —';
+  setStatus(E.notesStatus,'No private guidance loaded. Add notes when you are ready.','');
+  updateStats(); updateNotes(true); updateReadiness();
+  toast('Private guidance cleared');
+}
+
 function noteForSlide(n){return notesBySlide.get(n)||notesBySlide.get(0)||'No notes for this slide.'}
 function nextNote(n){
   for(let i=n+1;i<=Math.max(totalSlides,n+10);i++){
@@ -1047,14 +1354,13 @@ function nextNote(n){
 function syncSlideNotesEditor(){
   E.slideNotesLabel.textContent=totalSlides?`Slide ${currentSlide}`:'Slide —';
   const hasSlideSections=[...notesBySlide.keys()].some(k=>k>0);
+  E.slideNotesCard.hidden=!hasSlideSections;
   if(!hasSlideSections){
     E.slideNotesEditor.value=notesBySlide.get(0)||notesRaw||'';
     E.slideNotesEditor.disabled=true; E.saveSlideNotes.disabled=true;
-    E.slideNotesCard.style.opacity='.65';
     E.saveSlideNotes.textContent='Add ## Slide headings to edit per slide';
   }else{
     E.slideNotesEditor.disabled=false; E.saveSlideNotes.disabled=false;
-    E.slideNotesCard.style.opacity='1';
     E.saveSlideNotes.textContent='Save current slide guidance';
     E.slideNotesEditor.value=notesBySlide.get(currentSlide)||'';
   }
@@ -1076,11 +1382,15 @@ function saveCurrentSlideNotes(){
 }
 
 function updateNotes(reset=true){
-  const continuous=E.notesMode.value==='continuous',text=continuous?(continuousNotes||'No guidance loaded.'):noteForSlide(currentSlide);E.notesText.innerHTML=guidanceHtml(text);E.nextCue.textContent='Next cue: '+(continuous?'continuous guidance':nextNote(currentSlide));E.modePill.textContent=continuous?'CONTINUOUS':'SLIDE SYNC';if(reset){E.notesViewport.scrollTop=0;autoAdvanceArmed=false}updateReadingFocus();if(autoScrolling)setTimeout(()=>{lastScrollTs=performance.now()},0);
+  const hasGuidance=countWords(notesRaw)>0;
+  const continuous=E.notesMode.value==='continuous',text=continuous?(continuousNotes||'No guidance loaded.'):noteForSlide(currentSlide);
+  E.notesText.innerHTML=guidanceHtml(text);E.nextCue.textContent='Next cue: '+(continuous?'continuous guidance':nextNote(currentSlide));E.modePill.textContent=continuous?'CONTINUOUS':'SLIDE SYNC';
+  E.teleprompter.classList.toggle('hidden',!hasGuidance||prompterUserHidden);E.teleToggle.textContent=prompterUserHidden?'Show notes':'Hide notes';
+  if(reset){E.notesViewport.scrollTop=0;autoAdvanceArmed=false}updateReadingFocus();if(autoScrolling)setTimeout(()=>{lastScrollTs=performance.now()},0);
 }
 
 function updateStats(){
-  const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,mins=words/wpm,target=Math.max(.5,parseFloat(E.targetMin.value)||5),fit=Math.round(words/target),delta=mins*60-target*60;E.wordCount.textContent=words;E.estTime.textContent=fmt(mins*60);E.paceFit.textContent=words?(Math.abs(delta)<=9?'On target':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`):'—';if(sessionMode==='idle')E.remaining.textContent=`Target ${fmt(target*60)}`;let cls='';if(words)cls=Math.abs(delta)<=15?'good':Math.abs(delta)<=60?'warn':'danger';setStatus(E.timingStatus,words?`Estimated <b>${fmt(mins*60)}</b> for a <b>${fmt(target*60)}</b> target. Advanced pace: ${wpm} WPM${fit!==wpm?` · target-fit ${fit} WPM`:''}.`:'Add guidance to calculate pacing.',cls);updateDurationPreset();renderPacePlan();renderPreflight();updateReadiness();
+  const words=countWords(notesRaw),wpm=parseInt(E.speedRange.value)||130,mins=words/wpm;E.guidanceMetrics.hidden=!words;E.guidanceOptions.hidden=!words;const target=Math.max(.5,parseFloat(E.targetMin.value)||5),fit=Math.round(words/target),delta=mins*60-target*60;E.wordCount.textContent=words;E.estTime.textContent=fmt(mins*60);E.paceFit.textContent=words?(Math.abs(delta)<=9?'On target':`${delta>0?'+':'−'}${fmt(Math.abs(delta))}`):'—';if(sessionMode==='idle')E.remaining.textContent=`Target ${fmt(target*60)}`;let cls='';if(words)cls=Math.abs(delta)<=15?'good':Math.abs(delta)<=60?'warn':'danger';setStatus(E.timingStatus,words?`Estimated <b>${fmt(mins*60)}</b> · ${Math.abs(delta)<=10?'on target':delta>0?`<b>${fmt(Math.abs(delta))}</b> over target`:`<b>${fmt(Math.abs(delta))}</b> under target`}.`:'Add guidance to calculate pacing.',cls);updateDurationPreset();renderPacePlan();renderPreflight();updateReadiness();
 }
 
 function clampLayout(layout,minW=.12,minH=.10){
@@ -1130,7 +1440,7 @@ function scrollStep(ts){
 function toggleScroll(force){
   if(sessionMode==='countdown')return;
   autoScrolling=typeof force==='boolean' ? force : !autoScrolling;
-  E.scrollToggle.textContent=autoScrolling ? '⏸ Pause scroll' : '▶ Auto-scroll';
+  E.scrollToggle.textContent=autoScrolling ? '⏸ Pause guidance' : '▶ Start guidance';
   if(autoScrolling){ lastScrollTs=performance.now(); cancelAnimationFrame(scrollRAF); scrollRAF=requestAnimationFrame(scrollStep); }
   else cancelAnimationFrame(scrollRAF);
 }
@@ -1171,16 +1481,17 @@ async function startMedia(){
       const recordingActive=sessionMode==='recording'||(sessionMode==='paused'&&pausedFromMode==='recording');
       if(recordingActive){
         forcedStopReason=`${deviceName} disconnected`;
-        setStatus(E.sessionStatus,`${deviceName} disconnected. Wakanda is safely ending and saving this take. Reconnect before recording again.`,'danger');
+        setStatus(E.sessionStatus,`${deviceName} disconnected. QuietCue is safely ending and saving this take. Reconnect before recording again.`,'danger');
         toast(`${deviceName} disconnected — saving take`);
         stopSession();
       }
-      setStatus(E.mediaStatus,`${deviceName} disconnected. Re-enable camera & mic before the next recording.`,'danger'); updateReadiness();
+      setStatus(E.mediaStatus,`${deviceName} disconnected. Re-enable camera & mic before the next recording.`,'danger'); applyCameraLocal(); updateReadiness();
     }));
     E.cameraPreview.srcObject=mediaStream;
     await E.cameraPreview.play().catch(()=>{});
     await enumerateDevices();
     setStatus(E.mediaStatus,'Camera and microphone are ready.','good');
+    applyCameraLocal();
     clipHold=0; setupAudioMeter();
     updateReadiness();
     composeOnce(E.previewCanvas);
@@ -1194,6 +1505,7 @@ async function startMedia(){
     E.micHealth.textContent='Unavailable';
     E.micHealth.style.color='var(--danger)';
     setStatus(E.mediaStatus,`Could not access camera/mic: ${escapeHtml(err.message)}`,'danger');
+    applyCameraLocal();
     updateReadiness();
   }
 }
@@ -1358,12 +1670,9 @@ async function startRecording(){
     setStatus(E.sessionStatus,'Your browser does not support MediaRecorder. Try the latest Chrome or Edge.','danger');
     return;
   }
-  const protectedRows=await dbGetAll('chunks');
-  if(protectedRows.length){E.recordingRecovery.hidden=false;setStatus(E.sessionStatus,'A protected recording from an interrupted session is waiting. Recover it before starting a new take so it is not overwritten.','warn');return toast('Recover the protected recording first')}
   if(!(await ensureRecordingCapacity()))return;
   sessionMode='countdown'; setSessionLock(true); E.practiceBtn.disabled=true; E.recordBtn.disabled=true;
   await runCountdown();
-  if(!mediaStream){sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'Camera or microphone became unavailable during countdown. Re-enable media and try again.','danger');return}
   try{
     setOutputResolution();
     composeOnce(E.recordCanvas);
@@ -1371,10 +1680,10 @@ async function startRecording(){
     const mic=mediaStream.getAudioTracks()[0];
     const micClone=mic?mic.clone():null;
     recordingStream=new MediaStream([...canvasStream.getVideoTracks(), ...(micClone?[micClone]:[])]);
-    volatileChunks=[];protectedSeq=0;chunkWritePromises=[];forcedStopReason='';recordingProtectionFailed=false;recordingProtectionWarned=false;recordingProtectionAvailable=!!(await openWakandaDb());if(recordingProtectionAvailable&&!(await dbClear('chunks')))recordingProtectionAvailable=false;
+    volatileChunks=[];protectedSeq=0;chunkWritePromises=[];forcedStopReason='';recordingProtectionAvailable=!!(await openQuietCueDb());await dbClear('chunks');
     const mime=pickMime();
     recorder=new MediaRecorder(recordingStream, mime ? {mimeType:mime, videoBitsPerSecond:E.quality.value==='1080'?7000000:4200000, audioBitsPerSecond:128000} : {videoBitsPerSecond:6000000});
-    recorder.ondataavailable=e=>{if(e.data.size){const seq=++protectedSeq,entry={seq,blob:e.data};volatileChunks.push(entry);if(recordingProtectionAvailable&&!recordingProtectionFailed){const write=protectChunk(seq,e.data).then(ok=>{if(ok)volatileChunks=volatileChunks.filter(x=>x!==entry);else{recordingProtectionFailed=true;if(!recordingProtectionWarned){recordingProtectionWarned=true;setStatus(E.sessionStatus,'Recording continues, but local Recording Protection ran out of storage. Stop and download this take when practical.','warn');toast('Recording Protection degraded — take still recording')}}return ok});chunkWritePromises.push(write)}}};
+    recorder.ondataavailable=e=>{if(e.data.size){const seq=++protectedSeq,entry={seq,blob:e.data};volatileChunks.push(entry);if(recordingProtectionAvailable){const write=protectChunk(seq,e.data).then(ok=>{if(ok)volatileChunks=volatileChunks.filter(x=>x!==entry);return ok});chunkWritePromises.push(write)}}};
     recorder.onerror=e=>{ console.error(e); setStatus(E.sessionStatus,'Recording failed unexpectedly. Try again.','danger'); };
     recorder.onstop=finalizeRecording;
     recorder.start(5000);
@@ -1413,7 +1722,7 @@ function finishPractice(ms){
   setStatus(E.sessionStatus,`Rehearsal finished at <b>${fmt(d)}</b>. Adjust pace or notes, then record.`,'good');
   toast(`Rehearsal ${fmt(d)}`);
 }
-function finishLive(ms){const d=Math.floor((ms||sessionElapsedMs())/1000);setStatus(E.sessionStatus,`Live presentation finished at <b>${fmt(d)}</b>. Audience View can remain open for your next run.`,'good');toast(`Live session ${fmt(d)}`);setFlow('review',{force:true})}
+function finishLive(ms){const d=Math.floor((ms||sessionElapsedMs())/1000);setStatus(E.sessionStatus,`Live presentation finished at <b>${fmt(d)}</b>. Audience View can remain open for your next run.`,'good');toast(`Live session ${fmt(d)}`);setFlow('present',{force:true})}
 async function finalizeRecording(){
   const duration=Math.floor((lastSessionMs||sessionElapsedMs())/1000),type=recorder?.mimeType||'video/webm';
   await Promise.allSettled(chunkWritePromises);
@@ -1426,7 +1735,7 @@ async function finalizeRecording(){
   if(!blob.size){recorder=null;volatileChunks=[];sessionMode='idle';resetSessionChrome();updateReadiness();setStatus(E.sessionStatus,'The browser returned an empty recording. Please try a short test recording again.','danger');forcedStopReason='';return}
   const takeNumber=nextTakeNumber++;
   lastRecordingUrl=URL.createObjectURL(blob);E.reviewVideo.src=lastRecordingUrl;
-  const ext=type.includes('mp4')?'mp4':'webm',clean=(E.recordingName.value||'wakanda-studio-recording').trim().replace(/[^a-z0-9_-]+/gi,'-')||'wakanda-studio-recording',filename=`${clean}-take-${takeNumber}.${ext}`;
+  const ext=type.includes('mp4')?'mp4':'webm',clean=(E.recordingName.value||'quietcue-recording').trim().replace(/[^a-z0-9_-]+/gi,'-')||'quietcue-recording',filename=`${clean}-take-${takeNumber}.${ext}`;
   E.downloadLink.href=lastRecordingUrl;E.downloadLink.download=filename;
   const target=targetSeconds(),delta=duration-target,interrupted=!!forcedStopReason,deltaLabel=interrupted?'Interrupted':Math.abs(delta)<=4?'On target':`${Math.round(Math.abs(delta))}s ${delta>0?'over':'under'}`;
   E.reviewDuration.textContent=fmt(duration);E.reviewSlides.textContent=`${maxSlideReached}/${totalSlides}`;E.reviewWords.textContent=countWords(notesRaw);E.reviewTarget.textContent=fmt(target);E.reviewDelta.textContent=deltaLabel;E.reviewDelta.style.color=interrupted?'var(--danger)':Math.abs(delta)<=10?'var(--good)':Math.abs(delta)<=45?'var(--warn)':'var(--danger)';
@@ -1451,7 +1760,7 @@ function applyCameraLocal(){
   if(pos!=='custom'||size!=='custom')setCameraPreset(pos,size);
   E.cameraBubble.classList.toggle('circle',cameraCircle);
   applyFloatingLayout(E.cameraBubble,cameraLayout);
-  E.cameraBubble.style.display=cameraHidden?'none':'block';
+  E.cameraBubble.style.display=(!mediaStream||cameraHidden)?'none':'block';
   E.shapeBtn.textContent=cameraCircle?'Circle camera':'Rounded camera';
   E.cameraToggle.textContent=cameraHidden?'Show camera':'Hide camera';
   composeOnce(E.previewCanvas);savePrefs();
@@ -1515,7 +1824,8 @@ E.nextBtn.addEventListener('click',nextSlide);
 E.stage.addEventListener('click',e=>{ if(e.target.closest('.teleprompter') || e.target.closest('.camera-bubble') || e.target.closest('.countdown')) return; nextSlide(); });
 
 E.notesInput.addEventListener('change',()=>loadNotesFile(E.notesInput.files?.[0]));
-E.applyNotes.addEventListener('click',()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); setStatus(E.notesStatus,'Private guidance applied and saved locally.','good'); });
+E.applyNotes.addEventListener('click',()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); setStatus(E.notesStatus,'Private guidance is active for this session only.','good'); });
+E.clearNotesBtn.addEventListener('click',clearGuidance);
 E.notesPaste.addEventListener('input',()=>{ clearTimeout(E.notesPaste.t); E.notesPaste.t=setTimeout(()=>{ notesRaw=E.notesPaste.value; parseNotes(notesRaw); },450); });
 E.notesMode.addEventListener('change',()=>{ updateNotes(true); syncSlideNotesEditor(); savePrefs(); });
 E.saveSlideNotes.addEventListener('click',saveCurrentSlideNotes);
@@ -1558,7 +1868,6 @@ E.previewModal.addEventListener('click',e=>{ if(e.target===E.previewModal) stopP
 E.quality.addEventListener('change',()=>{ setOutputResolution(); savePrefs(); });
 E.recordingName.addEventListener('input',savePrefs);
 E.practiceBtn.addEventListener('click',startPractice);
-E.rehearseStartBtn.addEventListener('click',startPractice);
 E.audienceBtn.addEventListener('click',openAudienceView);
 E.liveBtn.addEventListener('click',startLive);
 E.recordBtn.addEventListener('click',startRecording);
@@ -1568,8 +1877,8 @@ E.stopBtn.addEventListener('click',stopSession);E.performanceStopBtn.addEventLis
 E.restartNotesBtn.addEventListener('click',restartNotes);
 E.scrollToggle.addEventListener('click',()=>toggleScroll());
 E.teleToggle.addEventListener('click',()=>{
-  E.teleprompter.classList.toggle('hidden');
-  E.teleToggle.textContent=E.teleprompter.classList.contains('hidden')?'Show notes':'Hide notes';
+  prompterUserHidden=!prompterUserHidden;
+  updateNotes(false);
 });
 E.speedRange.addEventListener('input',()=>{ E.speedLabel.textContent=E.speedRange.value+' WPM'; updateStats(); savePrefs(); });
 E.fontRange.addEventListener('input',applyPrompterStyle);
@@ -1579,12 +1888,13 @@ E.notesViewport.addEventListener('scroll',()=>{updateReadingFocus();renderLivePa
 E.restoreSessionBtn.addEventListener('click',restoreLastPresentation);E.recoverRecordingBtn.addEventListener('click',recoverProtectedRecording);
 E.workflowNav.querySelectorAll('.flow-btn').forEach(b=>b.addEventListener('click',()=>setFlow(b.dataset.flow)));
 const choosePresentation=(accept,multiple=false)=>{E.presentationInput.accept=accept;E.presentationInput.multiple=multiple;E.presentationInput.click()};
+const stageImportBtn=$('stageImportBtn');if(stageImportBtn)stageImportBtn.addEventListener('click',e=>{e.stopPropagation();choosePresentation('.pptx,.pdf,image/png,image/jpeg',false)});
 E.pptxSource.addEventListener('click',()=>choosePresentation('.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation',false));
 E.pdfSource.addEventListener('click',()=>choosePresentation('.pdf,application/pdf',false));
 E.imageSource.addEventListener('click',()=>choosePresentation('image/png,image/jpeg,.png,.jpg,.jpeg',true));
 const showGoogle=()=>{E.googleModal.classList.add('show');detectSharedLinkBridge();};E.googleSource.addEventListener('click',showGoogle);E.googleImportBtn.addEventListener('click',showGoogle);
 E.closeGoogle.addEventListener('click',()=>closeModal(E.googleModal));E.googleModal.addEventListener('click',e=>{if(e.target===E.googleModal)closeModal(E.googleModal)});E.googleConnectBtn.addEventListener('click',importGoogleWithOAuth);E.googlePublicBtn.addEventListener('click',importGoogleShared);
-E.thumbToggle.addEventListener('click',()=>{E.thumbDock.classList.toggle('hidden');E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slides':'Slides';savePrefs()});
+E.thumbToggle.addEventListener('click',()=>{E.thumbDock.classList.toggle('hidden');E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slide navigator':'Hide slide navigator';savePrefs()});
 E.focusBtn.addEventListener('click',toggleFocus);
 E.helpBtn.addEventListener('click',()=>E.helpModal.classList.add('show'));
 E.closeHelp.addEventListener('click',()=>closeModal(E.helpModal));
@@ -1618,16 +1928,18 @@ document.addEventListener('keydown',e=>{
 
 wireDropZone(E.presentationDrop,E.presentationInput,files=>loadPresentation(files));
 wireDropZone(E.notesDrop,E.notesInput,files=>loadNotesFile(files[0]));
+purgeLegacyGuidanceCache();
 loadPrefs();
+E.thumbDock.classList.add('hidden');
 setFlow(currentFlow,{force:true});updateDurationPreset();
-E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slides':'Slides';
+E.thumbToggle.textContent=E.thumbDock.classList.contains('hidden')?'Show slide navigator':'Hide slide navigator';
 E.speedLabel.textContent=E.speedRange.value+' WPM';
 E.notesText.style.fontSize=E.fontRange.value+'px';
 applyPrompterStyle();
 applyCameraLocal();
 setOutputResolution();
 clearSlideCanvas();
-if(notesRaw) parseNotes(notesRaw); else {updateStats();syncSlideNotesEditor();}
+if(notesRaw) parseNotes(notesRaw); else {updateStats();syncSlideNotesEditor();updateNotes(true);}
 updateReadiness();checkRecovery();detectSharedLinkBridge();
 </script>
 </body>

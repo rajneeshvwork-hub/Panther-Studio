@@ -1,8 +1,8 @@
 {
-  "name": "wakanda-studio",
-  "version": "4.2.0",
+  "name": "quietcue",
+  "version": "1.1.0",
   "private": true,
-  "description": "Presentation performance studio with private guidance, rehearsal, live presenting and clean recording.",
+  "description": "A private presentation copilot for rehearsing, presenting and recording with guidance the audience never sees.",
   "scripts": {
     "start": "node server.js",
     "check": "node --check server.js"

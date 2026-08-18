@@ -1,33 +1,25 @@
-# Wakanda Studio V4.2 — GitHub Upload Guide
+# QuietCue — GitHub Upload Guide
 
-This guide is intentionally written for someone who is new to GitHub.
+## Repository name
 
-## If your Wakanda Studio repository already exists
-
-You do **not** need to create a new repository.
-
-Open your existing `wakanda-studio` repository and upload the V4.2 files into the repository root.
-
-When GitHub asks for a commit message, use something like:
+Recommended:
 
 ```text
-Wakanda Studio V4.2 — final stable release
+quietcue
 ```
 
-Choose:
+Suggested description:
 
-**Commit directly to the `main` branch**
+> Private presentation copilot for rehearsal, live presenting and clean recording with guidance the audience never sees.
 
-for this personal project unless you specifically want to practice branches and pull requests.
+## Upload
 
-## Files to upload
+Upload the contents of the GitHub-ready ZIP directly into the repository root.
 
-Upload the contents of the V4.2 GitHub-ready ZIP, not the containing folder itself.
-
-Your repository root should look approximately like this:
+Expected structure:
 
 ```text
-wakanda-studio/
+quietcue/
 ├── index.html
 ├── README.md
 ├── PRODUCT_STORY.md
@@ -36,129 +28,55 @@ wakanda-studio/
 ├── TEST_CHECKLIST.md
 ├── GOOGLE_SLIDES_SETUP.md
 ├── GITHUB_UPLOAD_GUIDE.md
+├── GUIDANCE_TEMPLATE.md
 ├── config.js
 ├── config.example.js
 ├── server.js
 ├── package.json
-├── sample-notes.md
 ├── THIRD_PARTY_NOTICES.md
 └── .gitignore
 ```
 
-## Publish the front-end with GitHub Pages
+For a personal project, choose **Commit directly to the `main` branch**.
 
-After the files are committed:
+Suggested commit message:
+
+```text
+QuietCue 1.1 — simplified flow release
+```
+
+## GitHub Pages
 
 1. Open the repository.
-2. Click **Settings**.
-3. Click **Pages** in the left sidebar.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select:
-   - Branch: `main`
-   - Folder: `/ (root)`
-6. Click **Save**.
+2. Go to **Settings → Pages**.
+3. Choose **Deploy from a branch**.
+4. Select `main` and `/ (root)`.
+5. Save.
 
-GitHub will generate a URL similar to:
+Your demo URL will look similar to:
 
 ```text
-https://YOUR-USERNAME.github.io/wakanda-studio/
+https://YOUR-USERNAME.github.io/quietcue/
 ```
 
-That is your live portfolio demo.
+## Google configuration
 
-## What works on GitHub Pages
-
-The static GitHub Pages version supports the core product:
-
-- PowerPoint `.pptx`
-- PDF
-- JPG / PNG
-- private guidance
-- target-duration planning
-- rehearsal
-- camera / mic
-- audio test
-- recording
-- review / takes
-- session recovery
-
-It can also support **Connect Google** after you configure a Google OAuth Client ID correctly.
-
-## One V4.2 feature that GitHub Pages cannot host by itself
-
-The shared/public Google Slides URL bridge is implemented in:
-
-```text
-server.js
-```
-
-GitHub Pages only serves static files; it does not run Node server code.
-
-Therefore:
-
-- **Connect Google:** can be configured for the GitHub Pages front-end.
-- **Paste a public/shared Slides URL through `/api/google-slides`:** requires a Node-capable deployment.
-
-You can leave Google configuration blank for your first public portfolio release. PowerPoint, PDF, images, rehearsal, recording, and private guidance remain usable.
-
-## `config.js`
-
-The repository contains:
+`config.js` contains:
 
 ```js
-window.WAKANDA_CONFIG = {
+window.QUIETCUE_CONFIG = {
   googleClientId: ''
 };
 ```
 
-Do not place passwords, API secrets, or confidential credentials in this file.
+Do not add passwords, API secrets, or confidential credentials. See `GOOGLE_SLIDES_SETUP.md` before configuring Google OAuth.
 
-A Google OAuth **Web Client ID** is intended to be used by browser applications and is different from a client secret. Follow `GOOGLE_SLIDES_SETUP.md` before enabling it.
+## Before sharing publicly
 
-## Your repository description
+Run the checks in `TEST_CHECKLIST.md`, especially:
 
-Suggested GitHub description:
-
-> Presentation performance studio with private guidance, rehearsal pacing, PowerPoint/Slides import, live audience view, and clean recording.
-
-## Recommended repository About settings
-
-You can add topics such as:
-
-```text
-product-management
-presentation
-teleprompter
-powerpoint
-google-slides
-mediarecorder
-javascript
-portfolio-project
-```
-
-## After V4.2 is live
-
-Do one real-world test before sharing the project widely:
-
-- import a real deck,
-- add real guidance,
-- use the actual camera/mic,
-- record 15–30 seconds,
-- confirm notes do not appear,
-- download and play the recording.
-
-Use `TEST_CHECKLIST.md` for the full QA pass.
-
-## What the two links mean
-
-You will have two useful links:
-
-```text
-GitHub repository:
-https://github.com/YOUR-USERNAME/wakanda-studio
-
-Live product:
-https://YOUR-USERNAME.github.io/wakanda-studio/
-```
-
-The repository demonstrates the product thinking and implementation history. The live link lets someone actually use Wakanda Studio.
+- guidance starts blank,
+- guidance does not return after refresh,
+- camera/mic test works,
+- a short recording downloads and plays,
+- private guidance is absent from the final video.
