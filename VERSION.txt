@@ -1,3 +1,0 @@
-Decklight Studio — GitHub-ready package
-Source revision: 65d240ae8622118525798e22fe4582e32db2bc28
-Package date: 2026-09-24
